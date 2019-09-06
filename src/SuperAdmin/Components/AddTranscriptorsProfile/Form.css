@@ -1,0 +1,23 @@
+.border{
+    border-style: solid;
+    border-color: black
+}
+
+.button{
+    border-radius: 0px;
+}
+
+.button:hover{
+    border: 2px;
+    background-color: brown;
+}
+
+.self-btn {
+	color: #fff;
+	background-color: #182c39;
+	margin: 20px auto;
+	border-radius: 0;
+	font-weight: 500;
+	display: table;
+	padding: 10px;
+}
