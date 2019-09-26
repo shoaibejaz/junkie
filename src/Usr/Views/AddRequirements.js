@@ -7,7 +7,7 @@ import history from "../../Router/history";
 class AddRequirementsView extends Component {
   state = {};
   componentDidMount() {
-    getUserID() ? console.log("User Profile") : history.push("/AddRequirment");
+    getUserID() ? history.push("/AddRequirment") : history.push("/Login");
   }
   render() {
     return (

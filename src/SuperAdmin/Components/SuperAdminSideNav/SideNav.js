@@ -16,10 +16,11 @@ class SideNav extends Component {
             style={{ backgroundColor: "#ffffff" }}
           >
             <Link class="navbar-brand" to="/SADashboard">
-              <b>
+              {/* <b>
                 {" "}
                 TRANSCRIPTION <span style={{ color: "#4eafd7" }}>JUNKIE</span>
-              </b>
+              </b> */}
+              <img width="94px" src={require("../../../image/Logo1.png")} />
             </Link>
             <image
               style={{ width: "100px" }}
@@ -89,7 +90,7 @@ class SideNav extends Component {
                 </li>
               </ul>
               <ul class="navbar-nav ml-md-auto d-md-flex">
-                <li class="nav-item">
+                {/* <li class="nav-item">
                   <div class="container h-100">
                     <div class="d-flex justify-content-center h-100">
                       <div class="searchbar">
@@ -102,7 +103,7 @@ class SideNav extends Component {
                       </div>
                     </div>
                   </div>
-                </li>
+                </li> */}
                 {/* <li class="nav-item" style={{ padding: "8px 0px 0px 0px" }}>
                   <a class="nav-link" href="#">
                     <i class="fa fa-user" style={{ width: 15 }} />

@@ -15,10 +15,10 @@ export const displayAllOrdersAction = () => dispatch => {
       });
     })
     .catch(error => {
-      dispatch({
-        type: DisplayAllOrdersPool,
-        payload: error.response
-      });
+      // dispatch({
+      //   type: DisplayAllOrdersPool,
+      //   payload: error.response
+      // });
       console.log(error.response);
     });
 };

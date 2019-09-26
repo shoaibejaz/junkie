@@ -2,7 +2,7 @@ import { DisplayDeliveredOrders } from "../Types";
 import { BaseURL } from "../BaseURL";
 import axios from "axios";
 
-export const displayDeliveredOrdersAction = UserID => dispatch => {
+export const displayDeliveredOrdersAction = (UserID, crtl) => dispatch => {
   const ID = JSON.stringify(UserID);
   console.log(ID);
   axios
@@ -13,12 +13,15 @@ export const displayDeliveredOrdersAction = UserID => dispatch => {
         payload: res.data
       });
       console.log(res.data);
+      if (res.data) {
+        crtl.setState({ dLoading: false });
+      }
     })
     .catch(error => {
-      dispatch({
-        type: DisplayDeliveredOrders,
-        payload: error.response
-      });
+      // dispatch({
+      //   type: DisplayDeliveredOrders,
+      //   payload: error.response
+      // });
       console.log(error.response);
     });
 };

@@ -1,14 +1,17 @@
 import { SignUp } from "../../Actions/Types";
 
 const state = {
-  signUpList: []
+  signUpList: ""
 };
 
 function SignUpReducer(mState = { ...state }, action) {
   switch (action.type) {
     case SignUp:
-      mState.signUpList = action.payload;
-      return deepCopy(mState);
+      if (action.payload === undefined || action.payload === null) {
+      } else {
+        mState.signUpList = action.payload;
+        return deepCopy(mState);
+      }
 
     default:
       return deepCopy(mState);

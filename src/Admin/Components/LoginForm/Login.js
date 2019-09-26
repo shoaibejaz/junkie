@@ -27,12 +27,13 @@ class LogIn extends Component {
         () => {
           this.timer = setTimeout(() => {
             this.setState({
-              loading: false,
+              // loading: false,
               success: true
             });
-          }, 3000);
+          }, this.state.loading);
           this.props.transcriptorLoginAction(
-            new TranscriptorLoginClass(this.state._Email, this.state._Password)
+            new TranscriptorLoginClass(this.state._Email, this.state._Password),
+            this
           );
         }
       );
@@ -55,20 +56,6 @@ class LogIn extends Component {
               {/* <h1>Aditya News</h1> */}
             </div>
             <form>
-              {this.props.errorStatus === true ? (
-                this.props.errorMessage ? (
-                  <span style={{ color: "#ff0000", textAlign: "left" }}>
-                    {this.props.errorMessage}
-                  </span>
-                ) : (
-                  <span style={{ color: "#ff0000", textAlign: "left" }}>
-                    Invalid Email or Password
-                  </span>
-                )
-              ) : (
-                ""
-              )}
-
               <input
                 type="email"
                 id="login"
@@ -89,6 +76,13 @@ class LogIn extends Component {
                   disabled={loading}
                 />
               </div>
+              {this.props.errorMessage ? (
+                <span style={{ color: "#ff0000", textAlign: "left" }}>
+                  {this.props.errorMessage}
+                </span>
+              ) : (
+                ""
+              )}
               <div class="form-check">
                 <button
                   class="btn btn-lg"

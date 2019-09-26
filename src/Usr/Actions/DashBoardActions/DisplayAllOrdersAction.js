@@ -15,10 +15,10 @@ export const displayAllOrdersAction = UserID => dispatch => {
       console.log(res.data);
     })
     .catch(error => {
-      dispatch({
-        type: DisplayAllOrders,
-        payload: error.response
-      });
+      // dispatch({
+      //   type: DisplayAllOrders,
+      //   payload: error.response
+      // });
       console.log(error.response);
     });
 };

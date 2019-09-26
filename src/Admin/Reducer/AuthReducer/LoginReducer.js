@@ -3,8 +3,7 @@ import { setTranscriptorID } from "../../../LocalStorage/TranscriptorIDLocalStor
 
 const state = {
   transcriptorLoginID: "",
-  loginError: "",
-  error: false
+  loginError: ""
 };
 
 function TranscriptorLoginReducer(mState = { ...state }, action) {
@@ -15,14 +14,13 @@ function TranscriptorLoginReducer(mState = { ...state }, action) {
         mState.error = true;
       } else {
         if (
+          action.payload === "Email doesn't Exist" ||
           action.payload === "Invalid Password" ||
-          action.payload === "Email does not Exit" ||
           action.payload === "Invalid login or password" ||
           action.payload === "Null Values are not allowed" ||
           action.payload === "Access Denied"
         ) {
           mState.loginError = action.payload;
-          mState.error = true;
         } else {
           mState.transcriptorLoginID = action.payload;
           setTranscriptorID(mState.transcriptorLoginID);

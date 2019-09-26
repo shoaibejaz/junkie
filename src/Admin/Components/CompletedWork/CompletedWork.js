@@ -1,8 +1,31 @@
 import React, { Component } from "react";
 import "./completedWork.css";
+import { connect } from "react-redux";
+import SpinnerLoader from "../../../Usr/Component/Loader/SpinnerLoader";
+import { transcriptorCompleteOrderAction } from "../../Actions/OrdersActions/CompletedOrderAction";
+import SendTranscriptorIDClass from "../../BusinessLogics/ActionLogics/OrderLogics/SendTranscriptorID";
+import { getTranscriptorID } from "../../../LocalStorage/TranscriptorIDLocalStorage";
 
 class CompletedWork extends Component {
-  state = {};
+  state = {
+    loading: false
+  };
+  componentDidMount() {
+    if (!this.state.loading) {
+      this.setState(
+        {
+          loading: true
+        },
+        () => {
+          this.timer = setTimeout(() => {}, this.state.loading === false);
+          this.props.transcriptorCompleteOrderAction(
+            new SendTranscriptorIDClass(getTranscriptorID()),
+            this
+          );
+        }
+      );
+    }
+  }
   render() {
     // console.log(this.props.CList);
     return (
@@ -23,17 +46,29 @@ class CompletedWork extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.CList ? (
-                      this.props.CList.map(ls => (
+                    {this.state.loading === false ? (
+                      this.props.completedOrdersListlenght > 0 ? (
+                        this.props.completedOrdersList.map(ls => (
+                          <tr>
+                            <th scope="row">{ls._orderId}</th>
+                            <td>{ls._orederStartDate}</td>
+                            <td>{ls._orderEndDate}</td>
+                            <td>${ls._totlCost}</td>
+                          </tr>
+                        ))
+                      ) : (
                         <tr>
-                          <th scope="row">{ls._orderId}</th>
-                          <td>{ls._orederStartDate}</td>
-                          <td>{ls._orderEndDate}</td>
-                          <td>${ls._totlCost}</td>
+                          <td colSpan="4">
+                            <h2>No order is completed yet</h2>
+                          </td>
                         </tr>
-                      ))
+                      )
                     ) : (
-                      <h2>No order is completed yet</h2>
+                      <div class="container">
+                        <div style={{ marginLeft: "200%" }}>
+                          <SpinnerLoader />
+                        </div>
+                      </div>
                     )}
                   </tbody>
                 </table>
@@ -46,4 +81,12 @@ class CompletedWork extends Component {
   }
 }
 
-export default CompletedWork;
+const mapStateToProps = state => ({
+  completedOrdersList: state.OrdersReducer.transcriptorCompleteOrderList,
+  completedOrdersListlenght: state.OrdersReducer.completedOrderlenght
+});
+
+export default connect(
+  mapStateToProps,
+  { transcriptorCompleteOrderAction }
+)(CompletedWork);

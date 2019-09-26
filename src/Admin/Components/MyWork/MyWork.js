@@ -17,111 +17,95 @@ class CompletedWork extends Component {
     console.log("componentDidMount");
     console.log(this.state.url);
   }
+  // componentWillMount() {
+  //   console.log(this.props.AOrder._filePath);
+  // }
   render() {
-    // console.log(this.props.AOrder._filePath);
+    console.log(this.props.AOrder._filePath);
+    // if (this.props.AOrder._filePath) {
+    //   if (this.state.flag === true) {
+    //     this.setState({ url: this.props.AOrder._filePath });
+    //   }
+    // }
     // const filePath = JSON.stringify(this.props.AOrder._filePath);
-    if (this.props.AOrder._filePath === undefined) {
-      console.log("UNDEFINED");
-    } else {
-      if (this.state.flag) {
-        console.log("ASSIGNING");
-        this.setState({ flag: false }, () => {
-          console.log(this.props.AOrder);
-          this.setState({ url: this.props.AOrder._filePath }, () => {
-            console.log("URL");
-            console.log(this.props.AOrder._filePath);
-            console.log(this.state.url);
-            console.log("URL1");
-          });
-        });
-      }
-    }
+    // if (
+    //   this.props.AOrder._filePath === undefined ||
+    //   this.props.AOrder._filePath === null
+    // ) {
+    //   console.log("UNDEFINED");
+    // } else {
+    //   if (this.state.flag) {
+    //     console.log("ASSIGNING");
+    //     console.log(this.props.AOrder._filePath);
+    //     this.setState({ flag: false }, () => {
+    //       console.log(this.props.AOrder);
+    //       this.setState({ url: this.props.AOrder._filePath }, () => {
+    //         console.log("URL");
+    //         console.log(this.props.AOrder._filePath);
+    //         console.log(this.state.url);
+    //         console.log("URL1");
+    //       });
+    //     });
+    //   }
+    // }
     return (
       <React.Fragment>
         {/* <SideNav /> */}
-        <div class="container">
-          <h1>My Work</h1>
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="card-content">
-                <div class="card-img">
-                  {/* <video autoplay loop controls>
-                    <source
-                      src={this.props.AOrder._filePath}
-                      type="video/mp4"
-                    />
-                  </video> */}
-                  <video
-                    // class="video-fluid z-depth-1"
-                    // style={{ width: "auto", height: "250px" }}
-                    autoplay
-                    loop
-                    controls
-                    // muted
-                  >
-                    {this.state.url === "http" ? (
-                      false
-                    ) : (
-                      <source
-                        // style={{ width: "476px", height: "250px" }}
-                        src={this.state.url}
-                        type="video/mp4"
-                      />
-                    )}
-                  </video>
-                  {/* <span>
-                    <a href="#" class="btn-card">
-                      Select
-                    </a>
-                  </span> */}
-                </div>
-                <div class="card-desc">
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <h6>
-                        Turn Around Time:{" "}
-                        <span>{this.props.AOrder._trurnAroundTime} hr</span>
-                      </h6>
-                    </div>
-                    <div class="col-lg-6">
-                      <h6>
-                        Price: <span>${this.props.AOrder._totalCost}</span>
-                      </h6>
-                    </div>
-                    <div class="col-lg-6">
-                      <h6>
-                        No of speakers:{" "}
-                        <span>{this.props.AOrder._noOfSpeaker}</span>
-                      </h6>
-                    </div>
-                    <div class="col-lg-6">
-                      <h6>
-                        Time Stamp: <span>{this.props.AOrder._timeStamp}</span>
-                      </h6>
-                    </div>
-                  </div>
-                  {/* <h6>
-                    Language: <span>English</span>
-                  </h6>
+        <div>
+          {/* <h1>My Work</h1> */}
+          {/* <div class="row"> */}
+          <div class="card-content">
+            <div class="card-img">
+              <video autoplay loop controls style={{ height: "300px" }}>
+                {this.state.url ? (
+                  false
+                ) : (
+                  <source src={this.state.url} type="video/mp4" />
+                )}
+              </video>
+            </div>
+            <div class="card-desc">
+              <div class="row">
+                <div class="col-lg-12">
                   <h6>
-                    No of speakers : <span>3</span>
+                    Turn Around Time:&nbsp;&nbsp;
+                    <span>
+                      {this.props.AOrder._trurnAroundTime === "24"
+                        ? this.props.AOrder._trurnAroundTime + " hours"
+                        : ""}
+                      {this.props.AOrder._trurnAroundTime === "2"
+                        ? this.props.AOrder._trurnAroundTime + " days"
+                        : ""}
+                      {this.props.AOrder._trurnAroundTime === "3"
+                        ? this.props.AOrder._trurnAroundTime + " days"
+                        : ""}
+                      {this.props.AOrder._trurnAroundTime === "1"
+                        ? this.props.AOrder._trurnAroundTime + " week"
+                        : ""}
+                    </span>
                   </h6>
-                  <h6>
-                    Verbatim : <span>$60</span>
-                  </h6> */}
-                  {/* <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Laboriosam, voluptatum! Dolor quo, perspiciatis voluptas
-                    totam
-                  </p> */}
-                  {/* <div>
-                    <a href="#" class="btn-card">
-                      Select
-                    </a>
-                  </div> */}
                 </div>
+                <div class="col-lg-12">
+                  <h6>
+                    Price:&nbsp;&nbsp;
+                    <span>${this.props.AOrder._totalCost}</span>
+                  </h6>
+                </div>
+                <div class="col-lg-12">
+                  <h6>
+                    No of speakers:&nbsp;&nbsp;
+                    <span>{this.props.AOrder._noOfSpeaker}</span>
+                  </h6>
+                </div>
+                {/* <div class="col-lg-12">
+                  <h6>
+                    Time Stamp:&nbsp;&nbsp;
+                    <span>{this.props.AOrder._timeStamp}</span>
+                  </h6>
+                </div> */}
               </div>
             </div>
+            {/* </div> */}
           </div>
         </div>
       </React.Fragment>

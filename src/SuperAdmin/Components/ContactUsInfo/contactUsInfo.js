@@ -1,9 +1,26 @@
 import React, { Component } from "react";
-// import SideNav from "../AdminSideNav/SideNav";
+import SpinnerLoader from "../../../Usr/Component/Loader/SpinnerLoader";
 import "./contactUsInfo.css";
+import { connect } from "react-redux";
+import { DisplayContactUsInfoAction } from "../../Actions/ContactUsinfoActions/DisplayContactUsInfoAction";
 
 class ContactUsInfo extends Component {
-  state = {};
+  state = {
+    loading: false
+  };
+  componentDidMount() {
+    if (!this.state.loading) {
+      this.setState(
+        {
+          loading: true
+        },
+        () => {
+          this.timer = setTimeout(() => {}, this.state.loading === false);
+          this.props.DisplayContactUsInfoAction(this);
+        }
+      );
+    }
+  }
   render() {
     return (
       <React.Fragment>
@@ -22,8 +39,9 @@ class ContactUsInfo extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.CList
-                      ? this.props.CList.map(ls => (
+                    {this.state.loading === false ? (
+                      this.props.contactListLength > 0 ? (
+                        this.props.ContactInfoList.map(ls => (
                           <tr>
                             <td scope="row">{ls.fname}</td>
                             <td>{ls.lname}</td>
@@ -31,7 +49,20 @@ class ContactUsInfo extends Component {
                             <td>{ls.description}</td>
                           </tr>
                         ))
-                      : ""}
+                      ) : (
+                        <tr>
+                          <td colSpan="4">
+                            <h2>No contact us information is available now</h2>
+                          </td>
+                        </tr>
+                      )
+                    ) : (
+                      <div class="container">
+                        <div style={{ marginLeft: "175%" }}>
+                          <SpinnerLoader />
+                        </div>
+                      </div>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -43,4 +74,12 @@ class ContactUsInfo extends Component {
   }
 }
 
-export default ContactUsInfo;
+const mapStateToProps = state => ({
+  ContactInfoList: state.DisplayContactUsInfoReducer.displayContactUsInfoList,
+  contactListLength: state.DisplayContactUsInfoReducer.contactUsListLength
+});
+
+export default connect(
+  mapStateToProps,
+  { DisplayContactUsInfoAction }
+)(ContactUsInfo);

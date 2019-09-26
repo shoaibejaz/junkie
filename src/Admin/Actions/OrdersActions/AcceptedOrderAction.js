@@ -13,19 +13,21 @@ export const transcriptorAcceptedOrderAction = (Data, feedback) => dispatch => {
         payload: res.data
       });
       if (res.data === "You have pending works") {
-        feedback.addNotification(res.data);
+        feedback.handleWarningVisibility();
+      } else {
+        feedback.handleSuccessVisibility();
       }
     })
     .catch(error => {
-      dispatch({
-        type: TranscriptorAcceptOrder,
-        payload: error.response
-      });
+      // dispatch({
+      //   type: TranscriptorAcceptOrder,
+      //   payload: error.response
+      // });
       console.log(error.response);
     });
 };
 
-export const displayAcceptedOrderAction = Data => dispatch => {
+export const displayAcceptedOrderAction = (Data, crtl) => dispatch => {
   const data = JSON.stringify(Data);
   console.log(data);
   axios
@@ -36,12 +38,15 @@ export const displayAcceptedOrderAction = Data => dispatch => {
         payload: res.data
       });
       console.log(res.data);
+      if (res.data) {
+        crtl.setState({ loading: false });
+      }
     })
     .catch(error => {
-      dispatch({
-        type: DisplayAcceptedOrder,
-        payload: error.response
-      });
+      // dispatch({
+      //   type: DisplayAcceptedOrder,
+      //   payload: error.response
+      // });
       console.log(error.response);
     });
 };

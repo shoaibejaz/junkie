@@ -1,7 +1,10 @@
 import { DisplayContactUsInfo } from "../../Actions/Types";
 
+import ContactUsInfoClass from "../../BusinessLogics/ReducerLogics/ContactUsInfoClass";
+
 const state = {
-  displayContactUsInfoList: []
+  displayContactUsInfoList: [],
+  contactUsListLength: ""
 };
 
 function DisplayContactUsInfoReducer(mState = { ...state }, action) {
@@ -10,7 +13,10 @@ function DisplayContactUsInfoReducer(mState = { ...state }, action) {
       console.log(action.payload);
       if (action.payload === undefined || action.payload === null) {
       } else {
-        mState.displayContactUsInfoList = action.payload;
+        mState.contactUsListLength = action.payload.length;
+        action.payload.forEach(element => {
+          mState.displayContactUsInfoList.push(new ContactUsInfoClass(element));
+        });
       }
       mState.displayContactUsInfoList = action.payload;
       return deepCopy(mState);

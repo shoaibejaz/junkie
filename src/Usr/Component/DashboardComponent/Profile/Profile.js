@@ -1,20 +1,13 @@
 import React from "react";
 import "./Profile.css";
 
-import { displayUserProfileAction } from "../../../Actions/DashBoardActions/UserProfileAction";
-import SendUserIDClass from "../../../BusinessLogics/ActionLogics/UserIdLogics/SendUserIDClass";
 import { connect } from "react-redux";
 import { getUserID } from "../../../../LocalStorage/UserIDLocalStorage";
 
 const styles = theme => ({});
 
 class SimpleModal extends React.Component {
-  componentDidMount() {
-    this.props.displayUserProfileAction(new SendUserIDClass(getUserID()));
-  }
   render() {
-    const { classes } = this.props;
-
     return (
       <React.Fragment>
         <div class="container">
@@ -55,11 +48,4 @@ class SimpleModal extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  profileList: state.UserDashboardReducer.displayUserProfileList
-});
-
-export default connect(
-  mapStateToProps,
-  { displayUserProfileAction }
-)(SimpleModal);
+export default SimpleModal;

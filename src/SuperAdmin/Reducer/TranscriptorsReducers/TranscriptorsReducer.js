@@ -9,10 +9,12 @@ import {
 
 import CompletedOrderClass from "../../BusinessLogics/ReducerLogics/CompletedOrdersClass";
 import InProgressOrdersClass from "../../BusinessLogics/ReducerLogics/InProgressOrdersClass";
+import TranscriptorInfoClass from "../../BusinessLogics/ReducerLogics/TranscriptorsInfoClass";
 
 const state = {
-  addTranscriptorsList: "",
+  addTranscriptorsMessage: "",
   displayTranscriptorsList: [],
+  transcriptorsListLength: "",
   chnageTranscriptorPasswordMessage: "",
   displayCompletedOrdersList: [],
   displayInProgressOrdersList: []
@@ -25,17 +27,21 @@ function TranscriptorsReducer(mState = { ...state }, action) {
       if (action.payload === undefined || action.payload === null) {
       } else {
         // mState.displayTranscriptorsList = action.payload;
-        if (action.payload === "Transcriptor Added Successfully") {
-          // mState.displayTranscriptorsList = mState.displayTranscriptorsList;
-          // DisplayTranscriptorsAction();
-        }
+        // if (action.payload === "Transcriptor Added Successfully") {
+        mState.addTranscriptorsMessage = action.payload;
+        // }
       }
       return deepCopy(mState);
 
     case DisplayTranscriptors:
       if (action.payload === undefined || action.payload === null) {
       } else {
-        mState.displayTranscriptorsList = action.payload;
+        mState.transcriptorsListLength = action.payload.length;
+        action.payload.forEach(element => {
+          mState.displayTranscriptorsList.push(
+            new TranscriptorInfoClass(element)
+          );
+        });
       }
       return deepCopy(mState);
 

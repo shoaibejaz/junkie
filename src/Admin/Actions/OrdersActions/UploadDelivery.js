@@ -2,7 +2,7 @@ import { UploadDelivery } from "../Types";
 import { BaseURL } from "../BaseURL";
 import axios from "axios";
 
-export const uploadDeliveryAction = (Data, File) => dispatch => {
+export const uploadDeliveryAction = (Data, File, crtl) => dispatch => {
   console.log(Data);
   console.log(File[0]);
   const data = JSON.stringify(Data);
@@ -12,6 +12,9 @@ export const uploadDeliveryAction = (Data, File) => dispatch => {
   axios
     .post(BaseURL + "/adminCompletesOrder", formdata)
     .then(res => {
+      if (res.data) {
+        crtl.setState({ loading: false });
+      }
       dispatch({
         type: UploadDelivery,
         payload: res.data
@@ -19,10 +22,10 @@ export const uploadDeliveryAction = (Data, File) => dispatch => {
       console.log(res.data);
     })
     .catch(error => {
-      dispatch({
-        type: UploadDelivery,
-        payload: error.response
-      });
+      // dispatch({
+      //   type: UploadDelivery,
+      //   payload: error.response
+      // });
       console.log(error.response);
     });
 };

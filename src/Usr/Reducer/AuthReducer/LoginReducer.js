@@ -4,7 +4,6 @@ import { setUserID } from "../../../LocalStorage/UserIDLocalStorage";
 const state = {
   userLoginID: "",
   loginError: "",
-  error: false
 };
 
 function UserLoginReducer(mState = deepCopy(state), action) {
@@ -14,11 +13,11 @@ function UserLoginReducer(mState = deepCopy(state), action) {
         mState.error = true;
       } else {
         if (
-          action.payload === "Invalid Email or Password" ||
-          action.payload === "Invalid Entries"
+          action.payload === "Invalid Email" ||
+          action.payload === "Invalid Entries" ||
+          action.payload === "Invalid Password"
         ) {
           mState.loginError = action.payload;
-          mState.error = true;
         } else {
           mState.userLoginID = action.payload;
           setUserID(deepCopy(mState.userLoginID));

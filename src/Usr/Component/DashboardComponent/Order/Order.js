@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import './Order.css';
-import $ from 'jquery';
+import React, { Component } from "react";
+import "./Order.css";
+import $ from "jquery";
+import SpinnerLoader from "../../Loader/SpinnerLoader";
 import { getUserID } from "../../../../LocalStorage/UserIDLocalStorage";
 import { displayAllOrdersAction } from "../../../Actions/DashBoardActions/DisplayAllOrdersAction";
 import { displayRequestedOrdersAction } from "../../../Actions/DashBoardActions/DisplayRequestedOrdersAction";
@@ -10,217 +11,359 @@ import SendUserIDClass from "../../../BusinessLogics/ActionLogics/UserIdLogics/S
 import { connect } from "react-redux";
 
 class Services extends Component {
-	state = {};
-	componentDidMount = () => {
-		$(document).ready(function() {
-			$('.star').on('click', function() {
-				$(this).toggleClass('star-checked');
-			});
-
-			$('.ckbox label').on('click', function() {
-				$(this).parents('tr').toggleClass('selected');
-			});
-
-			$('.btn-filter').on('click', function() {
-				var $target = $(this).data('target');
-				if ($target != 'all') {
-					$('.table tr').css('display', 'none');
-					$('.table tr[data-status="' + $target + '"]').fadeIn('slow');
-				} else {
-					$('.table tr').css('display', 'none').fadeIn('slow');
-				}
-			});
-		});
-	};
-	render() {
-		return (
-			<React.Fragment>
-
-				<div class="container-fluid" style={{ marginTop: '40px' }}>
-					<h2>Manage Sales</h2>
-					<div class="col-md-12 col-md-offset-2">
-						<div class="panel panel-default">
-							<div class="panel-body">
-								<div>
-									<div class="btn-group">
-										<button style={{borderRadius:"5px"}} onClick={()=>this.props.displayAllOrdersAction(new SendUserIDClass(getUserID()))} class="btn btn-filter btn-radius" data-target="all">
-											All Orders
-										</button>&nbsp;
-										<button style={{borderRadius:"5px"}} onClick={()=>this.props.displayRequestedOrdersAction(new SendUserIDClass(getUserID()))} class="btn btn-filter btn-radius" data-target="pagado">
-											Requested Task
-										</button>&nbsp;
-										<button
-											onClick={()=>this.props.displayConfirmedOrdersAction(new SendUserIDClass(getUserID()))}
-											class="btn btn-filter btn-radius"
-											data-target="pendiente"
-											style={{borderRadius:"5px"}}
-										>
-											Confirmed Order
-										</button>&nbsp;
-										<button style={{borderRadius:"5px"}} onClick={()=>this.props.displayDeliveredOrdersAction(new SendUserIDClass(getUserID()))}  class="btn btn-filter btn-radius" data-target="cancelado">
-											Delivered Order
-										</button>&nbsp;
-									</div>
-								</div>
-								<div class="table-container">
-									<table class="table table-filter">
-										<tbody>
-											<tr data-status="pagado">
-												<td />
-												<td>
-													<a href="javascript:;" class="star">
-														<i class="glyphicon glyphicon-star" />
-													</a>
-												</td>
-												<td>
-													<div class="media">
-														<div class="media-body">
-															<span class="media-meta pull-right">Febrero 13, 2016</span>
-															<h4 class="title">
-																Audio Wall
-																<span class="pull-right pagado">Requested Task</span>
-																<span
-																
-																	class="btn btn-info btn-lg"
-																	data-toggle="modal"
-																	data-target="#myModal"
-																	class="pull-right pagado"
-																>
-																	Attached Files
-																	<div class="modal fade" id="myModal" role="dialog">
-																		<div class="modal-dialog">
-																			<div class="modal-content">
-																				<div class="modal-header" />
-																				<div class="modal-body">
-																					<a>Some text in the modal.</a>
-																					
-																				</div>
-																				<div class="modal-footer">
-																					<button
-																						type="button"
-																						class="btn btn-default"
-																						data-dismiss="modal"
-																					>
-																						Close
-																					</button>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</span>
-															</h4>
-															<p class="summary">I want this task to be completed.</p>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr data-status="pendiente">
-												<td />
-												<td>
-													<a href="javascript:;" class="star">
-														<i class="glyphicon glyphicon-star" />
-													</a>
-												</td>
-												<td>
-													<div class="media">
-														<div class="media-body">
-															<span class="media-meta pull-right">Febrero 13, 2016</span>
-															<h4 class="title">
-																Lorem Impsum
-																<span class="pull-right pendiente">Confirmed</span>
-															</h4>
-															<p class="summary">
-																Ut enim ad minim veniam, quis nostrud exercitation...
-															</p>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr data-status="cancelado">
-												<td />
-												<td>
-													<a href="javascript:;" class="star">
-														<i class="glyphicon glyphicon-star" />
-													</a>
-												</td>
-												<td>
-													<div class="media">
-														<div class="media-body">
-															<span class="media-meta pull-right">Febrero 13, 2016</span>
-															<h4 class="title">
-																Lorem Impsum
-																<span class="pull-right cancelado">Delivered</span>
-															</h4>
-															<p class="summary">
-																Ut enim ad minim veniam, quis nostrud exercitation...
-															</p>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr data-status="pagado" class="selected">
-												<td />
-												<td>
-													<a href="javascript:;" class="star star-checked">
-														<i class="glyphicon glyphicon-star" />
-													</a>
-												</td>
-												<td>
-													<div class="media">
-														<div class="media-body">
-															<span class="media-meta pull-right">Febrero 13, 2016</span>
-															<h4 class="title">
-																Lorem Impsum
-																<span class="pull-right pagado">Requested</span>
-															</h4>
-															<p class="summary">
-																Ut enim ad minim veniam, quis nostrud exercitation...
-															</p>
-														</div>
-													</div>
-												</td>
-											</tr>
-											<tr data-status="pendiente">
-												<td />
-												<td>
-													<a href="javascript:;" class="star">
-														<i class="glyphicon glyphicon-star" />
-													</a>
-												</td>
-												<td>
-													<div class="media">
-														<div class="media-body">
-															<span class="media-meta pull-right">Febrero 13, 2016</span>
-															<h4 class="title">
-																Lorem Impsum
-																<span class="pull-right pendiente">Confirmed</span>
-															</h4>
-															<p class="summary">
-																Ut enim ad minim veniam, quis nostrud exercitation...
-															</p>
-														</div>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</React.Fragment>
-		);
-	}
+  state = {
+    rLoading: false,
+    cLoading: false,
+    dLoading: false
+  };
+  componentDidMount() {
+    if (!this.state.rLoading) {
+      this.setState(
+        {
+          rLoading: true
+        },
+        () => {
+          this.timer = setTimeout(() => {}, this.state.rLoading === false);
+          this.props.displayRequestedOrdersAction(
+            new SendUserIDClass(getUserID()),
+            this
+          );
+        }
+      );
+    }
+  }
+  render() {
+    return (
+      <React.Fragment>
+        <div style={{ padding: "4%" }}>
+          <h1>Manage Orders</h1>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="home-tab"
+                data-toggle="tab"
+                href="#home"
+                role="tab"
+                onClick={() => {
+                  if (!this.state.rLoading) {
+                    this.setState(
+                      {
+                        rLoading: true
+                      },
+                      () => {
+                        this.timer = setTimeout(() => {},
+                        this.state.rLoading === false);
+                        this.props.displayRequestedOrdersAction(
+                          new SendUserIDClass(getUserID()),
+                          this
+                        );
+                      }
+                    );
+                  }
+                }}
+                aria-controls="home"
+                aria-selected="true"
+              >
+                Requested
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="profile-tab"
+                data-toggle="tab"
+                href="#profile"
+                role="tab"
+                onClick={() => {
+                  if (!this.state.cLoading) {
+                    this.setState(
+                      {
+                        cLoading: true
+                      },
+                      () => {
+                        this.timer = setTimeout(() => {},
+                        this.state.cLoading === false);
+                        this.props.displayConfirmedOrdersAction(
+                          new SendUserIDClass(getUserID()),
+                          this
+                        );
+                      }
+                    );
+                  }
+                }}
+                aria-controls="profile"
+                aria-selected="false"
+              >
+                Confirmed
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="contact-tab"
+                data-toggle="tab"
+                href="#contact"
+                onClick={() => {
+                  if (!this.state.dLoading) {
+                    this.setState(
+                      {
+                        dLoading: true
+                      },
+                      () => {
+                        this.timer = setTimeout(() => {},
+                        this.state.dLoading === false);
+                        this.props.displayDeliveredOrdersAction(
+                          new SendUserIDClass(getUserID()),
+                          this
+                        );
+                      }
+                    );
+                  }
+                }}
+                role="tab"
+                aria-controls="contact"
+                aria-selected="false"
+              >
+                Delivered
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="home"
+              role="tabpanel"
+              aria-labelledby="home-tab"
+            >
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">File Name</th>
+                    <th scope="col">Turnaround Time</th>
+                    <th scope="col">Total Cost</th>
+                    <th scope="col">Payment Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.rLoading === false ? (
+                    this.props.rLength > 0 ? (
+                      this.props.requestedOrders.map(ls => (
+                        <tr>
+                          <th scope="row">{ls.orderid}</th>
+                          <td>
+                            <a
+                              style={{ textDecoration: "none" }}
+                              href={ls.filepath}
+                              target={ls.filepath}
+                            >
+                              {ls.filename}
+                            </a>
+                          </td>
+                          <td>
+                            {ls.taroundtime === "24"
+                              ? ls.taroundtime + " hours"
+                              : ""}
+                            {ls.taroundtime === "2"
+                              ? ls.taroundtime + " days"
+                              : ""}
+                            {ls.taroundtime === "3"
+                              ? ls.taroundtime + " days"
+                              : ""}
+                            {ls.taroundtime === "1"
+                              ? ls.taroundtime + " week"
+                              : ""}
+                          </td>
+                          <td>${ls.totlcost}</td>
+                          <td>
+                            {ls.paypalstatus == "1" ? "Payed" : "Unpayed"}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5">
+                          <h2>No new order is requested yet</h2>
+                        </td>
+                      </tr>
+                    )
+                  ) : (
+                    <div class="container">
+                      <div style={{ marginLeft: "350%" }}>
+                        <SpinnerLoader />
+                      </div>
+                    </div>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="profile"
+              role="tabpanel"
+              aria-labelledby="profile-tab"
+            >
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">File Name</th>
+                    <th scope="col">Turnaround Time</th>
+                    <th scope="col">Total Cost</th>
+                    <th scope="col">Payment Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.cLoading === false ? (
+                    this.props.cLength > 0 ? (
+                      this.props.confirmedOrders.map(ls => (
+                        <tr>
+                          <th scope="row">{ls.orderid}</th>
+                          <td>
+                            <a
+                              style={{ textDecoration: "none" }}
+                              href={ls.filepath}
+                              target={ls.filepath}
+                            >
+                              {ls.filename}
+                            </a>
+                          </td>
+                          <td>
+                            {ls.taroundtime === "24"
+                              ? ls.taroundtime + " hours"
+                              : ""}
+                            {ls.taroundtime === "2"
+                              ? ls.taroundtime + " days"
+                              : ""}
+                            {ls.taroundtime === "3"
+                              ? ls.taroundtime + " days"
+                              : ""}
+                            {ls.taroundtime === "1"
+                              ? ls.taroundtime + " week"
+                              : ""}
+                          </td>
+                          <td>${ls.totlcost}</td>
+                          <td>
+                            {ls.paypalstatus == "1" ? "Payed" : "Unpayed"}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5">
+                          <h2>No order is confirmed yet</h2>
+                        </td>
+                      </tr>
+                    )
+                  ) : (
+                    <div class="container">
+                      <div style={{ marginLeft: "350%" }}>
+                        <SpinnerLoader />
+                      </div>
+                    </div>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="contact"
+              role="tabpanel"
+              aria-labelledby="contact-tab"
+            >
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">File Name</th>
+                    <th scope="col">Turnaround Time</th>
+                    <th scope="col">Total Cost</th>
+                    <th scope="col">Delivery File</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.dLoading === false ? (
+                    this.props.dLength > 0 ? (
+                      this.props.deliveredOrders.map(ls => (
+                        <tr>
+                          <th scope="row">{ls.orderid}</th>
+                          <td>
+                            <a
+                              style={{ textDecoration: "none" }}
+                              href={ls.filepath}
+                              target={ls.filepath}
+                            >
+                              {ls.filename}
+                            </a>
+                          </td>
+                          <td>
+                            {ls.taroundtime === "24"
+                              ? ls.taroundtime + " hours"
+                              : ""}
+                            {ls.taroundtime === "2"
+                              ? ls.taroundtime + " days"
+                              : ""}
+                            {ls.taroundtime === "3"
+                              ? ls.taroundtime + " days"
+                              : ""}
+                            {ls.taroundtime === "1"
+                              ? ls.taroundtime + " week"
+                              : ""}
+                          </td>
+                          <td>${ls.totlcost}</td>
+                          <a
+                            style={{ textDecoration: "none" }}
+                            href={ls.workedfilepath}
+                            target={ls.workedfilepath}
+                          >
+                            {" "}
+                            <td>{ls.workedfilename}</td>
+                          </a>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5">
+                          <h2>No order is delivered yet</h2>
+                        </td>
+                      </tr>
+                    )
+                  ) : (
+                    <div class="container">
+                      <div style={{ marginLeft: "350%" }}>
+                        <SpinnerLoader />
+                      </div>
+                    </div>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 const mapStateToProps = state => ({
-	allOrders: state.UserDashboardReducer.allUserOrdersList,
-	requestedOrders: state.UserDashboardReducer.requestedUserOrdersList,
-	confirmedOrders: state.UserDashboardReducer.confirmedUserOrdersList,
-	deliveredOrders: state.UserDashboardReducer.deliveredUserOrdersList
-  });
+  allOrders: state.UserDashboardReducer.allUserOrdersList,
+  requestedOrders: state.UserDashboardReducer.requestedUserOrdersList,
+  rMessage: state.UserDashboardReducer.rOrderMessage,
+  rLength: state.UserDashboardReducer.rOrderLength,
+  confirmedOrders: state.UserDashboardReducer.confirmedUserOrdersList,
+  cMessage: state.UserDashboardReducer.cOrderMessage,
+  cLength: state.UserDashboardReducer.cOrderLength,
+  deliveredOrders: state.UserDashboardReducer.deliveredUserOrdersList,
+  dMessage: state.UserDashboardReducer.dOrderMessage,
+  dLength: state.UserDashboardReducer.dOrderLength
+});
 
-export default connect(mapStateToProps,{displayAllOrdersAction,
+export default connect(
+  mapStateToProps,
+  {
+    displayAllOrdersAction,
     displayRequestedOrdersAction,
     displayConfirmedOrdersAction,
-    displayDeliveredOrdersAction})( Services);
+    displayDeliveredOrdersAction
+  }
+)(Services);

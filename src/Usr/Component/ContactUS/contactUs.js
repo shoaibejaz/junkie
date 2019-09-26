@@ -14,7 +14,9 @@ class ContactUs extends Component {
       _Fname: "",
       _Lname: "",
       _Email: "",
-      _Description: ""
+      _Description: "",
+      loading: false,
+      success: false
     };
   }
   addNotification() {
@@ -77,6 +79,8 @@ class ContactUs extends Component {
                       class="form-control"
                       placeholder="First name"
                       required
+                      value={this.state._Fname}
+                      disabled={this.state.loading}
                     />
                   </div>
                   <div class="form-group has-feedback">
@@ -88,6 +92,8 @@ class ContactUs extends Component {
                       class="form-control"
                       placeholder="Last name"
                       required
+                      value={this.state._Lname}
+                      disabled={this.state.loading}
                     />
                   </div>
                   <div class="form-group has-feedback">
@@ -99,6 +105,8 @@ class ContactUs extends Component {
                       class="form-control"
                       placeholder="Email"
                       required
+                      value={this.state._Email}
+                      disabled={this.state.loading}
                     />
                   </div>
                   <div class="form-group">
@@ -114,32 +122,62 @@ class ContactUs extends Component {
                       }
                       id="comment"
                       placeholder="Description"
+                      value={this.state._Description}
+                      disabled={this.state.loading}
                     />
                   </div>
+                  <div class="form-group">
+                    {this.props.contactUsMsg === "Your Request Received" ? (
+                      <span style={{ fontSize: "12px", color: "#00ff00" }}>
+                        Dear user you have successfully made a contact with us
+                      </span>
+                    ) : (
+                      <span style={{ fontSize: "11px", color: "red" }}>
+                        {this.props.contactUsMsg}
+                      </span>
+                    )}
+                  </div>
                   <div class="contact-buttons pull-left">
-                    <input
+                    <button
                       style={{ width: "200px" }}
-                      type="submit"
                       onClick={() => {
-                        this.props.ContactInfoAction(
-                          new ContactInfoClass(
-                            this.state._Fname,
-                            this.state._Lname,
-                            this.state._Email,
-                            this.state._Description
-                          ),
-                          this
-                        );
+                        if (!this.state.loading) {
+                          this.setState(
+                            {
+                              loading: true
+                            },
+                            () => {
+                              this.timer = setTimeout(() => {},
+                              this.state.loading === false);
+                              this.props.ContactInfoAction(
+                                new ContactInfoClass(
+                                  this.state._Fname,
+                                  this.state._Lname,
+                                  this.state._Email,
+                                  this.state._Description
+                                ),
+                                this
+                              );
+                            }
+                          );
+                        }
                       }}
-                      name="submit"
                       value="Send"
-                    />
+                      class="btn"
+                      disabled={this.state.loading}
+                    >
+                      {this.state.loading && (
+                        <i class="spinner-border" role="status" />
+                      )}
+                      {this.state.loading && <span>Submitting</span>}
+                      {!this.state.loading && <span>Submit</span>}
+                    </button>
                     <span>&emsp;</span>
-                    <input
+                    {/* <input
                       style={{ width: "200px" }}
                       type="reset"
                       value="Reset"
-                    />
+                    /> */}
                   </div>
                 </form>
               </div>
@@ -151,7 +189,9 @@ class ContactUs extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  contactUsMsg: state.ContactUsReducer.contactUsMessage
+});
 
 export default connect(
   mapStateToProps,

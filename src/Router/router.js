@@ -9,12 +9,19 @@ import AboutUs from "../Usr/Views/AboutUs";
 import Calculator from "../Usr/Views/Calculator";
 import LandingPage from "../Usr/Views/LandingPage";
 import LoginPage from "../Usr/Views/Login";
+import Email from "../Usr/Views/Email";
+import VerifyCode from "../Usr/Views/VerifyCode";
+import ForgetPassword from "../Usr/Views/ForgetPassword";
 import OrderNow from "../Usr/Views/OrderNow";
 import Testmonials from "../Usr/Views/Testmonials";
 import ContactUs from "../Usr/Views/ContactUs";
 import FAQ from "../Usr/Views/FAQ";
 import UsrProfile from "../Usr/Views/UsrProfile";
 import SignUp from "../Usr/Views/SignUp";
+import Error from "../Usr/Views/Error";
+import PaymentSuccess from "../Usr/Views/PaymnetSuccess";
+import PaymentCancel from "../Usr/Views/PaymentCancel";
+import CalculatorPanel from "../Usr/Views/CalculatorPanel";
 ///////////////////// Transcriptor Side Components /////////////////////////
 import TLogin from "../Admin/Views/TLogin";
 import TDashboard from "../Admin/Views/TDashboard";
@@ -27,7 +34,7 @@ import SAAddTranscriptorsProfile from "../SuperAdmin/Views/SAAddTranscriptorsPro
 import SATranscriptorsOrderInfo from "../SuperAdmin/Views/SATranscriptorsOrderInfo";
 // import SADashboard from "../SuperAdmin/Views/SADashboard";
 
-class Header extends Component {
+class Routing extends Component {
   state = {};
   render() {
     return (
@@ -77,6 +84,20 @@ class Header extends Component {
               path="/Login"
               render={props => <LoginPage {...props} />}
             />
+            {/* Email */}
+            <Route exact path="/Email" render={props => <Email {...props} />} />
+            {/* VerifyCode */}
+            <Route
+              exact
+              path="/VerifyCode"
+              render={props => <VerifyCode {...props} />}
+            />
+            {/* ForgetPassword */}
+            <Route
+              exact
+              path="/ForgetPassword"
+              render={props => <ForgetPassword {...props} />}
+            />
             {/* Testmonials */}
             <Route
               exact
@@ -102,6 +123,25 @@ class Header extends Component {
               exact
               path="/SignUp"
               render={props => <SignUp {...props} />}
+            />
+            {/* Error */}
+            <Route exact path="/Error" render={props => <Error {...props} />} />
+            {/* PaymentSuccess */}
+            <Route
+              path="/PaymentSuccess/:code"
+              render={props => <PaymentSuccess {...props} />}
+            />
+            {/* PaymentCancel */}
+            <Route
+              exact
+              path="/PaymentCancel"
+              render={props => <PaymentCancel {...props} />}
+            />
+            {/* CalculatorPanel */}
+            <Route
+              exact
+              path="/CalculatorPanel"
+              render={props => <CalculatorPanel {...props} />}
             />
 
             {/* Transcriptor Side */}
@@ -156,4 +196,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default Routing;

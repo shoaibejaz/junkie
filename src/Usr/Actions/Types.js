@@ -12,3 +12,12 @@ export const DisplayUserProfile = "DisplayUserProfile";
 export const UploadFileAfterLogin = "UploadFileAfterLogin";
 export const OrderCheck = "OrderCheck";
 export const DisplayUserOrders = "DisplayUserOrders";
+export const SendEmail = "SendEmail";
+export const SendCode = "SendCode";
+export const ResetPassword = "ResetPassword";
+export const PaymentStatus = "PaymentStatus";
+// Make Order Before login Action
+export const uploadFileBeforeLogin = "uploadFileBeforeLogin";
+export const MakeOrderBeforeLogin = "MakeOrderBeforeLogin";
+export const OrderLogin = "OrderLogin";
+export const OrderSignup = "OrderSignup";

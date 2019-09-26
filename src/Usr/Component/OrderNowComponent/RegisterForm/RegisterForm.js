@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-// import './Form'
 import $ from 'jquery';
 import {Link} from 'react-router-dom'
 import {connect} from "react-redux";
-import {SignUpAction} from "../../../Actions/AuthActions/SignUpAction";
-import SignUpClass from "../../../BusinessLogics/ActionLogics/AuthLogics/SignUpClass";
-// import {findDOMNode} from 'react-dom'
+import {orderSignupAction} from "../../../Actions/OrderActionsBeforeLogin/OrderSignUp";
+import {uploadFileActionBeforelogin} from "../../../Actions/OrderActionsBeforeLogin/UploadFileActionBeforeLogin";
+import {makeOrderActionBeforeLogin} from "../../../Actions/OrderActionsBeforeLogin/OrderActionBeforeLogin";
+import UploadFileClassBeforeLogin from "../../../BusinessLogics/ActionLogics/OrderLogicsBeforeLogin/BeforeLoginUploadFileClass";
+import OrderClassBeforeLogin from "../../../BusinessLogics/ActionLogics/OrderLogicsBeforeLogin/OrderClassBeforeLogin";
+import OrderSignupClass from "../../../BusinessLogics/ActionLogics/OrderLogicsBeforeLogin/OrderSignupClass";
+import {getOrder , deleteOrder} from "../../../../LocalStorage/OrderLocalStorage";
 import './Registerform.css';
-
 
 const validEmailRegex = RegExp(
 	/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -16,40 +18,92 @@ const validEmailRegex = RegExp(
 	let valid = true;
 	Object.values(errors).forEach(val => val.length > 0 && (valid = false));
 	console.log(valid);
-  
 	// Object.values(rest).forEach(val => {
 	//   val === null && (valid = false);
 	// });
-  
 	return valid;
   };
 
-class Niofox extends Component {
+  let context = null;
+class OrderNow extends Component {
 
 	constructor(props) {
 		super(props);
-		// this.addNotification = this.addNotification.bind(this);
-		// this.notificationDOMRef = React.createRef();
+		context = this;
 		this.state = {
-		  _TurnAroundTime:12,
-		  _NumberOFPersons:1,
+			File: [],
+			Duration:getOrder()._fileDuration?getOrder()._fileDuration: "",
+			firstNextButton:true,
+			loadingFile: false,
+			  loadingOrder: false,
+			  loadingSubmit:false,
+			_TurnAroundTime: getOrder()._turnAroundTime ? getOrder()._turnAroundTime: 24,
+			_NumberOFPersons: getOrder()._noOfSpeakers ? getOrder()._noOfSpeakers: 1,
 		  _TimeStamp:12,
+		  FilePath: getOrder()._filePath? getOrder()._filePath: "",
+		  FileName: getOrder()._fileName?getOrder()._fileName:"",
+		  FileSize: getOrder()._fileSize?getOrder()._fileSize:"",
+		  TotalCost: getOrder()._totalCost? getOrder()._totalCost:"",
+		  SecondDuration:getOrder()._secondsDuration?getOrder()._secondsDuration:"",
+		  checked_T:   false,
+		  checked_V:  false,
+		  checked_TStatus:getOrder()._timeStamp ? getOrder()._timeStamp: false,
+		  checked_VStatus:getOrder()._verbitam ? getOrder()._verbitam: false,
 		  _FName: null,
 		  _LName: null,
 		  _Email: null,
 		  _Password: null,
 		  formValidity: false,
-		  // _ConfirmPassword: null,
 		  errors: {
 			_FName: "",
 			_LName: "",
 			_Email: "",
 			_Password: ""
-			// _ConfirmPassword: ""
 		  }
 		};
+		this.handleCheckTimeStamping = this.handleCheckTimeStamping.bind(this);
+    	this.handleCheckVerbatim = this.handleCheckVerbatim.bind(this);
+	  }
+	  handleCheckTimeStamping(e) {
+		this.setState({
+		  checked_T: e.target.checked
+		});
+		this.setState({
+		  checked_TStatus: !this.state.checked_TStatus
+		});
+		// const TimeStampingCost = this.state.timeStampingCost;
+		// const TotalCost = this.state.totalCost;
+		// if (this.state.checked_TStatus === true) {
+		//   this.setState({
+		//     totalCost: +TotalCost + +TimeStampingCost
+		//   });
+		// } else if (this.state.checked_TStatus === false) {
+		//   this.setState({
+		//     totalCost: +TotalCost - +TimeStampingCost
+		//   });
+		// }
+	  }
+	  handleCheckVerbatim(e) {
+		this.setState({
+		  checked_V: e.target.checked
+		});
+		this.setState({
+		  checked_VStatus: !this.state.checked_VStatus
+		});
+		// const VerbitamCost = this.state.verbitamCost;
+		// const TotalCost = this.state.totalCost;
+		// if (this.state.checked_VStatus === true) {
+		//   this.setState({
+		//     totalCost: +TotalCost + +VerbitamCost
+		//   });
+		// } else if (this.state.checked_VStatus === false) {
+		//   this.setState({
+		//     totalCost: +TotalCost - +VerbitamCost
+		//   });
+		// }
 	  }
 	componentDidMount = () => {
+	
 		//Counter
 		// $(document).ready(function() {
 		// 	$('.count').prop('disabled', true);
@@ -150,6 +204,24 @@ class Niofox extends Component {
 		$('.submit').click(function() {
 			return false;
 		});
+		var fileInput = document.getElementById("fileInput");
+		// var sp = document.getElementById("sp");
+		fileInput.onchange = function() {
+		  var file = fileInput.files[0];
+		  var reader = new FileReader();
+		  reader.onload = function() {
+			var aud = new Audio(reader.result);
+			aud.onloadedmetadata = function() {
+			  // sp.innerHTML = aud.duration;
+			  context.setState({ Duration: aud.duration });
+			  console.log(context.state.Duration);
+			  if (context.state.Duration) {
+				context.handleFileUpload();
+			  }
+			};
+		  };
+		  reader.readAsDataURL(file);
+		};
 	};
 	decrement=()=>{
 	if(	this.state._NumberOFPersons>1){
@@ -159,6 +231,25 @@ class Niofox extends Component {
 	}
 		
 	}
+	handleFileUpload = () => {
+		if (!this.state.loadingFile) {
+		  this.setState(
+			{
+			  loadingFile: true
+			},
+			() => {
+			  this.timer = setTimeout(() => {}, this.state.loadingFile === false);
+			  this.props.uploadFileActionBeforelogin(
+				new UploadFileClassBeforeLogin(
+				  this.state.Duration
+				),
+				this.state.File,
+				this
+			  );
+			}
+		  );
+		}
+	  };
 	increment=()=>{
 		this.setState({_NumberOFPersons:this.state._NumberOFPersons+=1})
 	}
@@ -209,8 +300,11 @@ class Niofox extends Component {
 		// this.setState({ formValidity: false });
 	  };
 	render() {
-		console.log(this.state._TurnAroundTime);
 		const {errors} =this.state;
+		const Order = getOrder();
+		// console.log(getOrder());
+		// console.log(._fileName);
+	// this.state.Order = getOrder();
 
 		return (
 			<div class="row">
@@ -219,77 +313,175 @@ class Niofox extends Component {
 						<ul id="progressbar">
 							<li class="active">Step 1</li>
 							<li>Step 2</li>
-							<li>Step 3</li>
+							{/* <li>Step 3</li> */}
 						</ul>
 
 						<fieldset>
 			
-					<h2 class="fs-title">Upload Photo or vedio File(s)</h2>
+					<h2 class="fs-title">Upload Audio or vedio File</h2>
 					{/* <h3 class="fs-subtitle">Tell us something more about you</h3> */}
 					<div class="box">
 						<input
 							type="file"
-							name="file-7[]"
-							id="file-7"
+							accept=".mp3,.mp4,.mp2,.aiff,.aif,.amr,.avi,.caf,.dss,.dvd,.dvf,.m4a,.mov,.msv,.qt,.wav,.arf,.wma,.wmv"
+							id="fileInput"
+							onChange={e => {
+								this.setState({ File: e.target.files });
+								// this.handleFileChange();
+							  }}
+							  disabled={this.state.loadingFile || Order? Order._filePath:""}
+							name="selectedFile"
+							// onChange={e => this.onChange(e)}
+							style={{ display: "none" }}
 							class="inputfile inputfile-6"
 							data-multiple-caption="{count} files selected"
 							multiple
 						/>
-						<label for="file-7">
-							<span />{' '}
+						<label disabled={this.state.loadingFile} style={{cursor:"pointer"}} for="fileInput">
+							<span />
+							
 							<strong>
+							{this.state.loadingFile && <i class="spinner-border" role="status" />}
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
 									<path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
 								</svg>{' '}
-								Choose a file &hellip;
+								{this.state.loadingFile && <span>File is uploading</span>}
+              {!this.state.loadingFile && <span>Upload File</span>} &hellip;
 							</strong>
 						</label>
 					</div>
-					{/* //ProgressBar */}
-					<div class="progress">
-						<div
-							class="progress-bar  active"
-							role="progressbar"
-							aria-valuenow="455"
-							aria-valuemin="0"
-							aria-valuemax="100"
-							style={{ width: '80%' }}
-						>
-							<span class="skill-name">
-								<strong>ASD.jpg</strong>
-							</span>
-						</div>
-					</div>
-					<br />
+				
 					{/* Table */}
 					<table class="table table-bordered table-sm">
 						<thead class="thead-dark">
 							<tr>
 								<th>File Name</th>
 								<th>File Size</th>
-								<th>File Length (in Minutes)</th>
+								<th>File Length</th>
 								<th>Cost</th>
 							</tr>
 						</thead>
 						<tr>
-							<td>ASD.mp4</td>
-							<td>3000kb</td>
-							<td>0:40</td>
-							<td>$29</td>
+						<td>
+							{Order._fileName?
+							<img 
+							width="20px" 
+							onClick={()=>{
+								deleteOrder("OrderData");
+								window.location.reload();
+						}} 
+							style={{cursor:"pointer"}} 
+							src={require("../../../../image/cancelWarning.png")}
+							 />
+							:""}
+              {Order._fileName?(Order._fileName):(
+				  this.props.fileList._response === "got"
+                ? (this.props.fileList._fileName)
+                : ("example.mp4"))}
+            </td>
+            <td>
+              {Order._fileSize?(Order._fileSize):(
+				  this.props.fileList._response === "got"
+                ? (this.props.fileList._fileSize)
+                : ("0 B"))}
+            </td>
+            <td>
+              {Order._fileDuration?(Order._fileDuration):(
+				  this.props.fileList._response === "got"
+                ? (this.props.fileList._duration)
+                : ("00:00:00"))}
+            </td>
+            <td>
+			$
+              {Order._totalCost?(Order._totalCost):(
+				  this.props.fileList._response === "got"
+                ? (this.props.fileList._totalCost)
+                : ("0"))}
+            </td>
 						</tr>
+						{
+							Order._filePath?(
+								
+							<React.Fragment>
+							<tr>
+								<td>Turn Around Time { console.log("Local Storage")}</td>
+								<td  colspan="3">
+									<div class="form-group" style={{ width: '130px' }}>
+										<select class="form-control" value={this.state._TurnAroundTime} onChange={(e)=>this.setState({_TurnAroundTime:e.target.value})} id="sel1" style={{ width: '30' }}>
+											
+											<option value={24}>24 hour</option>
+											<option value={2}>2 days</option>
+											<option value={3}>3 days</option>
+											<option value={1}>1 week</option>
+										</select>
+									</div>
+								</td>
+								{/*<td>0:40</td>
+										<td>$29</td> */}
+							</tr>
+							<tr>
+								<td>Number of Speaker</td>
+								<td>
+								
+									<td class="qty mt-5" colspan="3">
+										<span class="minus bg-dark" onClick={this.decrement}>-</span>
+										<input
+										
+											style={{ height: '20px',width:'50px' }}
+											type="number"
+											onChange={(e)=>this.setState({_NumberOFPersons:e.target.value})}
+											class="count input"
+											name="qty"
+											value={this.state._NumberOFPersons}
+										/>
+										<span class="plus bg-dark" onClick={this.increment}>+</span>
+									</td>
+								</td>
+							</tr>
+							<tr>
+								<td>Time Stamp</td>
+								<td colSpan="3">
+						  <input
+							id="checkbox_id_T"
+							type="checkbox"
+							checked={this.state.checked_TStatus}
+							onChange={this.handleCheckTimeStamping}
+						  />
+						  <label htmlFor="checkbox_id_T">$0.15/mint</label>
+						</td>
+							</tr>
+							<tr>
+								<td>Verbitam</td>
+								<td colSpan="3">
+						  <input
+							id="checkbox_id_V"
+							type="checkbox"
+							checked={this.state.checked_VStatus}
+							onChange={this.handleCheckVerbatim}
+						  />
+						  <label htmlFor="checkbox_id_V">$0.15/mint</label>
+						</td>
+							</tr>
+							
+							{/* <tr>
+								<td class="table-secondary " colspan="4"><b>Sub Total</b></td>
+							
+							</tr> */}
+							</React.Fragment>
+						):
+							(this.props.fileList._response === "got"?
+							
+						<React.Fragment>
 						<tr>
-							<td class="table-secondary " colspan="4"><b>Sub Total</b></td>
-						
-						</tr>
-						<tr>
-							<td>Turn Around Time</td>
+							<td>Turn Around Time {console.log("Response")}</td>
 							<td  colspan="3">
 								<div class="form-group" style={{ width: '130px' }}>
-									<select class="form-control" onChange={(e)=>this.setState({_TurnAroundTime:e.target.value})} id="sel1" style={{ width: '30' }}>
-										<option value={12}>12 hour</option>
+									<select class="form-control" onChange={(e)=>this.setState({_TurnAroundTime:e.target.value})} value={this.state._TurnAroundTime} id="sel1" style={{ width: '30' }}>
+										
 										<option value={24}>24 hour</option>
 										<option value={2}>2 days</option>
 										<option value={3}>3 days</option>
+										<option value={1}>1 week</option>
 									</select>
 								</div>
 							</td>
@@ -308,8 +500,8 @@ class Niofox extends Component {
 										type="number"
 										onChange={(e)=>this.setState({_NumberOFPersons:e.target.value})}
 										class="count input"
-										name="qty"
 										value={this.state._NumberOFPersons}
+										name="qty"
 									/>
 									<span class="plus bg-dark" onClick={this.increment}>+</span>
 								</td>
@@ -317,24 +509,64 @@ class Niofox extends Component {
 						</tr>
 						<tr>
 							<td>Time Stamp</td>
-							<td colspan="3">
-								<div class="form-group">
-									<select class="form-control"  id="sel1" style={{ width: '130px' }}>
-										<option>12 hour</option>
-										<option>24 hour</option>
-										<option>2 days</option>
-										<option>3 days</option>
-									</select>
-								</div>
-							</td>
+							<td colSpan="3">
+                      <input
+                        id="checkbox_id_T"
+                        type="checkbox"
+                        checked={this.state.checked_TStatus}
+                        onChange={this.handleCheckTimeStamping}
+                      />
+                      <label htmlFor="checkbox_id_T">$0.15/mint</label>
+                    </td>
 						</tr>
+						<tr>
+							<td>Verbitam</td>
+							<td colSpan="3">
+                      <input
+                        id="checkbox_id_V"
+                        type="checkbox"
+                        checked={this.state.checked_VStatus}
+                        onChange={this.handleCheckVerbatim}
+                      />
+                      <label htmlFor="checkbox_id_V">$0.15/mint</label>
+                    </td>
+						</tr>
+						
+						{/* <tr>
+							<td class="table-secondary " colspan="4"><b>Sub Total</b></td>
+						
+						</tr> */}
+						</React.Fragment>:"")}
 					</table>
+				{/* {this.props.fileList._response === "got"? */}
 				
-				
-							<input type="button" name="next" class="next action-button" value="Next" />
+							
+							  <input
+							  type="button"
+							//   disabled={this.state.firstNextButton}
+							
+							  onClick={() => {
+								this.props.makeOrderActionBeforeLogin(
+								  new OrderClassBeforeLogin(
+									this.state.FilePath,
+									this.state.FileName,
+									this.state.FileSize,
+									this.state._TurnAroundTime,
+									this.state._NumberOFPersons,
+									this.state.checked_TStatus,
+									this.state.checked_VStatus,
+									this.state.TotalCost,
+									this.state.Duration,
+									this.state.SecondDuration
+								  ),
+								  this
+								);
+							  }} 
+							  name="next" class="next action-button" value="Next"/>
+					{/* :""	} */}
 						</fieldset>
 						<fieldset>
-							<h2 class="fs-title">Online Payment</h2>
+							<h2 class="fs-title">Authentication</h2>
 						<Link to="/Login">	<button
 								class="float-left"
 								style={{ backgroundColor: '#292a2c', color: '#ffffff' }}
@@ -355,7 +587,8 @@ class Niofox extends Component {
                       onChange={this.handleChange}
                       class="form-control"
                       placeholder="First Name"
-                      noValidate
+					  noValidate
+					  disabled={this.state.loadingSubmit}
                     />
                   </div>
                   <div class="input-group">
@@ -374,7 +607,8 @@ class Niofox extends Component {
                       name="_LName"
                       onChange={this.handleChange}
                       class="form-control"
-                      placeholder="Last Name"
+					  placeholder="Last Name"
+					  disabled={this.state.loadingSubmit}
                     />
                   </div>
                   <div class="input-group">
@@ -393,7 +627,8 @@ class Niofox extends Component {
                       name="_Email"
                       onChange={this.handleChange}
                       class="form-control"
-                      placeholder="Email Address"
+					  placeholder="Email Address"
+					  disabled={this.state.loadingSubmit}
                     />
                   </div>
                   <div class="input-group">
@@ -412,7 +647,8 @@ class Niofox extends Component {
                       name="_Password"
                       onChange={this.handleChange}
                       class="form-control"
-                      placeholder="Password"
+					  placeholder="Password"
+					  disabled={this.state.loadingSubmit}
                     />
                   </div>
                   <div class="input-group">
@@ -423,15 +659,51 @@ class Niofox extends Component {
                     )}
                   </div>
                 </div>
+				<div class="form-group">
+                      <span style={{ fontSize: "11px", color: "red" }}>
+                        {this.props.signUpMessage}
+                      </span>
+				</div>
 				<input
 								type="button"
 								name="previous"
 								class="previous action-button-previous"
 								value="Previous"
 							/>
-							<input type="button" name="next" class="next action-button" value="Next" />
+							<button 
+							disabled={this.state.loadingSubmit}
+							onClick={()=>{
+								if (!this.state.loadingSubmit) {
+									this.setState(
+									  {
+										loadingSubmit: true
+									  },
+									  () => {
+										this.timer = setTimeout(() => {}, this.state.loadingSubmit === false);
+										this.props.orderSignupAction(
+											new OrderSignupClass(
+												this.state._Email,
+												this.state._FName,
+												this.state._LName,
+												this.state._Password
+											),
+											this
+										)
+									  }
+									);
+								  }
+								
+							}}
+							//  name="submit" 
+							 class="action-button" 
+							//  value="Submit"
+							  >
+								 {this.state.loadingSubmit && <i class="spinner-border" role="status" />}
+                      {this.state.loadingSubmit && <span>Submitting</span>}
+                      {!this.state.loadingSubmit && <span>Submit</span>}
+						</button>
 						</fieldset>
-						<fieldset>
+						{/* <fieldset>
 							<h2 class="fs-title">Order Complete</h2>
 							
 							<input
@@ -441,7 +713,7 @@ class Niofox extends Component {
 								value="Previous"
 							/>
 							<Link to={'/Dashboard'}><input type="button" name="submit" class="submit action-button" value="Submit" /></Link>
-						</fieldset>
+						</fieldset> */}
 					</form>
 				</div>
 			</div>
@@ -450,6 +722,8 @@ class Niofox extends Component {
 }
 
 const mapStateToProps = state =>({
+	fileList: state.MakeOrderReducerBeforeLogin.uploadFileList,
+	signUpMessage: state.MakeOrderReducerBeforeLogin.orderSignUpMessage
 
 })
-export default connect(mapStateToProps,{SignUpAction})(Niofox);
+export default connect(mapStateToProps,{ uploadFileActionBeforelogin, makeOrderActionBeforeLogin , orderSignupAction})(OrderNow);

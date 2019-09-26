@@ -7,7 +7,10 @@ import DisplayContactUsInfoReducer from "../SuperAdmin/Reducer/ContactInfoReduce
 import SignUpReducer from "../Usr/Reducer/AuthReducer/SignUpReducer";
 import UserLoginReducer from "../Usr/Reducer/AuthReducer/LoginReducer";
 import MakeOrderReducer from "../Usr/Reducer/OrderReducer/OrderReducer";
+import MakeOrderReducerBeforeLogin from "../Usr/Reducer/OrderReducer/OrderReducerBeforeLogin";
 import UserDashboardReducer from "../Usr/Reducer/DashBoardReducers/UserDashboardReducer";
+import ResetPasswordReducer from "../Usr/Reducer/ResetPasswordReducers/ResetPasswordReducer";
+import ContactUsReducer from "../Usr/Reducer/ContactUsReducer/ContactUsReducer";
 ////////////////////////// Transcription Side Reducers \\\\\\\\\\\\\\\\\\\\\\\\\\
 import TranscriptorLoginReducer from "../Admin/Reducer/AuthReducer/LoginReducer";
 import OrdersReducer from "../Admin/Reducer/OrdersReducers/OrderReducer";
@@ -21,7 +24,10 @@ const rootReducer = combineReducers({
   SignUpReducer,
   UserLoginReducer,
   MakeOrderReducer,
+  MakeOrderReducerBeforeLogin,
   UserDashboardReducer,
+  ResetPasswordReducer,
+  ContactUsReducer,
   ////////////////////////// Transcription Side Reducers \\\\\\\\\\\\\\\\\\\\\\\\\\
   TranscriptorLoginReducer,
   OrdersReducer

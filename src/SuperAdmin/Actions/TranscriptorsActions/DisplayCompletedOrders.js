@@ -16,9 +16,9 @@ export const displayCompletedOrdersAction = TID => dispatch => {
     })
     .catch(error => {
       console.log(error.response);
-      dispatch({
-        type: DisplayCompletedOrders,
-        payload: error.response
-      });
+      // dispatch({
+      //   type: DisplayCompletedOrders,
+      //   payload: error.response
+      // });
     });
 };

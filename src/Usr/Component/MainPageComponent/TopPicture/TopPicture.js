@@ -17,7 +17,7 @@ class TopPicture extends Component {
                 <center>
                   <p style={{ marginTop: "5px", fontSize: "50px" }}>
                     Starting at{" "}
-                    <label style={{ color: " #FFD700" }}>$0.78</label>/ minute
+                    <label style={{ color: " #FFD700" }}>$0.79</label>/ minute
                   </p>
                 </center>
                 <center>

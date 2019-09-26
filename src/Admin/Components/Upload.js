@@ -8,9 +8,10 @@ import SendDeliveryClass from "../BusinessLogics/ActionLogics/OrderLogics/SendDe
 import { connect } from "react-redux";
 class RegisterForm extends Component {
   state = {
-    // OrderID: this.props.AOrder ? this.props.AOrder._orderId : "",
     TranscriptorID: getTranscriptorID() ? getTranscriptorID() : "",
-    File: []
+    File: [],
+    loading: false,
+    success: false
   };
 
   render() {
@@ -25,12 +26,14 @@ class RegisterForm extends Component {
               type="file"
               name="file-7[]"
               id="file-7"
+              // style={{ display: "none" }}
+              accept=".doc,.docx"
               onChange={e => this.setState({ File: e.target.files })}
               class="inputfile inputfile-6"
               data-multiple-caption="{count} files selected"
               multiple
             />
-            <label for="file-7">
+            {/* <label for="file-7" style={{ cursor: "pointer" }}>
               <span />{" "}
               <strong>
                 <svg
@@ -43,10 +46,10 @@ class RegisterForm extends Component {
                 </svg>{" "}
                 Choose a file &hellip;
               </strong>
-            </label>
+            </label> */}
           </div>
           {/* //ProgressBar */}
-          <div class="progress">
+          {/* <div class="progress">
             <div
               class="progress-bar  active"
               role="progressbar"
@@ -59,7 +62,7 @@ class RegisterForm extends Component {
                 <strong>ASD.jpg</strong>
               </span>
             </div>
-          </div>
+          </div> */}
           <br />
           {/* Table */}
           {this.props.deliveryMessage === "Order is delivered" ? (
@@ -72,19 +75,39 @@ class RegisterForm extends Component {
             </button>
           ) : (
             <button
-              href="#"
+              disabled={this.state.loading}
               onClick={() => {
-                this.props.uploadDeliveryAction(
-                  new SendDeliveryClass(
-                    this.props.AOrder._orderId,
-                    this.state.TranscriptorID
-                  ),
-                  this.state.File
-                );
+                if (!this.state.loading) {
+                  this.setState(
+                    {
+                      success: false,
+                      loading: true
+                    },
+                    () => {
+                      this.timer = setTimeout(() => {
+                        this.setState({
+                          // loading: false,
+                          success: true
+                        });
+                        // window.location.reload();
+                      }, this.state.loading === false);
+                      this.props.uploadDeliveryAction(
+                        new SendDeliveryClass(
+                          this.props.AOrder._orderId,
+                          this.state.TranscriptorID
+                        ),
+                        this.state.File,
+                        this
+                      );
+                    }
+                  );
+                }
               }}
               class="btn-card"
             >
-              Deliver Now
+              {this.state.loading && <i class="spinner-border" role="status" />}
+              {this.state.loading && <span>Delivering</span>}
+              {!this.state.loading && <span>Deliver now</span>}
             </button>
           )}
           &nbsp;

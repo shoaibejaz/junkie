@@ -9,7 +9,7 @@ class FAQPage extends Component {
   state = {};
   componentDidMount() {
     // getUserID()?console.log("Dashboard"):
-    getUserID() ? console.log("User Dashboard") : history.push("/Login");
+    getUserID() ? history.push("/Dashboard") : history.push("/Login");
   }
   render() {
     return (

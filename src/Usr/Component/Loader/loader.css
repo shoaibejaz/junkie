@@ -1,0 +1,105 @@
+/* .loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transition: 1s;
+}
+.spanLoader {
+  position: absolute;
+  transform: translate(-50%, 50%);
+  width: 70px;
+  height: 70px;
+  top: 35%;
+  border: 5px solid #fff;
+  z-index: 1;
+  animation: animar 2.5s linear infinite;
+}
+.spanLoader:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f48221;
+  animation: animarbg 2.5s linear infinite;
+}
+
+@keyframes animar {
+  0% {
+    transform: translate(-50%, 50%) rotate(0deg);
+  }
+  25% {
+    transform: translate(-50%, 50%) rotate(180deg);
+  }
+  50% {
+    transform: translate(-50%, 50%) rotate(180deg);
+  }
+  75% {
+    transform: translate(-50%, 50%) rotate(360deg);
+  }
+  100% {
+    transform: translate(-50%, 50%) rotate(360deg);
+  }
+}
+@keyframes animarbg {
+  0% {
+    height: 0;
+  }
+  25% {
+    height: 0;
+  }
+  50% {
+    height: 100%;
+  }
+  75% {
+    height: 100%;
+  }
+  100% {
+    height: 0;
+  }
+} */
+
+#containerLoader {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+#hourra {
+  display: flex;
+  height: 50px;
+}
+.cheers {
+  width: 15px;
+  height: 100%;
+  margin-right: 3px;
+  background-color: #292a2c;
+  opacity: 0;
+  animation: wake-up 1s ease 0s infinite alternate both;
+  transform-origin: bottom;
+}
+@keyframes wake-up {
+  0% {
+    transform: scale(1, 0);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+#hourra .cheers:first-child {
+  animation-delay: 0s;
+}
+#hourra .cheers:nth-child(2) {
+  animation-delay: 0.25s;
+}
+#hourra .cheers:nth-child(3) {
+  animation-delay: 0.5s;
+}
+#hourra .cheers:last-child {
+  animation-delay: 0.75s;
+}

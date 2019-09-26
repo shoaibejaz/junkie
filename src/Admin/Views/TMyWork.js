@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import Loader from "../../Usr/Component/Loader/Loader";
 import SideNav from "../Components/AdminSideNav/SideNav";
 import MyWork from "../Components/MyWork/MyWork";
 import Upload from "../Components/Upload";
@@ -12,23 +13,46 @@ import { Link } from "react-router-dom";
 import history from "../../Router/history";
 
 class TMyWork extends Component {
-  state = {};
+  state = {
+    loading: false
+  };
 
   componentDidMount() {
     getTranscriptorID() ? console.log("MyWork") : history.push("/TLogin");
-    this.props.displayAcceptedOrderAction(
-      new SendTranscriptorIDClass(getTranscriptorID())
-    );
+    if (!this.state.loading) {
+      this.setState(
+        {
+          loading: true
+        },
+        () => {
+          this.timer = setTimeout(() => {}, this.state.loading === false);
+          this.props.displayAcceptedOrderAction(
+            new SendTranscriptorIDClass(getTranscriptorID()),
+            this
+          );
+        }
+      );
+    }
   }
   render() {
-   
     return (
       <React.Fragment>
         <SideNav />
-        {this.props.acceptedOrders ? (
+        {/* {this.props.acceptedOrders._orderId ? ( */}
+        {// this.state.loading === false ? (
+        this.props.acceptedOrders ? (
           <div>
-            <MyWork AOrder={this.props.acceptedOrders} />
-            <Editor />
+            <div style={{ padding: "7% 10% 0% 10%" }}>
+              {/* <h1>Start Transcription</h1> */}
+              <div class="row">
+                <div class="col-lg-4">
+                  <MyWork AOrder={this.props.acceptedOrders} />
+                </div>
+                <div class="col-lg-8">
+                  <Editor />
+                </div>
+              </div>
+            </div>
             <div class="container">
               <h1>Upload Your Delivery</h1>
               <div class="row">
@@ -55,13 +79,18 @@ class TMyWork extends Component {
               </div>
             </div>
           </div>
-        )}
+        )
+        // ) : (
+        //   <Loader></Loader>
+        // )
+        }
       </React.Fragment>
     );
   }
 }
 const mapStateToProps = state => ({
-  acceptedOrders: state.OrdersReducer.displayAcceptedOrderList
+  acceptedOrders: state.OrdersReducer.displayAcceptedOrderList,
+  acceptOrderMessage: state.OrdersReducer.acceptedOrderMessage
 });
 
 export default connect(

@@ -5,19 +5,21 @@
   /* background: linear-gradient(to bottom, #FFB88C, #DE6262);  */
 
   width: 100%;
-  padding: 50px 0;
+  padding: 50px;
 }
 .banner-sec {
-  background: url("../../../image//5d4444de6fc94.png") no-repeat left bottom;
+  background: url("../../../image/john-schnobrich-520019-unsplash.jpg")
+    no-repeat left bottom;
   background-size: cover;
   min-height: 500px;
   border-radius: 0 10px 10px 0;
   padding: 0;
+  margin: 0px;
 }
 .cont {
   background: #fff;
   border-radius: 10px;
-  box-shadow: 15px 20px 0px #292a2c;
+  box-shadow: 15px 15px 0px #292a2c;
 }
 .carousel-inner {
   border-radius: 0 10px 10px 0;

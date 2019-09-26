@@ -15,10 +15,10 @@ export const displayUserProfileAction = UserID => dispatch => {
       console.log(res.data);
     })
     .catch(error => {
-      dispatch({
-        type: DisplayUserProfile,
-        payload: error.response
-      });
+      // dispatch({
+      //   type: DisplayUserProfile,
+      //   payload: error.response
+      // });
       console.log(error.response);
     });
 };

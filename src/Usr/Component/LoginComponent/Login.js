@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./Login.css";
-import ForgetPasswordModal from "./ForgetPasswordModel";
-
 import { LoginAction } from "../../Actions/AuthActions/LoginAction";
+import { orderLogin } from "../../Actions/OrderActionsBeforeLogin/OrderLogin";
+import OrderLoginClass from "../../BusinessLogics/ActionLogics/OrderLogicsBeforeLogin/OrderLoginClass";
 import LoginClass from "../../BusinessLogics/ActionLogics/AuthLogics/LoginClass";
 import { connect } from "react-redux";
 import { getUserID } from "../../../LocalStorage/UserIDLocalStorage";
@@ -19,12 +19,11 @@ class LoginComponent extends Component {
     };
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timer);
+  componentDidMount() {
     getUserID() ? history.push("/Dashboard") : history.push("/Login");
   }
 
-  OnClick = () => {
+  OnClickLogin = () => {
     if (!this.state.loading) {
       this.setState(
         {
@@ -33,22 +32,51 @@ class LoginComponent extends Component {
         },
         () => {
           this.timer = setTimeout(() => {
-            this.setState({
-              loading: false,
-              success: true
-            });
-          }, 2000);
+            // this.setState({
+            //   loading: false,
+            //   success: true
+            // });
+          }, this.state.loading === false);
           this.props.LoginAction(
-            new LoginClass(this.state._Email, this.state._Password)
+            new LoginClass(this.state._Email, this.state._Password),
+            this
           );
         }
       );
     }
   };
 
+  // OnClickOrderLogin = () => {
+  //   if (!this.state.loading) {
+  //     this.setState(
+  //       {
+  //         success: false,
+  //         loading: true
+  //       },
+  //       () => {
+  //         this.timer = setTimeout(() => {
+  //           // this.setState({
+  //           //   loading: false,
+  //           //   success: true
+  //           // });
+  //         }, this.state.loading === false);
+  //         this.props.orderLogin(
+  //           new OrderLoginClass(
+  //             this.state._Email,
+  //             this.state._Password,
+  //             this.props.orderIndentifierValue.orderIdentifier
+  //           ),
+  //           this
+  //         );
+  //       }
+  //     );
+  //   }
+  // };
+
   render() {
     const { loading, success } = this.state;
     console.log(getUserID() ? getUserID() : "");
+    // console.log(this.props.orderIndentifierValue);
     return (
       <React.Fragment>
         <section class="login-block">
@@ -57,26 +85,24 @@ class LoginComponent extends Component {
               <div class="col-md-4 login-sec">
                 <h2 class="text-center">Login Now as a Buyer</h2>
                 <center>
-                  {this.props.errorStatus === true ? (
+                  {/* {this.props.errorStatus === true ? (
                     <span style={{ color: "#ff0000", textAlign: "left" }}>
                       Invalid Email or Password
                     </span>
                   ) : (
                     ""
-                  )}
+                  )} */}
                 </center>
                 <form class="login-form">
                   <div class="form-group">
                     <label for="exampleInputEmail1" class="text-uppercase">
-                      {this.props.errorStatus === true ? (
-                        <span style={{ color: "#ff0000" }}>
-                          Invalid Username
-                        </span>
+                      {this.props.error === "Invalid Email" ? (
+                        <span style={{ color: "#ff0000" }}>Invalid Email</span>
                       ) : (
-                        <span>Username</span>
+                        <span>Email</span>
                       )}
                     </label>
-                    {this.props.errorStatus === true ? (
+                    {this.props.error === "Invalid Email" ? (
                       <input
                         style={{ color: "black" }}
                         type="email"
@@ -102,7 +128,7 @@ class LoginComponent extends Component {
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1" class="text-uppercase">
-                      {this.props.errorStatus === true ? (
+                      {this.props.error === "Invalid Password" ? (
                         <span style={{ color: "#ff0000" }}>
                           Invalid Password
                         </span>
@@ -110,7 +136,7 @@ class LoginComponent extends Component {
                         <span>Password</span>
                       )}
                     </label>
-                    {this.props.errorStatus === true ? (
+                    {this.props.error === "Invalid Password" ? (
                       <input
                         style={{ color: "black" }}
                         type="password"
@@ -133,36 +159,33 @@ class LoginComponent extends Component {
                         disabled={loading}
                       />
                     )}
+                    <a
+                      href="/Email"
+                      style={{ textDecoration: "none", float: "right" }}
+                    >
+                      <span>forgot password?</span>
+                    </a>
                   </div>
                   <div class="form-check">
                     <button
                       type="button"
                       class="btn btn-lg"
-                      onClick={this.OnClick}
-                      style={{ borderRadius: "5px", width: "170px" }}
+                      onClick={
+                        // this.props.orderIndentifierValue
+                        // ? this.OnClickOrderLogin
+                        this.OnClickLogin
+                      }
+                      style={{
+                        borderRadius: "5px",
+                        width: "170px",
+                        marginTop: "60px"
+                      }}
                       disabled={loading}
                     >
                       {loading && <i class="spinner-border" role="status" />}
                       {loading && <span>Logging in</span>}
                       {!loading && <span>Login</span>}
                     </button>
-                  </div>
-                  <div class="form-check">
-                    {/* <button
-                      style={{ borderRadius: "5px", width: "170px" }}
-                      class="btn btn-lg"
-                      data-toggle="modal"
-                      data-target="#myModal"
-                    >
-                      Forget Password
-                    </button> */}
-                    <ForgetPasswordModal
-                      buttonName={"Reset Password"}
-                      inputName={"Email"}
-                      inputType={"email"}
-                      modelHeader={"Reset your password"}
-                      disabled={loading}
-                    />
                   </div>
                 </form>
               </div>
@@ -178,10 +201,12 @@ class LoginComponent extends Component {
 }
 
 const mapStateToProps = state => ({
-  errorStatus: state.UserLoginReducer.error
+  // errorStatus: state.UserLoginReducer.error,
+  error: state.UserLoginReducer.loginError,
+  orderIndentifierValue: state.MakeOrderReducerBeforeLogin.makeOrderList
 });
 
 export default connect(
   mapStateToProps,
-  { LoginAction }
+  { LoginAction, orderLogin }
 )(LoginComponent);

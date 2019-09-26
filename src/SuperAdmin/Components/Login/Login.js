@@ -27,14 +27,10 @@ class LogIn extends Component {
           loading: true
         },
         () => {
-          this.timer = setTimeout(() => {
-            this.setState({
-              loading: false,
-              success: true
-            });
-          }, 2000);
+          this.timer = setTimeout(() => {}, this.state.loading === false);
           this.props.superAdminLoginAction(
-            new SuperAdminLoginClass(this.state._Email, this.state._Password)
+            new SuperAdminLoginClass(this.state._Email, this.state._Password),
+            this
           );
         }
       );
@@ -57,13 +53,6 @@ class LogIn extends Component {
               {/* <h1>Aditya News</h1> */}
             </div>
             <form>
-              {this.props.errorStatus === true ? (
-                <span style={{ color: "#ff0000", textAlign: "left" }}>
-                  Invalid Email or Password
-                </span>
-              ) : (
-                ""
-              )}
               <center>
                 <input
                   type="email"
@@ -85,6 +74,15 @@ class LogIn extends Component {
                 disabled={loading}
                 placeholder="password"
               />
+              <div class="form-group">
+                {this.props.error ? (
+                  <span style={{ color: "#ff0000", textAlign: "left" }}>
+                    {this.props.error}
+                  </span>
+                ) : (
+                  ""
+                )}
+              </div>
               <div class="form-check">
                 <button
                   type="button"
@@ -112,7 +110,7 @@ class LogIn extends Component {
 }
 
 const mapStateToProps = state => ({
-  errorStatus: state.SuperAdminLoginReducer.error
+  error: state.SuperAdminLoginReducer.loginError
 });
 
 export default connect(

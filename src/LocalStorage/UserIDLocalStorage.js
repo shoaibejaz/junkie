@@ -1,11 +1,13 @@
 import history from "../Router/history";
+import { getOrder } from "./OrderLocalStorage";
 
 export const setUserID = Data => {
   localStorage.setItem("UserLoginData", JSON.stringify(Data));
   const UserID = JSON.parse(localStorage.getItem("UserLoginData"));
-  if (UserID === null || UserID === undefined || UserID === "Invalid Entries") {
-    console.log("Login In Process");
+  if (getOrder()._filePath) {
+    // console.log("Login In Process");
     // history.push("/Login");
+    history.push("/AddRequirment");
   } else {
     history.push("/Dashboard");
   }

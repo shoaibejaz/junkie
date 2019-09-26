@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 
 import Router from "./Router/router";
+import Loader from "./Usr/Component/Loader/Loader";
+import AudioPlayer from "./Admin/Components/AudioPlayer/AudioPlayer";
 
-class img extends Component {
-  // getVideo =() =>{
-  //   const Video = React.createElement("video");
-
-  //   const media = new Video();
-  //   media.onloaded
-  // }
+class TranscriptionJunkie extends Component {
   render() {
     return (
       <div>
         <Router />
+        {/* <AudioPlayer></AudioPlayer> */}
       </div>
     );
   }
 }
-export default img;
+export default TranscriptionJunkie;

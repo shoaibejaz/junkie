@@ -32,50 +32,47 @@ class Editor extends Component {
     // const parsedValue = ReactHtmlParser(htmlFile);
 
     return (
-      <div class="container">
+      <div>
         <h1>Start Transcription</h1>
-        <div class="row">
-          <div class="col-lg-12">
-            <CKEditor
-              onChange={e => this.setState({ _Content: e.editor.getData() })}
-              data=""
-            />
-          </div>
-          {/* <span>{htmlFile}</span> */}
+        <CKEditor
+          onChange={e => this.setState({ _Content: e.editor.getData() })}
+          data=""
+        />
+
+        <button
+          class="btn btn-primary"
+          // style={{ float: "right" }}
+          onClick={() => {
+            this.props.uploadEditorDocumentAction(
+              new UploadDocumentClass(this.state._Content)
+            );
+          }}
+          // style={{ marginTop: "-100px" }}
+        >
+          Save
+        </button>
+        {htmlFile ? (
           <button
-            class="btn btn-primary"
-            // style={{ float: "right" }}
+            class="btn btn-success"
             onClick={() => {
-              this.props.uploadEditorDocumentAction(
-                new UploadDocumentClass(this.state._Content)
-              );
+              if (htmlFile) {
+                // console.log("Calling it.........");
+                // console.log(htmlFileWithStartingTags);
+                const converted = htmlDocx.asBlob(htmlFileWithStartingTags, {
+                  orientation: "landscape"
+                });
+                // this.setState({ _ContentForDocs: converted });
+                saveAs(converted, "TranscriptedFile.docx");
+              }
             }}
-            // style={{ marginTop: "-100px" }}
+            // style={{ float: "left" }}
           >
-            Save
+            Export as .doc
           </button>
-          {htmlFile ? (
-            <button
-              class="btn btn-success"
-              onClick={() => {
-                if (htmlFile) {
-                  // console.log("Calling it.........");
-                  // console.log(htmlFileWithStartingTags);
-                  const converted = htmlDocx.asBlob(htmlFileWithStartingTags, {
-                    orientation: "landscape"
-                  });
-                  // this.setState({ _ContentForDocs: converted });
-                  saveAs(converted, "TranscriptedFile.docx");
-                }
-              }}
-              // style={{ float: "left" }}
-            >
-              Export as .doc
-            </button>
-          ) : (
-            ""
-          )}
-          {/* <button
+        ) : (
+          ""
+        )}
+        {/* <button
           class="btn btn-success"
           onClick={() => {
             if (htmlFile) {
@@ -92,8 +89,9 @@ class Editor extends Component {
         >
           Export as .txt
         </button> */}
-        </div>
       </div>
+      //   </div>
+      // </div>
     );
   }
 }

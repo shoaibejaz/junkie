@@ -15,10 +15,10 @@ export const orderCheckAction = () => dispatch => {
       console.log(res.data);
     })
     .catch(error => {
-      dispatch({
-        type: OrderCheck,
-        payload: error.response
-      });
+      // dispatch({
+      //   type: OrderCheck,
+      //   payload: error.response
+      // });
       console.log(error.response);
     });
 };

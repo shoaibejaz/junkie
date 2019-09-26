@@ -1,57 +1,168 @@
 import React, { Component } from "react";
-// import './Order.css';
 import $ from "jquery";
-// import NavBar from '../NavBar/NavBar';
+import filesize from "filesize";
 
+let context = null;
 class Calculator extends Component {
-  state = {};
-  componentDidMount = () => {
-    $(document).ready(function() {
-      $(".star").on("click", function() {
-        $(this).toggleClass("star-checked");
-      });
-
-      $(".ckbox label").on("click", function() {
-        $(this)
-          .parents("tr")
-          .toggleClass("selected");
-      });
-
-      $(".btn-filter").on("click", function() {
-        var $target = $(this).data("target");
-        if ($target != "all") {
-          $(".table tr").css("display", "none");
-          $('.table tr[data-status="' + $target + '"]').fadeIn("slow");
-        } else {
-          $(".table tr")
-            .css("display", "none")
-            .fadeIn("slow");
-        }
-      });
+  constructor(props) {
+    super(props);
+    context = this;
+    this.state = {
+      perMinuteCost: 0.79,
+      timeStampingPerMinuteCost: 0.15,
+      verbitamPerMinuteCost: 0.15,
+      initialCost: 0.0,
+      timeStampingCost: 0.0,
+      verbitamCost: 0.0,
+      totalCost: 0.0,
+      fileName: "",
+      fileSize: "",
+      fileSeconds: "",
+      fileDuration: "",
+      checked_T: false,
+      checked_V: false,
+      checked_TStatus: true,
+      checked_VStatus: true
+    };
+    this.handleCheckTimeStamping = this.handleCheckTimeStamping.bind(this);
+    this.handleCheckVerbatim = this.handleCheckVerbatim.bind(this);
+  }
+  handleCheckTimeStamping(e) {
+    this.setState({
+      checked_T: e.target.checked
     });
+    this.setState({
+      checked_TStatus: !this.state.checked_TStatus
+    });
+    const TimeStampingCost = this.state.timeStampingCost;
+    const TotalCost = this.state.totalCost;
+    if (this.state.checked_TStatus === true) {
+      this.setState({
+        totalCost: +TotalCost + +TimeStampingCost
+      });
+    } else if (this.state.checked_TStatus === false) {
+      this.setState({
+        totalCost: +TotalCost - +TimeStampingCost
+      });
+    }
+  }
+  handleCheckVerbatim(e) {
+    this.setState({
+      checked_V: e.target.checked
+    });
+    this.setState({
+      checked_VStatus: !this.state.checked_VStatus
+    });
+    const VerbitamCost = this.state.verbitamCost;
+    const TotalCost = this.state.totalCost;
+    if (this.state.checked_VStatus === true) {
+      this.setState({
+        totalCost: +TotalCost + +VerbitamCost
+      });
+    } else if (this.state.checked_VStatus === false) {
+      this.setState({
+        totalCost: +TotalCost - +VerbitamCost
+      });
+    }
+  }
+  componentDidMount = () => {
+    function getExt(filename) {
+      var ext = filename.split(".").pop();
+      if (ext == filename) return "";
+      return ext;
+    }
+    var fileInput = document.getElementById("fileInput");
+    fileInput.onchange = function() {
+      var file = fileInput.files[0];
+      var filename = fileInput.files[0].name;
+      var ext = getExt(filename);
+      console.log(ext);
+      var reader = new FileReader();
+      reader.onload = function() {
+        var aud = new Audio(reader.result);
+        aud.onloadedmetadata = function() {
+          // Duration calculation
+          var Dur = aud.duration;
+          var hours = Math.floor(Dur / 3600);
+          var minutes = Math.floor((Dur / 60) % 60);
+          var seconds = Math.floor(Dur % 60);
+          var Duration = hours + ":" + minutes + ":" + seconds;
+          context.setState({ fileDuration: Duration });
+          // initial cost calculation
+          var perSecondCost = context.state.perMinuteCost / 60;
+          var cost = perSecondCost * Dur;
+          var Cost = cost.toFixed(2);
+          context.setState({ initialCost: Cost });
+          context.setState({ totalCost: Cost });
+          // Time stamp cost
+          var tPerSecondCost = context.state.timeStampingPerMinuteCost / 60;
+          var tCost = tPerSecondCost * Dur;
+          console.log(Dur);
+          var TCost = tCost.toFixed(2);
+          context.setState({ timeStampingCost: TCost });
+          // Verbitam cost
+          var vPerSecondCost = context.state.verbitamPerMinuteCost / 60;
+          var vCost = vPerSecondCost * Dur;
+          var VCost = vCost.toFixed(2);
+          context.setState({ verbitamCost: VCost });
+        };
+      };
+      reader.readAsDataURL(file);
+    };
+  };
+  onChange = e => {
+    switch (e.target.name) {
+      case "selectedFile":
+        if (e.target.files.length > 0) {
+          this.setState({ fileName: e.target.files[0].name });
+          this.setState({ fileSize: e.target.files[0].size });
+        }
+        break;
+      default:
+        this.setState({ [e.target.name]: e.target.value });
+    }
   };
   render() {
     return (
       <React.Fragment>
-        {/* <NavBar /> */}
+        <input
+          type="checkbox"
+          disabled={false}
+          Id="Selected"
+          onClick={() => this.setState({ status: !this.state.status })}
+        />
         <div class="row">
           <div class="col-md-12 col-md-offset-3">
             <form id="msform">
               <fieldset>
-                <h2 class="fs-title">Upload Photo or vedio File(s)</h2>
-                {/* <h3 class="fs-subtitle">Tell us something more about you</h3> */}
+                <h2 class="fs-title">Upload Audio or vedio File</h2>
                 <div class="box">
                   <input
                     type="file"
-                    name="file-7[]"
-                    id="file-7"
+                    accept=".mp3,.mp4,.mp2,.aiff,.aif,.amr,.avi,.caf,.dss,.dvd,.dvf,.m4a,.mov,.msv,.qt,.wav,.arf,.wma,.wmv"
+                    id="fileInput"
+                    name="selectedFile"
+                    onChange={e => {
+                      this.onChange(e);
+                      this.setState({ initialCost: 0.0 });
+                      this.setState({ timeStampingCost: 0.0 });
+                      this.setState({ verbitamCost: 0.0 });
+                      this.setState({ totalCost: 0.0 });
+                      this.setState({ fileSeconds: "" });
+                      this.setState({ fileDuration: "" });
+                      this.setState({ checked_T: false });
+                      this.setState({ checked_V: false });
+                      this.setState({ checked_TStatus: true });
+                      this.setState({ checked_VStatus: true });
+                    }}
+                    style={{ display: "none" }}
                     class="inputfile inputfile-6"
                     data-multiple-caption="{count} files selected"
                     multiple
                   />
-                  <label for="file-7">
+                  <label for="fileInput">
                     <span />{" "}
-                    <strong>
+                    <strong style={{ cursor: "pointer" }}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -64,51 +175,80 @@ class Calculator extends Component {
                     </strong>
                   </label>
                 </div>
-                {/* //ProgressBar */}
-                <div class="progress">
-                  <div
-                    class="progress-bar  active"
-                    role="progressbar"
-                    aria-valuenow="455"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    style={{ width: "80%" }}
-                  >
-                    <span class="skill-name">
-                      <strong>ASD.jpg</strong>
-                    </span>
-                  </div>
-                </div>
                 <br />
-                {/* Table */}
                 <table class="table table-bordered table-sm">
                   <thead class="thead-dark">
                     <tr>
                       <th>File Name</th>
                       <th>File Size</th>
-                      <th>File Length (in Minutes)</th>
+                      <th>File Length</th>
                       <th>Cost</th>
                     </tr>
                   </thead>
                   <tr>
-                    <td>ASD.mp4</td>
-                    <td>3000kb</td>
-                    <td>0:40</td>
-                    <td>$29</td>
+                    <td>
+                      {this.state.fileName
+                        ? this.state.fileName
+                        : "example.mp4"}
+                    </td>
+                    <td>{filesize(this.state.fileSize)}</td>
+                    <td>
+                      {this.state.fileDuration
+                        ? this.state.fileDuration
+                        : "00:00:00"}
+                    </td>
+                    <td>${this.state.initialCost}</td>
                   </tr>
                   <tr>
-                    <td class="table-secondary " colspan="4">
+                    <th class="thead-dark">Time stamping</th>
+                    <td colSpan="2">
+                      <input
+                        id="checkbox_id_T"
+                        type="checkbox"
+                        checked={this.state.checked_T}
+                        onChange={this.handleCheckTimeStamping}
+                      />
+                      <label style={{ zIndex: 1 }} htmlFor="checkbox_id_T">
+                        $0.15/mint
+                      </label>
+                    </td>
+                    <td>
+                      $
+                      {this.state.checked_T === false
+                        ? "0"
+                        : this.state.timeStampingCost}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="thead-dark">Verbatim</th>
+
+                    <td colSpan="2">
+                      <input
+                        id="checkbox_id_V"
+                        type="checkbox"
+                        checked={this.state.checked_V}
+                        onChange={this.handleCheckVerbatim}
+                      />
+                      <label htmlFor="checkbox_id_V">$0.15/mint</label>
+                    </td>
+                    <td>
+                      $
+                      {this.state.checked_V === false
+                        ? "0"
+                        : this.state.verbitamCost}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-secondary" colSpan="3">
                       <b>Sub Total</b>
+                    </td>
+                    <td class="table-secondary">
+                      <b>
+                        ${this.state.totalCost ? this.state.totalCost : "0"}
+                      </b>
                     </td>
                   </tr>
                 </table>
-
-                {/* <input
-                  type="button"
-                  name="next"
-                  class="next action-button"
-                  value="Next"
-                /> */}
               </fieldset>
             </form>
           </div>

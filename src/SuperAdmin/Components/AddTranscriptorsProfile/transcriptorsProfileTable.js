@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+
+import SpinnerLoader from "../../../Usr/Component/Loader/SpinnerLoader";
+import { DisplayTranscriptorsAction } from "../../Actions/TranscriptorsActions/DisplaytranscriptorsAction";
 import { changeTranscriptorStatusAction } from "../../Actions/TranscriptorsActions/ChangeTranscriptorStatus";
 import SendTranscriptorIDClass from "../../BusinessLogics/ActionLogics/TranscriptorsClassses/TranscriptorID";
 import { connect } from "react-redux";
@@ -14,13 +17,33 @@ const validateForm = (errors, ...rest) => {
 
 class TranscriptorsTable extends Component {
   state = {
+    loading: false,
     TID: "",
     _Password: null,
     formValidity: "",
+    loadingActivate: false,
+    loadingDeactivate: false,
+    loadingPassword: false,
+    passwordMessage: this.props.changePasswordMessage
+      ? this.props.changePasswordMessage
+      : "",
     errors: {
       _Password: ""
     }
   };
+  componentDidMount() {
+    if (!this.state.loading) {
+      this.setState(
+        {
+          loading: true
+        },
+        () => {
+          this.timer = setTimeout(() => {}, this.state.loading === false);
+          this.props.DisplayTranscriptorsAction(this);
+        }
+      );
+    }
+  }
   toggleButton = () => {
     this.setState({ toggle: !this.state.toggle });
   };
@@ -56,7 +79,7 @@ class TranscriptorsTable extends Component {
 
   render() {
     const { errors } = this.state;
-    // console.log(this.props.TList);
+    // console.log(this.props.transcriptorsList);
     return (
       <React.Fragment>
         <div style={{ marginTop: "-150px" }} class="container">
@@ -73,14 +96,18 @@ class TranscriptorsTable extends Component {
                       Email
                     </th>
                     {/* <th scope="col">Password</th> */}
-                    <th colSpan="2" style={{ textAlign: "center" }}>
-                      Actions
+                    <th scope="col" style={{ textAlign: "center" }}>
+                      Status
+                    </th>
+                    <th scope="col" style={{ textAlign: "center" }}>
+                      Reset Password
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.TList
-                    ? this.props.TList.map(ls => (
+                  {this.state.loading === false ? (
+                    this.props.tListLenght > 0 ? (
+                      this.props.transcriptorsList.map(ls => (
                         <tr>
                           <td>{ls.username}</td>
                           <td>{ls.email}</td>
@@ -97,11 +124,12 @@ class TranscriptorsTable extends Component {
                                 }}
                                 onClick={() => {
                                   this.props.changeTranscriptorStatusAction(
-                                    new SendTranscriptorIDClass(ls.id)
+                                    new SendTranscriptorIDClass(ls.id),
+                                    this
                                   );
                                 }}
                               >
-                                Active
+                                Activate
                               </button>
                             ) : (
                               <button
@@ -132,12 +160,27 @@ class TranscriptorsTable extends Component {
                               style={{ borderRadius: "5px", width: "170px" }}
                               onClick={() => this.setState({ TID: ls.id })}
                             >
-                              Reset Password
+                              Reset
                             </button>
                           </td>
                         </tr>
                       ))
-                    : ""}
+                    ) : (
+                      <tr>
+                        <td colSpan="4">
+                          <h2>
+                            No transcriptor is added into the system still
+                          </h2>
+                        </td>
+                      </tr>
+                    )
+                  ) : (
+                    <div class="container">
+                      <div style={{ marginLeft: "175%" }}>
+                        <SpinnerLoader />
+                      </div>
+                    </div>
+                  )}
                 </tbody>
               </table>
               <div class="modal fade" id="myModal">
@@ -145,7 +188,15 @@ class TranscriptorsTable extends Component {
                   <div class="modal-content">
                     <div class="modal-header">
                       <h4 class="modal-title">Reset Your Password</h4>
-                      <button type="button" class="close" data-dismiss="modal">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          this.setState({ _Password: "" });
+                          this.setState({ passwordMessage: "" });
+                        }}
+                        class="close"
+                        data-dismiss="modal"
+                      >
                         &times;
                       </button>
                     </div>
@@ -156,6 +207,7 @@ class TranscriptorsTable extends Component {
                             type="password"
                             noValidate
                             name="_Password"
+                            value={this.state._Password}
                             onChange={this.handleChange}
                             class="form-control"
                             placeholder="Password"
@@ -185,18 +237,36 @@ class TranscriptorsTable extends Component {
                     </div>
                     <div class="modal-footer">
                       <button
-                        type="button"
+                        disabled={this.state.loadingPassword}
                         onClick={() => {
-                          this.props.resetTranscriptorPasswordAction(
-                            new NewPasswordClass(
-                              this.state.TID,
-                              this.state._Password
-                            )
-                          );
+                          if (!this.state.loadingPassword) {
+                            this.setState(
+                              {
+                                loadingPassword: true
+                              },
+                              () => {
+                                this.timer = setTimeout(() => {},
+                                this.state.loadingPassword === false);
+                                this.props.resetTranscriptorPasswordAction(
+                                  new NewPasswordClass(
+                                    this.state.TID,
+                                    this.state._Password
+                                  ),
+                                  this
+                                );
+                              }
+                            );
+                          }
                         }}
                         class="btn btn-block"
                       >
-                        Submit
+                        {this.state.loadingPassword && (
+                          <i class="spinner-border" role="status" />
+                        )}
+                        {this.state.loadingPassword && <span>Updating</span>}
+                        {!this.state.loadingPassword && (
+                          <span>Update Password</span>
+                        )}
                       </button>
                     </div>
                   </div>
@@ -211,10 +281,16 @@ class TranscriptorsTable extends Component {
 }
 const mapStateToProps = state => ({
   changePasswordMessage:
-    state.TranscriptorsReducer.chnageTranscriptorPasswordMessage
+    state.TranscriptorsReducer.chnageTranscriptorPasswordMessage,
+  transcriptorsList: state.TranscriptorsReducer.displayTranscriptorsList,
+  tListLenght: state.TranscriptorsReducer.transcriptorsListLength
 });
 
 export default connect(
   mapStateToProps,
-  { changeTranscriptorStatusAction, resetTranscriptorPasswordAction }
+  {
+    changeTranscriptorStatusAction,
+    resetTranscriptorPasswordAction,
+    DisplayTranscriptorsAction
+  }
 )(TranscriptorsTable);

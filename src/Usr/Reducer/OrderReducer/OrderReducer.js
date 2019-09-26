@@ -1,19 +1,35 @@
-import { MakeOrder, UploadFileAfterLogin } from "../../Actions/Types";
+import {
+  MakeOrder,
+  UploadFileAfterLogin,
+  PaymentStatus
+} from "../../Actions/Types";
 
 const state = {
-  makeOrderList: [],
-  uploadFileList: []
+  uploadFileList: {
+    _response: "",
+    _duration: "",
+    _fileUrl: "",
+    _fileSize: "",
+    _fileName: "",
+    _totalCost: ""
+  },
+  makeOrderList: "",
+  paymentStatusList: ""
 };
 
 function MakeOrderReducer(mState = { ...state }, action) {
   switch (action.type) {
+    case UploadFileAfterLogin:
+      console.log(action.payload);
+      mState.uploadFileList = action.payload;
+      return deepCopy(mState);
+
     case MakeOrder:
       mState.makeOrderList = action.payload;
       return deepCopy(mState);
 
-    case UploadFileAfterLogin:
-      console.log(action.payload);
-      mState.uploadFile = action.payload;
+    case PaymentStatus:
+      mState.paymentStatusList = action.payload;
       return deepCopy(mState);
 
     default:

@@ -5,7 +5,7 @@ import Footer from "../Component/MainPageComponent/Footer/footer";
 import Calculator from "../Component/Calculator/claculator";
 import { getUserID } from "../../LocalStorage/UserIDLocalStorage";
 import history from "../../Router/history";
-class AboutUs extends Component {
+class CalculatorView extends Component {
   state = {};
   componentDidMount() {
     getUserID() ? history.push("/Dashboard") : history.push("/Calculator");
@@ -21,4 +21,4 @@ class AboutUs extends Component {
   }
 }
 
-export default AboutUs;
+export default CalculatorView;

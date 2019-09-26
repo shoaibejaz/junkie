@@ -23,6 +23,7 @@ class AddTranscriptorsForm extends Component {
       _Email: null,
       _Password: null,
       formValidity: false,
+      loading: false,
       errors: {
         _TranscriptorName: "",
         _Email: "",
@@ -40,7 +41,7 @@ class AddTranscriptorsForm extends Component {
     switch (name) {
       case "_TranscriptorName":
         errors._TranscriptorName =
-          value.length < 5 ? "Last Name must be 5 characters long!" : "";
+          value.length < 5 ? "User Name must be 5 characters long!" : "";
         State._LName = value;
         break;
       case "_Email":
@@ -99,8 +100,8 @@ class AddTranscriptorsForm extends Component {
                           type="text"
                           name="_TranscriptorName"
                           value={this.state._TranscriptorName}
-                          // onChange={e => this.setState({ _FName: e.target.value })}
                           onChange={this.handleChange}
+                          disabled={this.state.loading}
                           class="form-control"
                           placeholder="Transcriptor Name"
                           noValidate
@@ -122,6 +123,7 @@ class AddTranscriptorsForm extends Component {
                           value={this.state._Email}
                           name="_Email"
                           onChange={this.handleChange}
+                          disabled={this.state.loading}
                           class="form-control"
                           placeholder="Email Address"
                         />
@@ -142,6 +144,7 @@ class AddTranscriptorsForm extends Component {
                           value={this.state._Password}
                           name="_Password"
                           onChange={this.handleChange}
+                          disabled={this.state.loading}
                           class="form-control"
                           placeholder="Password"
                         />
@@ -154,25 +157,59 @@ class AddTranscriptorsForm extends Component {
                         )}
                       </div>
                     </div>
-
-                    <input
-                      type="submit"
-                      name="SignUp"
+                    <div style={{ textAlign: "center" }}>
+                      {this.props.errorMessage ===
+                      "Transcriptor Added Successfully" ? (
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            color: "#00ff00"
+                          }}
+                        >
+                          {this.props.errorMessage}
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            fontSize: "11px",
+                            color: "red"
+                          }}
+                        >
+                          {this.props.errorMessage}
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      disabled={this.state.loading}
                       onClick={() => {
-                        this.props.AddTranscriptorsAction(
-                          new AddTranscriptorsClass(
-                            this.state._TranscriptorName,
-                            this.state._Email,
-                            this.state._Password
-                          ),
-                          this.props.DisplayTranscriptorsAction()
-                        );
-                        this.setState({ _TranscriptorName: "" });
-                        this.setState({ _Email: "" });
-                        this.setState({ _Password: "" });
+                        if (!this.state.loading) {
+                          this.setState(
+                            {
+                              loading: true
+                            },
+                            () => {
+                              this.timer = setTimeout(() => {},
+                              this.state.loading === false);
+                              this.props.AddTranscriptorsAction(
+                                new AddTranscriptorsClass(
+                                  this.state._TranscriptorName,
+                                  this.state._Email,
+                                  this.state._Password
+                                ),
+                                this
+                              );
+                            }
+                          );
+                        }
                       }}
                       class="btn btn-block"
-                    />
+                    >
+                      {this.state.loading && (
+                        <i class="spinner-border" role="status" />
+                      )}
+                      {this.state.loading && <span>Adding</span>}
+                      {!this.state.loading && <span>Add Transcriptor</span>}
+                    </button>
                   </form>
                 </article>
               </section>
@@ -184,7 +221,9 @@ class AddTranscriptorsForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  errorMessage: state.TranscriptorsReducer.addTranscriptorsMessage
+});
 
 export default connect(
   mapStateToProps,

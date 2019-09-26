@@ -8,13 +8,26 @@ import {
 } from "../../Actions/Types";
 
 import CompletedOrderClass from "../../BusinessLogics/ReducerLogics/CompletedOrdersClass";
+import DisplayAcceptedOrderClass from "../../BusinessLogics/ReducerLogics/DisplayAcceptedOrderClass";
+import DisplayAllOrdersPoolClass from "../../BusinessLogics/ReducerLogics/DisplayAllOrdersPoolClass";
 
 const state = {
   displayAllOrdersPoolList: [],
+  allOrdersLength: "",
   acceptOrderList: [],
   transcriptorAcceptedOrderList: [],
-  displayAcceptedOrderList: {},
+  displayAcceptedOrderList: {
+    _orderId: "",
+    _noOfSpeaker: "",
+    _fileName: "",
+    _trurnAroundTime: "",
+    _timeStamp: "",
+    _totalCost: "",
+    _filePath: ""
+  },
+  acceptedOrderMessage: "",
   transcriptorCompleteOrderList: [],
+  completedOrderlenght: "",
   uploadDeliveryMessage: "",
   documentData: ""
 };
@@ -24,9 +37,12 @@ function OrdersReducer(mState = { ...state }, action) {
     case DisplayAllOrdersPool:
       if (action.payload === undefined || action.payload === null) {
       } else {
-        mState.displayAllOrdersPoolList = action.payload;
-
-        console.log(mState.displayAllOrdersPoolList);
+        action.payload.forEach(element => {
+          mState.displayAllOrdersPoolList.push(
+            new DisplayAllOrdersPoolClass(element)
+          );
+        });
+        mState.allOrdersLength = mState.displayAllOrdersPoolList.length;
       }
       return deepCopy(mState);
 
@@ -42,11 +58,20 @@ function OrdersReducer(mState = { ...state }, action) {
       return deepCopy(mState);
 
     case DisplayAcceptedOrder:
-      console.log("DisplayAcceptedOrder");
-      if (action.payload === undefined || action.payload === null) {
+      // console.log("DisplayAcceptedOrder");
+      if (action.payload === undefined) {
+        // console.log("Undefine");
+      } else if (action.payload === null) {
+        mState.acceptedOrderMessage = "No Order To Display";
       } else {
-        console.log(action.payload);
+        // mState.acceptedOrderLength = action.payload.length;
         mState.displayAcceptedOrderList = action.payload;
+        // console.log(mState.acceptedOrderLength);
+        // action.payload.forEach(element => {
+        //   mState.displayAcceptedOrderList.push(
+        //     new DisplayAcceptedOrderClass(element)
+        //   );
+        // });
       }
       return deepCopy(mState);
 
@@ -54,7 +79,12 @@ function OrdersReducer(mState = { ...state }, action) {
       console.log(action.payload);
       if (action.payload === undefined || action.payload === null) {
       } else {
-        mState.transcriptorCompleteOrderList = action.payload;
+        mState.completedOrderlenght = action.payload.length;
+        action.payload.forEach(element => {
+          mState.transcriptorCompleteOrderList.push(
+            new CompletedOrderClass(element)
+          );
+        });
       }
       return deepCopy(mState);
 
