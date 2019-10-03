@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+
 class Completed extends Component {
   state = {};
   render() {
@@ -26,8 +28,9 @@ class Completed extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {this.props.CList ? (
-                        this.props.CList.map(ls => (
+                      {// this.props.getCLoadingVlaue() === true ? (
+                      this.props.completedOrderList ? (
+                        this.props.completedOrderList.map(ls => (
                           <tr>
                             <td>{ls._orderId}</td>
                             <td>{ls._orederStartDate}</td>
@@ -41,20 +44,15 @@ class Completed extends Component {
                             <h2>No order is completed yet</h2>
                           </td>
                         </tr>
-                      )}
+                      )
+                      // ) : (
+                      //   "No Order"
+                      // )
+                      }
                     </tbody>
                   </table>
                 </div>
               </div>
-              {/* <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div> */}
             </div>
           </div>
         </div>
@@ -63,4 +61,12 @@ class Completed extends Component {
   }
 }
 
-export default Completed;
+const mapStateToProps = state => ({
+  // completedOrderList: state.TranscriptorsReducer.displayCompletedOrdersList,
+  // completedOrderLength: state.TranscriptorsReducer.completeOrderLength
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(Completed);

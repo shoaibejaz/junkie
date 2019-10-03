@@ -3,13 +3,10 @@ import { BaseURL } from "../BaseURL";
 import axios from "axios";
 
 export const uploadFileActionBeforelogin = (Data, file, crtl) => dispatch => {
-  console.log(file[0]);
   const data = JSON.stringify(Data);
-  console.log(data);
   const formdata = new FormData();
   formdata.append("file", file[0]);
   formdata.append("data", data);
-  // console.log(formdata);
   axios
     .post(BaseURL + "/uploadvideo", formdata)
     .then(res => {
@@ -17,7 +14,6 @@ export const uploadFileActionBeforelogin = (Data, file, crtl) => dispatch => {
         type: uploadFileBeforeLogin,
         payload: res.data
       });
-      console.log(res.data);
       if (res.data) {
         crtl.setState({ loadingFile: false });
         crtl.setState({ FilePath: res.data._fileUrl });
@@ -29,10 +25,6 @@ export const uploadFileActionBeforelogin = (Data, file, crtl) => dispatch => {
       }
     })
     .catch(error => {
-      // dispatch({
-      //   type: uploadFileBeforeLogin,
-      //   payload: error.response
-      // });
       console.log(error.response);
     });
 };

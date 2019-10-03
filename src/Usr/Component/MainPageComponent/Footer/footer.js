@@ -6,7 +6,7 @@ class Header extends Component {
       <React.Fragment>
         <footer class="x-colophon bottom" role="contentinfo">
           <div class="x-container max width">
-            <div class="x-colophon-content">
+            {/* <div class="x-colophon-content">
               <p>
                 POWERED BY THE{" "}
                 <a
@@ -17,7 +17,7 @@ class Header extends Component {
                   Niofox
                 </a>
               </p>{" "}
-            </div>
+            </div> */}
 
             <ul id="menu-primary-menu-2" class="x-nav">
               <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-7 current_page_item menu-item-569">

@@ -190,7 +190,6 @@ class AddRequirements extends Component {
     const { loadingFile, loadingOrder } = this.state;
     const html = this.props.orderPaymentbutton;
     const Order = getOrder();
-    console.log(Order);
     return (
       <div
         class="container"
@@ -294,7 +293,7 @@ class AddRequirements extends Component {
                 : "0"}
             </td>
           </tr>
-          {Order._turnAroundTime ? (
+          {Order._filePath ? (
             <React.Fragment>
               <tr>
                 <td>Turn Around Time</td>
@@ -448,7 +447,7 @@ class AddRequirements extends Component {
             ""
           )}
         </table>
-        {Order._turnAroundTime ? (
+        {Order._filePath ? (
           html ? (
             ReactHtmlParser(html)
           ) : (
@@ -458,7 +457,6 @@ class AddRequirements extends Component {
               class="btn"
             >
               {loadingOrder && <i class="spinner-border" role="status" />}
-              {loadingOrder && <span>Submitting</span>}
               {!loadingOrder && <span>Submit Order</span>}
             </button>
           )
@@ -472,7 +470,6 @@ class AddRequirements extends Component {
               class="btn"
             >
               {loadingOrder && <i class="spinner-border" role="status" />}
-              {loadingOrder && <span>Submitting</span>}
               {!loadingOrder && <span>Submit Order</span>}
             </button>
           )

@@ -7,7 +7,7 @@ class Faq extends Component {
         <section
           class="container"
           id="faq"
-          style={{ marginTop: "10%", marginBottom: "10%" }}
+          style={{ marginTop: "4%", marginBottom: "4%" }}
         >
           <h1 class="container-h1">FAQ</h1>
           <div class="row">
@@ -20,6 +20,7 @@ class Faq extends Component {
                     href="#collapseOne"
                     aria-expanded="true"
                     aria-controls="collapseOne"
+                    style={{ textDecoration: "none" }}
                   >
                     <div class="card-header" role="tab" id="headingOne">
                       <h5 class="mb-0">What is Transcription?</h5>
@@ -32,7 +33,7 @@ class Faq extends Component {
                     role="tabpanel"
                     aria-labelledby="headingOne"
                   >
-                    <div class="card-block ">
+                    <div class="card-block" style={{ padding: "2%" }}>
                       To covert any type of media in text form or words
                     </div>
                   </div>
@@ -46,6 +47,7 @@ class Faq extends Component {
                     href="#collapseTwo"
                     aria-expanded="false"
                     aria-controls="collapseTwo"
+                    style={{ textDecoration: "none" }}
                   >
                     <div class="card-header" role="tab" id="headingTwo">
                       <h5 class="mb-0">How Transcription is done?</h5>
@@ -57,7 +59,7 @@ class Faq extends Component {
                     role="tabpanel"
                     aria-labelledby="headingTwo"
                   >
-                    <div class="card-block">
+                    <div class="card-block" style={{ padding: "2%" }}>
                       Anim pariatur cliche reprehenderit, enim eiusmod high life
                       accusamus terry richardson ad squid. 3 wolf moon officia
                       aute, non cupidatat skateboard dolor brunch. Food truck
@@ -80,6 +82,7 @@ class Faq extends Component {
                     href="#collapseThree"
                     aria-expanded="false"
                     aria-controls="collapseThree"
+                    style={{ textDecoration: "none" }}
                   >
                     <div class="card-header" role="tab" id="headingThree">
                       <h5 class="mb-0">Why Transcription is done?</h5>
@@ -91,7 +94,7 @@ class Faq extends Component {
                     role="tabpanel"
                     aria-labelledby="headingThree"
                   >
-                    <div class="card-block">
+                    <div class="card-block" style={{ padding: "2%" }}>
                       Anim pariatur cliche reprehenderit, enim eiusmod high life
                       accusamus terry richardson ad squid. 3 wolf moon officia
                       aute, non cupidatat skateboard dolor brunch. Food truck

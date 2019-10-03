@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Completed extends Component {
   state = {};
   render() {
-    console.log(this.props.IList);
+    console.log(this.props.inProgressOrdersList);
     return (
       <React.Fragment>
         <div class="modal fade" id="myModalInProcess">
@@ -22,18 +22,22 @@ class Completed extends Component {
                       <tr>
                         <th scope="col">Order ID</th>
                         <th scope="col">Start Date</th>
-                        <th scope="col">End Date</th>
+                        <th scope="col">Order Status</th>
                         <th scope="col">Price</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {this.props.IList ? (
-                        this.props.IList.map(ls => (
+                      {this.props.inProgressOrdersList ? (
+                        this.props.inProgressOrdersList.map(ls => (
                           <tr>
                             <th scope="row">{ls._orderId}</th>
-                            <td>{ls._startDate}</td>
-                            <td>{ls._endDate}</td>
-                            <td>{ls._price}</td>
+                            <td>{ls._orederStartDate}</td>
+                            <td>
+                              {ls._orderEndDate === "Not Submited Yet"
+                                ? "Not Submitted"
+                                : ""}
+                            </td>
+                            <td>${ls._totlCost}</td>
                           </tr>
                         ))
                       ) : (

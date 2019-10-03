@@ -35,7 +35,7 @@ class VerifyCode extends Component {
         () => {
           this.timer = setTimeout(() => {
             this.setState({
-              loading: false,
+              // loading: false
               success: true
             });
             if (
@@ -46,8 +46,12 @@ class VerifyCode extends Component {
             } else {
               history.push("/VerifyCode");
             }
-          }, 6000);
-          this.props.sendCodeAction(new SendCodeClass(this.state._VerifyCode));
+          }, this.state.loading === false);
+          this.props.sendCodeAction(
+            new SendCodeClass(this.state._VerifyCode),
+            this.state._VerifyCode,
+            this
+          );
         }
       );
     }
@@ -137,7 +141,6 @@ class VerifyCode extends Component {
                         disabled={loading}
                       >
                         {loading && <i class="spinner-border" role="status" />}
-                        {loading && <span>Continue</span>}
                         {!loading && <span>Continue</span>}
                       </button>
                     </form>

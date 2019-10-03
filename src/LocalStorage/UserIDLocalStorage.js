@@ -4,12 +4,10 @@ import { getOrder } from "./OrderLocalStorage";
 export const setUserID = Data => {
   localStorage.setItem("UserLoginData", JSON.stringify(Data));
   const UserID = JSON.parse(localStorage.getItem("UserLoginData"));
-  if (getOrder()._filePath) {
-    // console.log("Login In Process");
-    // history.push("/Login");
-    history.push("/AddRequirment");
-  } else {
+  if (getOrder()._filePath === "") {
     history.push("/Dashboard");
+  } else {
+    history.push("/AddRequirment");
   }
 };
 

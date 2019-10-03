@@ -109,9 +109,9 @@ class TranscriptorsTable extends Component {
                     this.props.tListLenght > 0 ? (
                       this.props.transcriptorsList.map(ls => (
                         <tr>
-                          <td>{ls.username}</td>
-                          <td>{ls.email}</td>
-                          <td>
+                          <td style={{ padding: "35px" }}>{ls.username}</td>
+                          <td style={{ padding: "35px" }}>{ls.email}</td>
+                          <td style={{ padding: "0px" }}>
                             {ls.status === true ? (
                               <button
                                 style={{
@@ -151,7 +151,7 @@ class TranscriptorsTable extends Component {
                               </button>
                             )}
                           </td>
-                          <td>
+                          <td style={{ padding: "0px" }}>
                             <button
                               type="button"
                               class="btn btn-lg"
@@ -221,7 +221,8 @@ class TranscriptorsTable extends Component {
                           )}
                         </div>
                       </div>
-                      {this.props.changePasswordMessage ? (
+                      {this.props.changePasswordMessage ===
+                      "Password Updated Successfuly" ? (
                         <span
                           style={{
                             textAlign: "center",
@@ -232,7 +233,15 @@ class TranscriptorsTable extends Component {
                           {this.props.changePasswordMessage}
                         </span>
                       ) : (
-                        ""
+                        <span
+                          style={{
+                            textAlign: "center",
+                            color: "#DB493C",
+                            marginLeft: "100px"
+                          }}
+                        >
+                          {this.props.changePasswordMessage}
+                        </span>
                       )}
                     </div>
                     <div class="modal-footer">
@@ -263,7 +272,6 @@ class TranscriptorsTable extends Component {
                         {this.state.loadingPassword && (
                           <i class="spinner-border" role="status" />
                         )}
-                        {this.state.loadingPassword && <span>Updating</span>}
                         {!this.state.loadingPassword && (
                           <span>Update Password</span>
                         )}

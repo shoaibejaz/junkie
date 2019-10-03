@@ -12,7 +12,7 @@ class Header extends Component {
               <div class="x-container max width">
                 <a href="/" class="x-brand img">
                   <img
-                  style={{width:"180px"}}
+                    style={{ width: "180px" }}
                     src={require("../../../../image//Logo.png")}
                     alt="Agency"
                   />
@@ -34,10 +34,20 @@ class Header extends Component {
                     aria-expanded="false"
                     aria-controls="x-nav-wrap-mobile"
                     role="button"
+                    data-target="#x-nav-wrap-mobile"
                   >
-                    <i class="x-icon-bars" data-x-icon-s="&#xf0c9;" />
-                    <span class="visually-hidden">Navigation</span>
+                    {/* <i class=""></i> */}
+                    <i class="fa fa-bars" data-x-icon-s="&#xf0c9;" />
+                    {/* <span class="visually-hidden">Navigation</span>  */}
                   </a>
+                  {/* <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#x-nav-wrap-mobile"
+                  >
+                    <span class="navbar-toggler-icon"></span>
+                  </button> */}
 
                   <nav class="x-nav-wrap desktop" role="navigation">
                     <ul id="menu-primary-menu" class="x-nav">
@@ -112,6 +122,7 @@ class Header extends Component {
                   <div
                     id="x-nav-wrap-mobile"
                     class="x-nav-wrap mobile x-collapsed"
+                    // class="collapse navbar-collapse"
                     data-x-toggleable="x-nav-wrap-mobile"
                     data-x-toggle-collapse="1"
                     aria-hidden="true"

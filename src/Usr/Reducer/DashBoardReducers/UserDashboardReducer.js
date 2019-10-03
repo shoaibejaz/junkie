@@ -36,7 +36,6 @@ function UserDashboardReducer(mState = { ...state }, action) {
       return deepCopy(mState);
 
     case DisplayAllOrders:
-      // mState.displayUserProfileList = action.payload;
       if (action.payload === undefined || action.payload === null) {
       } else {
         mState.allUserOrdersList = action.payload;
@@ -51,9 +50,7 @@ function UserDashboardReducer(mState = { ...state }, action) {
         } else {
           mState.requestedUserOrdersList = action.payload;
           mState.rOrderLength = mState.requestedUserOrdersList.length;
-          // console.log(mState.rOrderLength);
         }
-        console.log(mState.requestedUserOrdersList);
       }
       return deepCopy(mState);
 
@@ -66,7 +63,6 @@ function UserDashboardReducer(mState = { ...state }, action) {
           mState.confirmedUserOrdersList = action.payload;
           mState.cOrderLength = mState.confirmedUserOrdersList.length;
         }
-        console.log(mState.confirmedUserOrdersList);
       }
       return deepCopy(mState);
 
@@ -79,7 +75,6 @@ function UserDashboardReducer(mState = { ...state }, action) {
           mState.deliveredUserOrdersList = action.payload;
           mState.dOrderLength = mState.deliveredUserOrdersList.length;
         }
-        console.log(mState.deliveredUserOrdersList);
       }
       return deepCopy(mState);
 

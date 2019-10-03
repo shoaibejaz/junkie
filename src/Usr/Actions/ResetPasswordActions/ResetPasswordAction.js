@@ -1,8 +1,9 @@
 import { ResetPassword } from "../Types";
 import { BaseURL } from "../BaseURL";
+import history from "../../../Router/history";
 import axios from "axios";
 
-export const resetPasswordAction = NewPassword => dispatch => {
+export const resetPasswordAction = (NewPassword, crtl) => dispatch => {
   const password = JSON.stringify(NewPassword);
   console.log(password);
   axios
@@ -13,12 +14,14 @@ export const resetPasswordAction = NewPassword => dispatch => {
         payload: res.data
       });
       console.log(res.data);
+      if (res.data) {
+        crtl.setState({ loading: false });
+        if (res.data === "Password Updated Successfuly") {
+          history.push("/Login");
+        }
+      }
     })
     .catch(error => {
-      // dispatch({
-      //   type: ResetPassword,
-      //   payload: error.response
-      // });
       console.log(error.response);
     });
 };

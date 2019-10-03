@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "./Login.css";
 import { LoginAction } from "../../Actions/AuthActions/LoginAction";
-import { orderLogin } from "../../Actions/OrderActionsBeforeLogin/OrderLogin";
-import OrderLoginClass from "../../BusinessLogics/ActionLogics/OrderLogicsBeforeLogin/OrderLoginClass";
 import LoginClass from "../../BusinessLogics/ActionLogics/AuthLogics/LoginClass";
 import { connect } from "react-redux";
 import { getUserID } from "../../../LocalStorage/UserIDLocalStorage";
@@ -14,8 +12,7 @@ class LoginComponent extends Component {
     this.state = {
       _Email: "",
       _Password: "",
-      loading: false,
-      success: false
+      loading: false
     };
   }
 
@@ -27,16 +24,10 @@ class LoginComponent extends Component {
     if (!this.state.loading) {
       this.setState(
         {
-          success: false,
           loading: true
         },
         () => {
-          this.timer = setTimeout(() => {
-            // this.setState({
-            //   loading: false,
-            //   success: true
-            // });
-          }, this.state.loading === false);
+          this.timer = setTimeout(() => {}, this.state.loading === false);
           this.props.LoginAction(
             new LoginClass(this.state._Email, this.state._Password),
             this
@@ -46,37 +37,9 @@ class LoginComponent extends Component {
     }
   };
 
-  // OnClickOrderLogin = () => {
-  //   if (!this.state.loading) {
-  //     this.setState(
-  //       {
-  //         success: false,
-  //         loading: true
-  //       },
-  //       () => {
-  //         this.timer = setTimeout(() => {
-  //           // this.setState({
-  //           //   loading: false,
-  //           //   success: true
-  //           // });
-  //         }, this.state.loading === false);
-  //         this.props.orderLogin(
-  //           new OrderLoginClass(
-  //             this.state._Email,
-  //             this.state._Password,
-  //             this.props.orderIndentifierValue.orderIdentifier
-  //           ),
-  //           this
-  //         );
-  //       }
-  //     );
-  //   }
-  // };
-
   render() {
-    const { loading, success } = this.state;
-    console.log(getUserID() ? getUserID() : "");
-    // console.log(this.props.orderIndentifierValue);
+    const { loading } = this.state;
+    // console.log(getUserID() ? getUserID() : "");
     return (
       <React.Fragment>
         <section class="login-block">
@@ -84,15 +47,6 @@ class LoginComponent extends Component {
             <div class="row">
               <div class="col-md-4 login-sec">
                 <h2 class="text-center">Login Now as a Buyer</h2>
-                <center>
-                  {/* {this.props.errorStatus === true ? (
-                    <span style={{ color: "#ff0000", textAlign: "left" }}>
-                      Invalid Email or Password
-                    </span>
-                  ) : (
-                    ""
-                  )} */}
-                </center>
                 <form class="login-form">
                   <div class="form-group">
                     <label for="exampleInputEmail1" class="text-uppercase">
@@ -170,11 +124,7 @@ class LoginComponent extends Component {
                     <button
                       type="button"
                       class="btn btn-lg"
-                      onClick={
-                        // this.props.orderIndentifierValue
-                        // ? this.OnClickOrderLogin
-                        this.OnClickLogin
-                      }
+                      onClick={this.OnClickLogin}
                       style={{
                         borderRadius: "5px",
                         width: "170px",
@@ -183,7 +133,7 @@ class LoginComponent extends Component {
                       disabled={loading}
                     >
                       {loading && <i class="spinner-border" role="status" />}
-                      {loading && <span>Logging in</span>}
+                      {/* {loading && <span>Logging in</span>} */}
                       {!loading && <span>Login</span>}
                     </button>
                   </div>
@@ -208,5 +158,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { LoginAction, orderLogin }
+  { LoginAction }
 )(LoginComponent);

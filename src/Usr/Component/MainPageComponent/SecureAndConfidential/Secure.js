@@ -24,12 +24,12 @@ class Secure extends Component {
                       non-disclosure agreement (NDA) that protects your
                       information privacy.{" "}
                     </h4>
-                    <button
+                    {/* <button
                       class="col btn btn-lg btn-dark-blue"
                       style={{ width: "200px", alignItems: "center" }}
                     >
                       <b>Learn More</b>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>

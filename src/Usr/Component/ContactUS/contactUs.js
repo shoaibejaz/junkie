@@ -2,14 +2,11 @@ import React, { Component } from "react";
 
 import { ContactInfoAction } from "../../Actions/ContactUsInfoActions/ContactUsInfoAction";
 import ContactInfoClass from "../../BusinessLogics/ActionLogics/ContactUSLogics/ContactUsClass";
-import ReactNotification from "react-notifications-component";
 import { connect } from "react-redux";
 
 class ContactUs extends Component {
   constructor(props) {
     super(props);
-    this.addNotification = this.addNotification.bind(this);
-    this.notificationDOMRef = React.createRef();
     this.state = {
       _Fname: "",
       _Lname: "",
@@ -19,25 +16,10 @@ class ContactUs extends Component {
       success: false
     };
   }
-  addNotification() {
-    // console.log(value);
-    this.notificationDOMRef.current.addNotification({
-      title: "We are now in conatc",
-      message: "Contact Information collected successfully",
-      type: "success",
-      insert: "top",
-      container: "top-right",
-      animationIn: ["animated", "fadeIn"],
-      animationOut: ["animated", "fadeOut"],
-      dismiss: { duration: 3000 },
-      dismissable: { click: true }
-    });
-  }
 
   render() {
     return (
       <React.Fragment>
-        <ReactNotification ref={this.notificationDOMRef} />
         <section id="contact" style={{ marginTop: "10%", marginBottom: "10%" }}>
           <div class="container-fluid">
             <div class="row slideanim">
@@ -169,15 +151,8 @@ class ContactUs extends Component {
                       {this.state.loading && (
                         <i class="spinner-border" role="status" />
                       )}
-                      {this.state.loading && <span>Submitting</span>}
                       {!this.state.loading && <span>Submit</span>}
                     </button>
-                    <span>&emsp;</span>
-                    {/* <input
-                      style={{ width: "200px" }}
-                      type="reset"
-                      value="Reset"
-                    /> */}
                   </div>
                 </form>
               </div>

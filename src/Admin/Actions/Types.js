@@ -6,3 +6,4 @@ export const DisplayAcceptedOrder = "DisplayAcceptedOrder";
 export const TranscriptorCompleteOrder = "TranscriptorCompleteOrder";
 export const UploadDelivery = "UploadDelivery";
 export const EditorDocument = "EditorDocument";
+export const ExtendDeliveryTime = "ExtendDeliveryTime";

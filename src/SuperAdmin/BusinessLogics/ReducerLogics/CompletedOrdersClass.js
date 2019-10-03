@@ -1,9 +1,9 @@
 class CompletedOrdersClass {
-  constructor(OrderID, StartDate, EndDate, Price) {
-    this._orderId = OrderID;
-    this._startDate = StartDate;
-    this._endDate = EndDate;
-    this._price = Price;
+  constructor(element) {
+    this._orderId = element._orderId;
+    this._orederStartDate = element._orederStartDate;
+    this._orderEndDate = element._orderEndDate;
+    this._totlCost = element._totlCost;
   }
 }
 export default CompletedOrdersClass;

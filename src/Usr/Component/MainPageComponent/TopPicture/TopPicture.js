@@ -40,7 +40,7 @@ class TopPicture extends Component {
           </div>
         </div>
         {/* Why Junkies */}
-        <div class="header-content-inner" style={{ marginTop: "100px" }}>
+        <div class="header-content-inner" style={{ marginTop: "80px" }}>
           <center>
             <h1 style={{ color: "#272727" }}>Why Transcription Junkie?</h1>
           </center>
@@ -62,19 +62,20 @@ class TopPicture extends Component {
               style={{
                 marginLeft: "10%",
                 marginRight: "10%",
-                fontSize: "20px"
+                fontSize: "20px",
+                marginBottom: "6%"
               }}
             >
               Transcripts are100% manually produced with short turn-around time
               based on your needs
             </p>
           </center>
-          <button
+          {/* <button
             class="col btn btn-lg btn-dark-blue"
             style={{ width: "200px", alignItems: "center" }}
           >
             <b>Read More</b>
-          </button>
+          </button> */}
         </div>
         {/* File Formated*/}
         {/* <div class="fileSupported">

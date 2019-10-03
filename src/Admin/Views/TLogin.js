@@ -7,10 +7,9 @@ import history from "../../Router/history";
 class TDashboard extends Component {
   state = {};
   componentDidMount() {
-    getTranscriptorID() ? history.push("/TDashboard")  :  history.push("/TLogin");
+    getTranscriptorID() ? history.push("/TDashboard") : history.push("/TLogin");
   }
   render() {
-    console.log(getTranscriptorID());
     return (
       <React.Fragment>
         <TranscriptorLogin />

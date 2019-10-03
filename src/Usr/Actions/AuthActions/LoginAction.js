@@ -5,11 +5,11 @@ import { createBrotliCompress } from "zlib";
 
 export const LoginAction = (LoginData, crtl) => dispatch => {
   const Data = JSON.stringify(LoginData);
-  console.log(Data);
+  // console.log(Data);
   axios
     .post(BaseURL + "/userLogin", Data)
     .then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data) {
         crtl.setState({ loading: false });
       }
@@ -17,16 +17,12 @@ export const LoginAction = (LoginData, crtl) => dispatch => {
         type: UserLogin,
         payload: res.data
       });
-      console.log(res.data);
+      // console.log(res.data);
     })
     .catch(error => {
-      if (error.response) {
-        crtl.setState({ loading: false });
-      }
-      // dispatch({
-      //   type: UserLogin,
-      //   payload: error.response
-      // });
+      // if (error.response) {
+      //   crtl.setState({ loading: false });
+      // }
       console.log(error.response);
     });
 };

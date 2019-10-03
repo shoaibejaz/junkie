@@ -4,7 +4,8 @@ import {
   TranscriptorCompleteOrder,
   DisplayAcceptedOrder,
   EditorDocument,
-  UploadDelivery
+  UploadDelivery,
+  ExtendDeliveryTime
 } from "../../Actions/Types";
 
 import CompletedOrderClass from "../../BusinessLogics/ReducerLogics/CompletedOrdersClass";
@@ -23,13 +24,16 @@ const state = {
     _trurnAroundTime: "",
     _timeStamp: "",
     _totalCost: "",
-    _filePath: ""
+    _filePath: "",
+    timer: "",
+    timeExtendStatus: ""
   },
   acceptedOrderMessage: "",
   transcriptorCompleteOrderList: [],
   completedOrderlenght: "",
   uploadDeliveryMessage: "",
-  documentData: ""
+  documentData: "",
+  extendDeliveryMessage: ""
 };
 
 function OrdersReducer(mState = { ...state }, action) {
@@ -58,20 +62,9 @@ function OrdersReducer(mState = { ...state }, action) {
       return deepCopy(mState);
 
     case DisplayAcceptedOrder:
-      // console.log("DisplayAcceptedOrder");
-      if (action.payload === undefined) {
-        // console.log("Undefine");
-      } else if (action.payload === null) {
-        mState.acceptedOrderMessage = "No Order To Display";
+      if (action.payload === undefined || action.payload === null) {
       } else {
-        // mState.acceptedOrderLength = action.payload.length;
         mState.displayAcceptedOrderList = action.payload;
-        // console.log(mState.acceptedOrderLength);
-        // action.payload.forEach(element => {
-        //   mState.displayAcceptedOrderList.push(
-        //     new DisplayAcceptedOrderClass(element)
-        //   );
-        // });
       }
       return deepCopy(mState);
 
@@ -101,6 +94,14 @@ function OrdersReducer(mState = { ...state }, action) {
       if (action.payload === undefined || action.payload === null) {
       } else {
         mState.uploadDeliveryMessage = action.payload;
+      }
+      return deepCopy(mState);
+
+    case ExtendDeliveryTime:
+      console.log(action.payload);
+      if (action.payload === undefined || action.payload === null) {
+      } else {
+        mState.extendDeliveryMessage = action.payload;
       }
       return deepCopy(mState);
 

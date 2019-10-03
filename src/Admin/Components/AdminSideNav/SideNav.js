@@ -63,9 +63,9 @@ class SideNav extends Component {
                     title="Work in process"
                   >
                     {/* <i class="fas fa-cart-plus" style={{ width: 22 }} /> */}
-                    <i class="fa fa-stream" style={{ width: 22 }} /> My Work{" "}
+                    <i class="fa fa-briefcase" style={{ width: 22 }} /> My Work{" "}
                     <i
-                      class="fa fa-stream shortmenu animate"
+                      class="fa fa-briefcase shortmenu animate"
                       style={{ width: 22 }}
                     />
                   </a>

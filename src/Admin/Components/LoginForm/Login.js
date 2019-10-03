@@ -91,16 +91,10 @@ class LogIn extends Component {
                   disabled={loading}
                 >
                   {loading && <i class="spinner-border" role="status" />}
-                  {loading && <span>Logging in</span>}
                   {!loading && <span>Login</span>}
                 </button>
               </div>
             </form>
-            {/* <div id="formFooter">
-              <a class="underlineHover" href="#">
-                Go to the Site
-              </a>
-            </div> */}
           </div>
         </div>
       </React.Fragment>

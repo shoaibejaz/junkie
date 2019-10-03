@@ -207,7 +207,6 @@ class AddTranscriptorsForm extends Component {
                       {this.state.loading && (
                         <i class="spinner-border" role="status" />
                       )}
-                      {this.state.loading && <span>Adding</span>}
                       {!this.state.loading && <span>Add Transcriptor</span>}
                     </button>
                   </form>

@@ -17,6 +17,7 @@ const state = {
   transcriptorsListLength: "",
   chnageTranscriptorPasswordMessage: "",
   displayCompletedOrdersList: [],
+  completeOrderLength: "",
   displayInProgressOrdersList: []
 };
 
@@ -64,14 +65,23 @@ function TranscriptorsReducer(mState = { ...state }, action) {
     case DisplayCompletedOrders:
       if (action.payload === undefined || action.payload === null) {
       } else {
+        mState.displayCompletedOrdersList = [];
+        // action.payload.forEach(element => {
+        //   mState.displayCompletedOrdersList.push(
+        //     new CompletedOrderClass(element)
+        //   );
+        // });
         mState.displayCompletedOrdersList = action.payload;
+        // mState.completeOrderLength = mState.displayCompletedOrdersList.length;
+        // mState.displayCompletedOrdersList = action.payload;
       }
       return deepCopy(mState);
 
     case DisplayInProgressOrders:
       if (action.payload === undefined || action.payload === null) {
       } else {
-        mState.displayInProgressOrdersList = action.payload;
+        mState.displayInProgressOrdersList = [];
+        mState.displayInProgressOrdersList.push(action.payload);
       }
       return deepCopy(mState);
 

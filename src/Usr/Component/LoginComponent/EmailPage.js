@@ -9,11 +9,6 @@ import { connect } from "react-redux";
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
-const validateForm = (errors, ...rest) => {
-  let valid = true;
-  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-  return valid;
-};
 
 class EmailPage extends Component {
   constructor(props) {
@@ -22,7 +17,6 @@ class EmailPage extends Component {
       _Email: false,
       formValidity: false,
       loading: false,
-      success: false,
       errors: {
         _Email: ""
       }
@@ -32,22 +26,14 @@ class EmailPage extends Component {
     if (!this.state.loading) {
       this.setState(
         {
-          success: false,
           loading: true
         },
         () => {
-          this.timer = setTimeout(() => {
-            this.setState({
-              loading: false,
-              success: true
-            });
-            if (this.state.success == true) {
-              this.props.emailList === "Email sent with Code to Verify"
-                ? history.push("/VerifyCode")
-                : history.push("/Email");
-            }
-          }, 6000);
-          this.props.sendEmailAction(new SendEmailClass(this.state._Email));
+          this.timer = setTimeout(() => {}, this.state.loading === false);
+          this.props.sendEmailAction(
+            new SendEmailClass(this.state._Email),
+            this
+          );
         }
       );
     }
@@ -70,14 +56,6 @@ class EmailPage extends Component {
     }
     this.setState({ errors, [name]: value });
     this.setState({ State, [name]: value });
-  };
-  handleSubmit = event => {
-    event.preventDefault();
-    if (validateForm(this.state.errors)) {
-      this.setState({ formValidity: true });
-    } else {
-      this.setState({ formValidity: false });
-    }
   };
   render() {
     const { errors } = this.state;
@@ -110,7 +88,7 @@ class EmailPage extends Component {
                         ? this.props.emailList
                         : ""}
                     </h2>
-                    <form onSubmit={this.handleSubmit} noValidate>
+                    <form noValidate>
                       <div class="form-group">
                         <div class="input-group">
                           <input
@@ -139,7 +117,6 @@ class EmailPage extends Component {
                         disabled={loading}
                       >
                         {loading && <i class="spinner-border" role="status" />}
-                        {loading && <span>Continue</span>}
                         {!loading && <span>Continue</span>}
                       </button>
                       {/* </div> */}

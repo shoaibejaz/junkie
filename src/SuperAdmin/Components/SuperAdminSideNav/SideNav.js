@@ -60,13 +60,23 @@ class SideNav extends Component {
                     href="/SAContactUsInfo"
                     title="Work in process"
                   >
-                    {/* <i class="fas fa-cart-plus" style={{ width: 22 }} /> */}
-                    <i class="fas fa-id-card" />
-                    <i class="fa fa-stream" style={{ width: 22 }} /> Contact Us
-                    Info
+                    {/* <i class="fas fa-file-signature"></i> */}
+                    {/* <i class="fas fa-camera"></i>
+                    Dashboard
                     <i
-                      class="fa fa-stream shortmenu animate"
+                      class="fas fa-file-signature shortmenu animate"
                       style={{ width: 22 }}
+                    /> */}
+                    <img
+                      width="15px"
+                      style={{ marginRight: "12px", marginLeft: "0px" }}
+                      src={require("../../../image/file-signature-solid.svg")}
+                    />
+                    Contact us info
+                    <img
+                      width="15px"
+                      class="shortmenu animate"
+                      src={require("../../../image/file-signature-solid.svg")}
                     />
                   </a>
                 </li>
@@ -77,14 +87,17 @@ class SideNav extends Component {
                     href="/SAAddTranscriptorsProfile"
                     // title="Completed"
                   >
-                    {/* <i class="fas fa-comment" style={{ width: 22 }} /> */}
-                    {/* <i class="far fa-plus-square"></i> */}
-                    {/* <i class="fas fa-plus-circle"></i> */}
-                    <i class="fas fa-user-plus" style={{ width: 22 }} /> Add
-                    Transcriptors{" "}
-                    <i
-                      class="fas fa-user-plus shortmenu animate"
-                      style={{ width: 22 }}
+                    <img
+                      width="15px"
+                      style={{ marginRight: "12px", marginLeft: "-2px" }}
+                      src={require("../../../image/follow.png")}
+                    />
+                    Add Transcriptor
+                    <img
+                      width="15px"
+                      style={{ margin: "0px", padding: "0px" }}
+                      class="shortmenu animate"
+                      src={require("../../../image/follow.png")}
                     />
                   </a>
                 </li>

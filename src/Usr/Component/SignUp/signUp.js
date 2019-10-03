@@ -10,23 +10,10 @@ import SignUpClass from "../../BusinessLogics/ActionLogics/AuthLogics/SignUpClas
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
-const validateForm = (errors, ...rest) => {
-  let valid = true;
-  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-  console.log(valid);
-
-  // Object.values(rest).forEach(val => {
-  //   val === null && (valid = false);
-  // });
-
-  return valid;
-};
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
-    // this.addNotification = this.addNotification.bind(this);
-    // this.notificationDOMRef = React.createRef();
     this.state = {
       loading: false,
       _FName: null,
@@ -34,69 +21,14 @@ class SignUp extends Component {
       _Email: null,
       _Password: null,
       formValidity: false,
-      // _ConfirmPassword: null,
       errors: {
         _FName: "",
         _LName: "",
         _Email: "",
         _Password: ""
-        // _ConfirmPassword: ""
       }
     };
   }
-
-  // addNotification(value) {
-  //   // console.log(value);
-  //   if (value === "User Registered Successfully") {
-  //     this.notificationDOMRef.current.addNotification({
-  //       title: "SignUp",
-  //       message: "SignUp Successfully",
-  //       type: "success",
-  //       insert: "top",
-  //       container: "top-right",
-  //       animationIn: ["animated", "fadeIn"],
-  //       animationOut: ["animated", "fadeOut"],
-  //       dismiss: { duration: 3000 },
-  //       dismissable: { click: true }
-  //     });
-  //   } else if (value === "Invalid Entries") {
-  //     this.notificationDOMRef.current.addNotification({
-  //       title: "SignUp",
-  //       message: "Empty fields are not allowed",
-  //       type: "danger",
-  //       insert: "top",
-  //       container: "top-right",
-  //       animationIn: ["animated", "fadeIn"],
-  //       animationOut: ["animated", "fadeOut"],
-  //       dismiss: { duration: 3000 },
-  //       dismissable: { click: true }
-  //     });
-  //   } else if (value === "Email Already Exist") {
-  //     this.notificationDOMRef.current.addNotification({
-  //       title: "SignUp",
-  //       message: "This email already exists in our system.",
-  //       type: "danger",
-  //       insert: "top",
-  //       container: "top-right",
-  //       animationIn: ["animated", "fadeIn"],
-  //       animationOut: ["animated", "fadeOut"],
-  //       dismiss: { duration: 3000 },
-  //       dismissable: { click: true }
-  //     });
-  //   } else if (value === "Invalid data of fields") {
-  //     this.notificationDOMRef.current.addNotification({
-  //       title: "SignUp",
-  //       message: "Please check your data fields",
-  //       type: "danger",
-  //       insert: "top",
-  //       container: "top-right",
-  //       animationIn: ["animated", "fadeIn"],
-  //       animationOut: ["animated", "fadeOut"],
-  //       dismiss: { duration: 3000 },
-  //       dismissable: { click: true }
-  //     });
-  //   }
-  // }
 
   handleChange = event => {
     event.preventDefault();
@@ -133,18 +65,6 @@ class SignUp extends Component {
     this.setState({ State, [name]: value });
   };
 
-  // handleSubmit = event => {
-  //   event.preventDefault();
-  //   if (validateForm(this.state.errors)) {
-  //     this.setState({ formValidity: true });
-  //     console.log(this.state.formValidity);
-  //   } else {
-  //     this.setState({ formValidity: false });
-  //     console.log(this.state.formValidity);
-  //   }
-  //   // this.setState({ formValidity: false });
-  // };
-
   render() {
     const { errors } = this.state;
     return (
@@ -152,10 +72,7 @@ class SignUp extends Component {
         <div class="col-md-4 col-md-offset-4" id="login">
           <section id="inner-wrapper" class="login">
             <article>
-              <form
-                // onSubmit={this.handleSubmit}
-                noValidate
-              >
+              <form noValidate>
                 <div class="form-group">
                   <div class="input-group">
                     <input
@@ -236,7 +153,6 @@ class SignUp extends Component {
                     )}
                   </div>
                 </div>
-                {/* <ReactNotification ref={this.notificationDOMRef} /> */}
                 {this.props.signUpMessage === "User Registered Successfully" ? (
                   <span style={{ fontSize: "11px", color: "#00ff00" }}>
                     {this.props.signUpMessage}
@@ -275,7 +191,6 @@ class SignUp extends Component {
                   {this.state.loading && (
                     <i class="spinner-border" role="status" />
                   )}
-                  {this.state.loading && <span>SignUp</span>}
                   {!this.state.loading && <span>SignUp</span>}
                 </button>
               </form>

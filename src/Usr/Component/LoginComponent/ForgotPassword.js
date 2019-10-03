@@ -5,18 +5,13 @@ import { resetPasswordAction } from "../../Actions/ResetPasswordActions/ResetPas
 import ResetPasswordClass from "../../BusinessLogics/ActionLogics/ResetPasswordlogics/ResetPasswordClass";
 import { connect } from "react-redux";
 
-const validateForm = (errors, ...rest) => {
-  let valid = true;
-  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-  return valid;
-};
-
 class FrgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       _Code: "",
       _Email: "",
+      loading: false,
       _NewPassowrd: null,
       _ConfirmPassword: null,
       formValidity: false,
@@ -31,27 +26,18 @@ class FrgotPassword extends Component {
     if (!this.state.loading) {
       this.setState(
         {
-          success: false,
           loading: true
         },
         () => {
-          this.timer = setTimeout(() => {
-            this.setState({
-              loading: false,
-              success: true
-            });
-            if (this.state.success == true) {
-              this.props.passowrdList === "Password Updated Successfuly"
-                ? history.push("/Login")
-                : history.push("/VerifyCode");
-            }
-          }, 4000);
+          this.timer = setTimeout(() => {}, this.state.loading === false);
           this.props.resetPasswordAction(
             new ResetPasswordClass(
               this.state._Code,
-              this.state._Email,
-              this.state._NewPassowrd
-            )
+              this.state._NewPassowrd,
+              this.state._ConfirmPassword,
+              this.state._Email
+            ),
+            this
           );
         }
       );
@@ -80,15 +66,6 @@ class FrgotPassword extends Component {
     }
     this.setState({ errors, [name]: value });
     this.setState({ State, [name]: value });
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-    if (validateForm(this.state.errors)) {
-      this.setState({ formValidity: true });
-    } else {
-      this.setState({ formValidity: false });
-    }
   };
 
   OnClick = () => {
@@ -129,7 +106,10 @@ class FrgotPassword extends Component {
                     </div>
                     <h2 class="text-center">Forgot Password?</h2>
                     <p>You can reset your password here.</p>
-                    <form onSubmit={this.handleSubmit} noValidate>
+                    <h2 class="text-center" style={{ color: "#bf3a2c" }}>
+                      {this.props.passowrdList}
+                    </h2>
+                    <form noValidate>
                       <div class="form-group">
                         <div class="input-group">
                           <input
@@ -179,7 +159,6 @@ class FrgotPassword extends Component {
                         disabled={loading}
                       >
                         {loading && <i class="spinner-border" role="status" />}
-                        {loading && <span>Reset Password</span>}
                         {!loading && <span>Reset Password</span>}
                       </button>
                       {/* </div> */}

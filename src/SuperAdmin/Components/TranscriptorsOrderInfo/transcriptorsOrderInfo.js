@@ -15,7 +15,9 @@ import "./modal.css";
 
 class TranscriptorsOrderInfoTable extends Component {
   state = {
-    loading: false
+    loading: false,
+    CLoading: false,
+    ILoading: false
   };
   componentDidMount() {
     if (!this.state.loading) {
@@ -30,6 +32,12 @@ class TranscriptorsOrderInfoTable extends Component {
       );
     }
   }
+  getCLoadingVlaue = () => {
+    return this.state.CLoading;
+  };
+  getILoadingValue = () => {
+    return this.state.ILoading;
+  };
   render() {
     console.log(this.props.transcriptorsList);
     return (
@@ -55,26 +63,25 @@ class TranscriptorsOrderInfoTable extends Component {
                       this.props.tListLenght > 0 ? (
                         this.props.transcriptorsList.map(ls => (
                           <tr>
-                            <td>{ls.username}</td>
-                            <td>{ls.email}</td>
-                            <td>
+                            <td style={{ padding: "30px" }}>{ls.username}</td>
+                            <td style={{ padding: "30px" }}>{ls.email}</td>
+                            <td style={{ padding: "0px" }}>
                               <button
-                                type="button"
                                 class="btn"
                                 data-toggle="modal"
                                 data-target="#myModalCompleted"
                                 onClick={() => {
                                   this.props.displayCompletedOrdersAction(
-                                    new SendTranscriptorIDClass(ls.id)
+                                    new SendTranscriptorIDClass(ls.id),
+                                    this
                                   );
                                 }}
                               >
                                 Completed
                               </button>
                             </td>
-                            <td>
+                            <td style={{ padding: "0px" }}>
                               <button
-                                type="button"
                                 class="btn"
                                 data-toggle="modal"
                                 data-target="#myModalInProcess"
@@ -107,8 +114,14 @@ class TranscriptorsOrderInfoTable extends Component {
                     )}
                   </tbody>
                 </table>
-                <CompletedModal CList={this.props.completedOrderList} />
-                <InProcessModal IList={this.props.inProgressOrdersList} />
+                <CompletedModal
+                  completedOrderList={this.props.completedOrderList}
+                  cOrderLength={this.props.cOrderLength}
+                  getCLoadingVlaue={this.getCLoadingVlaue}
+                />
+                <InProcessModal
+                  inProgressOrdersList={this.props.inProgressOrdersList}
+                />
               </div>
             </div>
           </div>
@@ -120,6 +133,7 @@ class TranscriptorsOrderInfoTable extends Component {
 
 const mapStateToProps = state => ({
   completedOrderList: state.TranscriptorsReducer.displayCompletedOrdersList,
+  cOrderLength: state.TranscriptorsReducer.completeOrderLength,
   inProgressOrdersList: state.TranscriptorsReducer.displayInProgressOrdersList,
   transcriptorsList: state.TranscriptorsReducer.displayTranscriptorsList,
   tListLenght: state.TranscriptorsReducer.transcriptorsListLength

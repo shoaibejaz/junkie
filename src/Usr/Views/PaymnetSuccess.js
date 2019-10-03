@@ -8,14 +8,13 @@ import { deleteOrder } from "../../LocalStorage/OrderLocalStorage";
 class PaymentSuccess extends Component {
   state = {};
   componentDidMount() {
-    this.props.match.params.code
+    this.props.match
       ? console.log("Payment Success Page")
       : history.push("/Error");
   }
   render() {
     return (
       <React.Fragment>
-        {/* <NavBar /> */}
         {this.props.match ? deleteOrder("OrderData") : ""}
         <Success match={this.props.match} />
       </React.Fragment>

@@ -14,15 +14,6 @@ import './Registerform.css';
 const validEmailRegex = RegExp(
 	/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
-  const validateForm = (errors, ...rest) => {
-	let valid = true;
-	Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-	console.log(valid);
-	// Object.values(rest).forEach(val => {
-	//   val === null && (valid = false);
-	// });
-	return valid;
-  };
 
   let context = null;
 class OrderNow extends Component {
@@ -169,23 +160,13 @@ class OrderNow extends Component {
 
 			current_fs = $(this).parent();
 			previous_fs = $(this).parent().prev();
-
-			//de-activate current step on progressbar
 			$('#progressbar li').eq($('fieldset').index(current_fs)).removeClass('active');
-
-			//show the previous fieldset
 			previous_fs.show();
-			//hide the current fieldset with style
 			current_fs.animate(
 				{ opacity: 0 },
 				{
 					step: function(now, mx) {
-						//as the opacity of current_fs reduces to 0 - stored in "now"
-						//1. scale previous_fs from 80% to 100%
 						scale = 0.8 + (1 - now) * 0.2;
-						//2. take current_fs to the right(50%) - from 0%
-						// left = ((1-now) * 50)+"%";
-						//3. increase opacity of previous_fs to 1 as it moves in
 						opacity = 1 - now;
 						current_fs.css({ left: 0 });
 						previous_fs.css({ transform: 'scale(' + scale + ')', opacity: opacity });
@@ -195,7 +176,6 @@ class OrderNow extends Component {
 						current_fs.hide();
 						animating = false;
 					},
-					//this comes from the custom easing plugin
 					easing: 'swing'
 				}
 			);
@@ -205,16 +185,13 @@ class OrderNow extends Component {
 			return false;
 		});
 		var fileInput = document.getElementById("fileInput");
-		// var sp = document.getElementById("sp");
 		fileInput.onchange = function() {
 		  var file = fileInput.files[0];
 		  var reader = new FileReader();
 		  reader.onload = function() {
 			var aud = new Audio(reader.result);
 			aud.onloadedmetadata = function() {
-			  // sp.innerHTML = aud.duration;
 			  context.setState({ Duration: aud.duration });
-			  console.log(context.state.Duration);
 			  if (context.state.Duration) {
 				context.handleFileUpload();
 			  }
@@ -288,38 +265,23 @@ class OrderNow extends Component {
 		this.setState({ State, [name]: value });
 	  };
 	
-	  handleSubmit = event => {
-		event.preventDefault();
-		if (validateForm(this.state.errors)) {
-		  this.setState({ formValidity: true });
-		  console.log(this.state.formValidity);
-		} else {
-		  this.setState({ formValidity: false });
-		  console.log(this.state.formValidity);
-		}
-		// this.setState({ formValidity: false });
-	  };
+	 
 	render() {
 		const {errors} =this.state;
 		const Order = getOrder();
-		// console.log(getOrder());
-		// console.log(._fileName);
-	// this.state.Order = getOrder();
-
 		return (
-			<div class="row">
+			<div class="row" style={{marginTop:"7%"}}>
 				<div class="col-md-12 col-md-offset-3">
 					<form id="msform">
-						<ul id="progressbar">
+						{/* <ul id="progressbar">
 							<li class="active">Step 1</li>
 							<li>Step 2</li>
-							{/* <li>Step 3</li> */}
-						</ul>
+							<li>Step 3</li>
+						</ul> */}
 
 						<fieldset>
 			
 					<h2 class="fs-title">Upload Audio or vedio File</h2>
-					{/* <h3 class="fs-subtitle">Tell us something more about you</h3> */}
 					<div class="box">
 						<input
 							type="file"
@@ -327,11 +289,9 @@ class OrderNow extends Component {
 							id="fileInput"
 							onChange={e => {
 								this.setState({ File: e.target.files });
-								// this.handleFileChange();
 							  }}
 							  disabled={this.state.loadingFile || Order? Order._filePath:""}
 							name="selectedFile"
-							// onChange={e => this.onChange(e)}
 							style={{ display: "none" }}
 							class="inputfile inputfile-6"
 							data-multiple-caption="{count} files selected"
@@ -344,14 +304,12 @@ class OrderNow extends Component {
 							{this.state.loadingFile && <i class="spinner-border" role="status" />}
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
 									<path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
-								</svg>{' '}
+								</svg>
 								{this.state.loadingFile && <span>File is uploading</span>}
               {!this.state.loadingFile && <span>Upload File</span>} &hellip;
 							</strong>
 						</label>
 					</div>
-				
-					{/* Table */}
 					<table class="table table-bordered table-sm">
 						<thead class="thead-dark">
 							<tr>
@@ -404,7 +362,7 @@ class OrderNow extends Component {
 								
 							<React.Fragment>
 							<tr>
-								<td>Turn Around Time { console.log("Local Storage")}</td>
+								<td>Turn Around Time</td>
 								<td  colspan="3">
 									<div class="form-group" style={{ width: '130px' }}>
 										<select class="form-control" value={this.state._TurnAroundTime} onChange={(e)=>this.setState({_TurnAroundTime:e.target.value})} id="sel1" style={{ width: '30' }}>
@@ -416,8 +374,6 @@ class OrderNow extends Component {
 										</select>
 									</div>
 								</td>
-								{/*<td>0:40</td>
-										<td>$29</td> */}
 							</tr>
 							<tr>
 								<td>Number of Speaker</td>
@@ -462,18 +418,13 @@ class OrderNow extends Component {
 						  <label htmlFor="checkbox_id_V">$0.15/mint</label>
 						</td>
 							</tr>
-							
-							{/* <tr>
-								<td class="table-secondary " colspan="4"><b>Sub Total</b></td>
-							
-							</tr> */}
 							</React.Fragment>
 						):
 							(this.props.fileList._response === "got"?
 							
 						<React.Fragment>
 						<tr>
-							<td>Turn Around Time {console.log("Response")}</td>
+							<td>Turn Around Time</td>
 							<td  colspan="3">
 								<div class="form-group" style={{ width: '130px' }}>
 									<select class="form-control" onChange={(e)=>this.setState({_TurnAroundTime:e.target.value})} value={this.state._TurnAroundTime} id="sel1" style={{ width: '30' }}>
@@ -485,8 +436,6 @@ class OrderNow extends Component {
 									</select>
 								</div>
 							</td>
-							{/*<td>0:40</td>
-									<td>$29</td> */}
 						</tr>
 						<tr>
 							<td>Number of Speaker</td>
@@ -531,19 +480,10 @@ class OrderNow extends Component {
                       <label htmlFor="checkbox_id_V">$0.15/mint</label>
                     </td>
 						</tr>
-						
-						{/* <tr>
-							<td class="table-secondary " colspan="4"><b>Sub Total</b></td>
-						
-						</tr> */}
 						</React.Fragment>:"")}
 					</table>
-				{/* {this.props.fileList._response === "got"? */}
-				
-							
 							  <input
 							  type="button"
-							//   disabled={this.state.firstNextButton}
 							
 							  onClick={() => {
 								this.props.makeOrderActionBeforeLogin(
@@ -563,7 +503,6 @@ class OrderNow extends Component {
 								);
 							  }} 
 							  name="next" class="next action-button" value="Next"/>
-					{/* :""	} */}
 						</fieldset>
 						<fieldset>
 							<h2 class="fs-title">Authentication</h2>
@@ -577,13 +516,11 @@ class OrderNow extends Component {
 							>
 								Existing Customer Login here?
 							</button></Link>
-							{/* <h3 class="fs-subtitle">Your presence on the social network</h3> */}
 							<div class="form-group">
                   <div class="input-group">
                     <input
                       type="text"
                       name="_FName"
-                      // onChange={e => this.setState({ _FName: e.target.value })}
                       onChange={this.handleChange}
                       class="form-control"
                       placeholder="First Name"
@@ -694,12 +631,9 @@ class OrderNow extends Component {
 								  }
 								
 							}}
-							//  name="submit" 
 							 class="action-button" 
-							//  value="Submit"
 							  >
 								 {this.state.loadingSubmit && <i class="spinner-border" role="status" />}
-                      {this.state.loadingSubmit && <span>Submitting</span>}
                       {!this.state.loadingSubmit && <span>Submit</span>}
 						</button>
 						</fieldset>

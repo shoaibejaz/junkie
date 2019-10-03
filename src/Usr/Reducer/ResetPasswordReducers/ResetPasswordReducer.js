@@ -1,5 +1,6 @@
 import { SendEmail, SendCode, ResetPassword } from "../../Actions/Types";
 import VerifyCodeResponce from "../../BusinessLogics/ReducerLogics/ResetPasswordlogics/VerifyCodeResponce";
+import history from "../../../Router/history";
 
 const state = {
   sendEmailList: "",
@@ -19,10 +20,6 @@ function ResetPasswordReducer(mState = { ...state }, action) {
     case SendCode:
       if (action.payload === undefined || action.payload === null) {
       } else {
-        // console.log(action.payload);
-        // mState.sendCodeList.push(
-        //   new VerifyCodeResponce(action.payload._email, action.payload._code)
-        // );
         mState.sendCodeList = action.payload;
       }
       return deepCopy(mState);
@@ -30,7 +27,13 @@ function ResetPasswordReducer(mState = { ...state }, action) {
     case ResetPassword:
       if (action.payload === undefined || action.payload === null) {
       } else {
-        mState.resetPasswordList = action.payload;
+        if (
+          action.payload === "Password doesn't match!" ||
+          action.payload === "Invalid Entries" ||
+          action.payload === "Failed" ||
+          action.payload === "Password must be 8 characters long!"
+        )
+          mState.resetPasswordList = action.payload;
       }
       return deepCopy(mState);
 

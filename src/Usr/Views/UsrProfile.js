@@ -17,7 +17,6 @@ class UsrProfile extends Component {
     this.props.displayUserProfileAction(new SendUserIDClass(getUserID()));
   }
   render() {
-    console.log(this.props.profileList);
     return (
       <React.Fragment>
         <NavBar />

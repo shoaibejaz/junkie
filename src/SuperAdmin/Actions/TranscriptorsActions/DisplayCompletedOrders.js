@@ -2,7 +2,7 @@ import { DisplayCompletedOrders } from "../Types";
 import { BaseURL } from "../BaseURL";
 import axios from "axios";
 
-export const displayCompletedOrdersAction = TID => dispatch => {
+export const displayCompletedOrdersAction = (TID, crtl) => dispatch => {
   const ID = JSON.stringify(TID);
   console.log(ID);
   axios
@@ -16,9 +16,5 @@ export const displayCompletedOrdersAction = TID => dispatch => {
     })
     .catch(error => {
       console.log(error.response);
-      // dispatch({
-      //   type: DisplayCompletedOrders,
-      //   payload: error.response
-      // });
     });
 };

@@ -1,27 +1,27 @@
 import { SendEmail } from "../Types";
 import { BaseURL } from "../BaseURL";
+import history from "../../../Router/history";
 import axios from "axios";
 
-export const sendEmailAction = Email => dispatch => {
+export const sendEmailAction = (Email, crtl) => dispatch => {
   const email = JSON.stringify(Email);
-  console.log(email);
   axios
     .post(BaseURL + "/userRestSendMail", email)
     .then(res => {
-      // if (res.data) {
-      //   crtl.setState({ loading: false });
-      // }
       dispatch({
         type: SendEmail,
         payload: res.data
       });
-      console.log(res.data);
+      if (res.data) {
+        crtl.setState({ loading: false });
+        if (res.data === "Email sent with Code to Verify") {
+          history.push("/VerifyCode");
+        } else {
+          history.push("/Email");
+        }
+      }
     })
     .catch(error => {
-      // dispatch({
-      //   type: SendEmail,
-      //   payload: error.response
-      // });
       console.log(error.response);
     });
 };

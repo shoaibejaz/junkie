@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Loader from "../../Usr/Component/Loader/Loader";
+import CountDown from "../Components/MyWork/CountDown";
 import SideNav from "../Components/AdminSideNav/SideNav";
 import MyWork from "../Components/MyWork/MyWork";
 import Upload from "../Components/Upload";
@@ -44,6 +45,11 @@ class TMyWork extends Component {
           <div>
             <div style={{ padding: "7% 10% 0% 10%" }}>
               {/* <h1>Start Transcription</h1> */}
+              <div class="row">
+                <div class="col-lg-12">
+                  <CountDown acceptedOrders={this.props.acceptedOrders} />
+                </div>
+              </div>
               <div class="row">
                 <div class="col-lg-4">
                   <MyWork AOrder={this.props.acceptedOrders} />

@@ -27,18 +27,9 @@ class SimpleModal extends React.Component {
                   &nbsp;
                   {this.props.profileList ? this.props.profileList.lname : ""}
                 </h5>
-                {/* <small>
-                  <cite title="Source Title">
-                    Chicago, United States of America{" "}
-                    <i class="icon-map-marker" />
-                  </cite>
-                </small> */}
               </blockquote>
               <p>
                 {this.props.profileList ? this.props.profileList.email : ""}
-                {/* <br />
-                www.bootsnipp.com <br />
-                June 18, 1990 */}
               </p>
             </div>
           </div>

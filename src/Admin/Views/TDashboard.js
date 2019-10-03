@@ -2,8 +2,6 @@ import React, { Component } from "react";
 
 import SideNav from "../Components/AdminSideNav/SideNav";
 import PostedWork from "../Components/PostedWork/PostedWork";
-import Notification from "../Components/Notification/Notification";
-import Loader from "../../Usr/Component/Loader/Loader";
 
 import { displayAllOrdersAction } from "../Actions/OrdersActions/DisplayAllOrder";
 import { connect } from "react-redux";
@@ -21,21 +19,14 @@ class TDashboard extends Component {
     );
   }
   render() {
-    console.log(this.props.ordersPoolList);
-
     return (
       <React.Fragment>
         <SideNav />
-        {/* <Notification /> */}
-        {/* {this.props.orderListLength > 0 ? ( */}
         <PostedWork
           oList={this.props.ordersPoolList}
           AOrder={this.props.acceptedOrders}
           orderListLength={this.props.orderListLength}
         />
-        {/* ) : (
-          <Loader />
-        )} */}
       </React.Fragment>
     );
   }

@@ -5,13 +5,12 @@ import { connect } from "react-redux";
 
 class VerifyCodeView extends Component {
   state = {};
-  componentWillMount() {
-    this.props.emailList
+  componentDidMount() {
+    this.props.emailList === "Email sent with Code to Verify"
       ? console.log("Verify Code Page")
       : history.push("/Error");
   }
   render() {
-    console.log(this.props.codeList);
     return (
       <React.Fragment>
         <VerifyCodePage />

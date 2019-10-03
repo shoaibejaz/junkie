@@ -9,7 +9,6 @@ const state = {
 function TranscriptorLoginReducer(mState = { ...state }, action) {
   switch (action.type) {
     case TranscriptorsLogin:
-      console.log(action.payload);
       if (action.payload === undefined || action.payload === null) {
         mState.error = true;
       } else {
