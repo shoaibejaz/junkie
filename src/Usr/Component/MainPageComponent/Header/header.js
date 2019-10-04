@@ -38,7 +38,6 @@ class Header extends Component {
                     <i class="fa fa-bars" data-x-icon-s="&#xf0c9;" />
                     <span class="visually-hidden">Navigation</span>
                   </a>
-
                   <nav class="x-nav-wrap desktop" role="navigation">
                     <ul id="menu-primary-menu" class="x-nav">
                       <li
@@ -108,15 +107,6 @@ class Header extends Component {
                       </li>
                     </ul>
                   </nav>
-                  {/* <div
-                    id="x-nav-wrap-mobile"
-                    class="x-nav-wrap mobile x-collapsed"
-                    data-x-toggleable="x-nav-wrap-mobile"
-                    data-x-toggle-collapse="1"
-                    aria-hidden="true"
-                    aria-labelledby="x-btn-navbar"
-                  ></div> */}
-
                   <div
                     id="x-nav-wrap-mobile"
                     class="x-nav-wrap mobile x-collapsed"
