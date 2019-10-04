@@ -29,14 +29,14 @@ class Header extends Component {
                     href="#"
                     id="x-btn-navbar"
                     class="x-btn-navbar collapsed"
-                    data-x-toggle="collapse-b"
-                    data-x-toggleable="x-nav-wrap-mobile"
+                    // data-x-toggle="collapse-b"
+                    data-toggle="collapse"
+                    data-target="#x-nav-wrap-mobile"
                     aria-expanded="false"
                     aria-controls="x-nav-wrap-mobile"
                     role="button"
                   >
                     <i class="fa fa-bars" data-x-icon-s="&#xf0c9;" />
-                    <span class="visually-hidden">Navigation</span>
                   </a>
                   <nav class="x-nav-wrap desktop" role="navigation">
                     <ul id="menu-primary-menu" class="x-nav">
@@ -107,11 +107,10 @@ class Header extends Component {
                       </li>
                     </ul>
                   </nav>
+
                   <div
                     id="x-nav-wrap-mobile"
-                    class="x-nav-wrap mobile x-collapsed"
-                    data-x-toggleable="x-nav-wrap-mobile"
-                    data-x-toggle-collapse="1"
+                    class="x-nav-wrap mobile collapse"
                     aria-hidden="true"
                     aria-labelledby="x-btn-navbar"
                   >
