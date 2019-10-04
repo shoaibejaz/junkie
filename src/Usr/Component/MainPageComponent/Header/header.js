@@ -34,20 +34,10 @@ class Header extends Component {
                     aria-expanded="false"
                     aria-controls="x-nav-wrap-mobile"
                     role="button"
-                    data-target="#x-nav-wrap-mobile"
                   >
-                    {/* <i class=""></i> */}
                     <i class="fa fa-bars" data-x-icon-s="&#xf0c9;" />
-                    {/* <span class="visually-hidden">Navigation</span>  */}
+                    <span class="visually-hidden">Navigation</span>
                   </a>
-                  {/* <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#x-nav-wrap-mobile"
-                  >
-                    <span class="navbar-toggler-icon"></span>
-                  </button> */}
 
                   <nav class="x-nav-wrap desktop" role="navigation">
                     <ul id="menu-primary-menu" class="x-nav">
@@ -122,7 +112,6 @@ class Header extends Component {
                   <div
                     id="x-nav-wrap-mobile"
                     class="x-nav-wrap mobile x-collapsed"
-                    // class="collapse navbar-collapse"
                     data-x-toggleable="x-nav-wrap-mobile"
                     data-x-toggle-collapse="1"
                     aria-hidden="true"
@@ -135,12 +124,12 @@ class Header extends Component {
                         </a>
                       </li>
                       <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-567">
-                        <a href="#">
+                        <a href="/Calculator">
                           <span>Calculator</span>
                         </a>
                       </li>
                       <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-571">
-                        <a href="#">
+                        <a href="/OrderNow">
                           <span>Order now</span>
                         </a>
                       </li>
@@ -165,7 +154,7 @@ class Header extends Component {
                           <span>Signup</span>
                         </a>
                       </li>
-                      <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-7 current_page_item menu-item-569">
+                      <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-568">
                         <a href="/Login">
                           <span>Login</span>
                         </a>
