@@ -108,6 +108,14 @@ class Header extends Component {
                       </li>
                     </ul>
                   </nav>
+                  {/* <div
+                    id="x-nav-wrap-mobile"
+                    class="x-nav-wrap mobile x-collapsed"
+                    data-x-toggleable="x-nav-wrap-mobile"
+                    data-x-toggle-collapse="1"
+                    aria-hidden="true"
+                    aria-labelledby="x-btn-navbar"
+                  ></div> */}
 
                   <div
                     id="x-nav-wrap-mobile"
