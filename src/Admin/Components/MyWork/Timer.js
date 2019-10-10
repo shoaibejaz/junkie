@@ -52,72 +52,81 @@ class Timer extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.state.days === 0 ? (
-          ""
-        ) : (
-          <div className="clock">
-            {this.leadingZero(this.state.days ? this.state.days : "00")}:
-          </div>
-        )}
-        {this.state.hours === 0 ? (
-          ""
-        ) : (
-          <div className="clock">
-            {this.leadingZero(this.state.hours ? this.state.hours : "00")}:
-          </div>
-        )}
-        {this.state.minutes === 0 ? (
-          ""
-        ) : (
-          <div className="clock">
-            {this.leadingZero(this.state.minutes ? this.state.minutes : "00")}:
-          </div>
-        )}
-        {this.state.seconds === 0 ? (
-          ""
-        ) : (
-          <div className="clock">
-            {this.leadingZero(this.state.seconds ? this.state.seconds : "00")}
-          </div>
-        )}
-        {this.props.acceptedOrders.timeExtendStatus}
-        {this.state.seconds === 0 ? (
-          ""
-        ) : this.props.acceptedOrders.timeExtendStatus === false ? (
-          ""
-        ) : (
-          <div className="clock">
-            <button
-              onClick={() => {
-                if (!this.state.loading) {
-                  this.setState(
-                    {
-                      loading: true
-                    },
-                    () => {
-                      this.timer = setTimeout(() => {
-                        window.location.reload();
-                      }, this.state.loading === false);
-                      this.props.extentDeliveryTime(
-                        new ExtendOrderTimeClass(
-                          this.props.acceptedOrders._orderId
-                        ),
-                        this
-                      );
-                    }
-                  );
-                }
-              }}
-              class="btn"
-            >
-              {this.state.loading && <i class="spinner-border" role="status" />}
-              {this.state.loading && <span>Extending</span>}
-              {!this.state.loading && <span>Extend Time upto 12 hours</span>}
-            </button>
-          </div>
-        )}
-      </div>
+      <React.Fragment>
+        <div style={{marginLeft:"5%"}}>
+          <div className="clockHead">Days :</div>
+          <div className="clockHead"> Hours :</div>
+          <div className="clockHead"> Minutes :</div>
+          <div className="clockHead"> Seconds</div>
+        </div>
+        <div>
+          {this.state.days === 0 ? (
+            <div className="clock">{this.leadingZero("00")} :</div>
+          ) : (
+            <div className="clock">
+              {this.leadingZero(this.state.days ? this.state.days : "00")} :
+            </div>
+          )}
+          {this.state.hours === 0 ? (
+            <div className="clock">{this.leadingZero("00")} :</div>
+          ) : (
+            <div className="clock">
+              {this.leadingZero(this.state.hours ? this.state.hours : "00")} :
+            </div>
+          )}
+          {this.state.minutes === 0 ? (
+            <div className="clock">{this.leadingZero("00")} :</div>
+          ) : (
+            <div className="clock">
+              {this.leadingZero(this.state.minutes ? this.state.minutes : "00")}{" "}
+              :
+            </div>
+          )}
+          {this.state.seconds === 0 ? (
+            <div className="clock">{this.leadingZero("00")}</div>
+          ) : (
+            <div className="clock">
+              {this.leadingZero(this.state.seconds ? this.state.seconds : "00")}
+            </div>
+          )}
+          {this.props.acceptedOrders.timeExtendStatus}
+          {this.props.acceptedOrders.timeExtendStatus === false ? (
+            ""
+          ) : (
+            <div className="clock">
+              <button
+                onClick={() => {
+                  if (!this.state.loading) {
+                    this.setState(
+                      {
+                        loading: true
+                      },
+                      () => {
+                        this.timer = setTimeout(() => {
+                          window.location.reload();
+                        }, this.state.loading === false);
+                        this.props.extentDeliveryTime(
+                          new ExtendOrderTimeClass(
+                            this.props.acceptedOrders._orderId
+                          ),
+                          this
+                        );
+                      }
+                    );
+                  }
+                }}
+                class="btn"
+              >
+                {this.state.loading && (
+                  <i class="spinner-border" role="status" />
+                )}
+                {this.state.loading && <span>Extending</span>}
+                {!this.state.loading && <span>Extend Time upto 12 hours</span>}
+              </button>
+            </div>
+          )}
+        </div>
+      </React.Fragment>
     );
   }
 }

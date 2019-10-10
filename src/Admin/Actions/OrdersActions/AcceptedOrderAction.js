@@ -19,10 +19,6 @@ export const transcriptorAcceptedOrderAction = (Data, feedback) => dispatch => {
       }
     })
     .catch(error => {
-      // dispatch({
-      //   type: TranscriptorAcceptOrder,
-      //   payload: error.response
-      // });
       console.log(error.response);
     });
 };
@@ -37,16 +33,11 @@ export const displayAcceptedOrderAction = (Data, crtl) => dispatch => {
         type: DisplayAcceptedOrder,
         payload: res.data
       });
-      console.log(res.data);
       if (res.data) {
         crtl.setState({ loading: false });
       }
     })
     .catch(error => {
-      // dispatch({
-      //   type: DisplayAcceptedOrder,
-      //   payload: error.response
-      // });
       console.log(error.response);
     });
 };

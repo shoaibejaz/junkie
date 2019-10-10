@@ -60,7 +60,7 @@ class TMyWork extends Component {
               </div>
             </div>
             <div class="container">
-              <h1>Upload Your Delivery</h1>
+              <h1>Deliver Your Order</h1>
               <div class="row">
                 <div class="col-lg-12">
                   <div class="card-content">

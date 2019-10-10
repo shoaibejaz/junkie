@@ -9,7 +9,6 @@ class TranscriptionJunkie extends Component {
     return (
       <div>
         <Router />
-        {/* <AudioPlayer></AudioPlayer> */}
       </div>
     );
   }

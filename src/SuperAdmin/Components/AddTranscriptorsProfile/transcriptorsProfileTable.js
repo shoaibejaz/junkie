@@ -85,104 +85,106 @@ class TranscriptorsTable extends Component {
         <div style={{ marginTop: "-150px" }} class="container">
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    {/* <th scope="col">Serial</th> */}
-                    <th scope="col" style={{ textAlign: "center" }}>
-                      User Name
-                    </th>
-                    <th scope="col" style={{ textAlign: "center" }}>
-                      Email
-                    </th>
-                    {/* <th scope="col">Password</th> */}
-                    <th scope="col" style={{ textAlign: "center" }}>
-                      Status
-                    </th>
-                    <th scope="col" style={{ textAlign: "center" }}>
-                      Reset Password
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.loading === false ? (
-                    this.props.tListLenght > 0 ? (
-                      this.props.transcriptorsList.map(ls => (
+              <div style={{ overflowX: "auto" }}>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      {/* <th scope="col">Serial</th> */}
+                      <th scope="col" style={{ textAlign: "center" }}>
+                        User Name
+                      </th>
+                      <th scope="col" style={{ textAlign: "center" }}>
+                        Email
+                      </th>
+                      {/* <th scope="col">Password</th> */}
+                      <th scope="col" style={{ textAlign: "center" }}>
+                        Status
+                      </th>
+                      <th scope="col" style={{ textAlign: "center" }}>
+                        Reset Password
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.loading === false ? (
+                      this.props.tListLenght > 0 ? (
+                        this.props.transcriptorsList.map(ls => (
+                          <tr>
+                            <td style={{ padding: "35px" }}>{ls.username}</td>
+                            <td style={{ padding: "35px" }}>{ls.email}</td>
+                            <td style={{ padding: "0px" }}>
+                              {ls.status === true ? (
+                                <button
+                                  style={{
+                                    borderRadius: "5px",
+                                    marginTop: "28px",
+                                    padding: "5%",
+                                    backgroundColor: "#28a745",
+                                    borderColor: "#28a745",
+                                    color: "#ffffff"
+                                  }}
+                                  onClick={() => {
+                                    this.props.changeTranscriptorStatusAction(
+                                      new SendTranscriptorIDClass(ls.id),
+                                      this
+                                    );
+                                  }}
+                                >
+                                  Activate
+                                </button>
+                              ) : (
+                                <button
+                                  style={{
+                                    borderRadius: "5px",
+                                    marginTop: "28px",
+                                    padding: "5%",
+                                    backgroundColor: "#dc3545",
+                                    borderColor: "#dc3545",
+                                    color: "#ffffff"
+                                  }}
+                                  onClick={() => {
+                                    this.props.changeTranscriptorStatusAction(
+                                      new SendTranscriptorIDClass(ls.id)
+                                    );
+                                  }}
+                                >
+                                  Deactive
+                                </button>
+                              )}
+                            </td>
+                            <td style={{ padding: "0px" }}>
+                              <button
+                                type="button"
+                                class="btn btn-lg"
+                                data-toggle="modal"
+                                data-target="#myModal"
+                                style={{ borderRadius: "5px", width: "170px" }}
+                                onClick={() => this.setState({ TID: ls.id })}
+                              >
+                                Reset
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
                         <tr>
-                          <td style={{ padding: "35px" }}>{ls.username}</td>
-                          <td style={{ padding: "35px" }}>{ls.email}</td>
-                          <td style={{ padding: "0px" }}>
-                            {ls.status === true ? (
-                              <button
-                                style={{
-                                  borderRadius: "5px",
-                                  marginTop: "28px",
-                                  padding: "5%",
-                                  backgroundColor: "#28a745",
-                                  borderColor: "#28a745",
-                                  color: "#ffffff"
-                                }}
-                                onClick={() => {
-                                  this.props.changeTranscriptorStatusAction(
-                                    new SendTranscriptorIDClass(ls.id),
-                                    this
-                                  );
-                                }}
-                              >
-                                Activate
-                              </button>
-                            ) : (
-                              <button
-                                style={{
-                                  borderRadius: "5px",
-                                  marginTop: "28px",
-                                  padding: "5%",
-                                  backgroundColor: "#dc3545",
-                                  borderColor: "#dc3545",
-                                  color: "#ffffff"
-                                }}
-                                onClick={() => {
-                                  this.props.changeTranscriptorStatusAction(
-                                    new SendTranscriptorIDClass(ls.id)
-                                  );
-                                }}
-                              >
-                                Deactive
-                              </button>
-                            )}
-                          </td>
-                          <td style={{ padding: "0px" }}>
-                            <button
-                              type="button"
-                              class="btn btn-lg"
-                              data-toggle="modal"
-                              data-target="#myModal"
-                              style={{ borderRadius: "5px", width: "170px" }}
-                              onClick={() => this.setState({ TID: ls.id })}
-                            >
-                              Reset
-                            </button>
+                          <td colSpan="4">
+                            <h2>
+                              No transcriptor is added into the system still
+                            </h2>
                           </td>
                         </tr>
-                      ))
+                      )
                     ) : (
-                      <tr>
-                        <td colSpan="4">
-                          <h2>
-                            No transcriptor is added into the system still
-                          </h2>
-                        </td>
-                      </tr>
-                    )
-                  ) : (
-                    <div class="container">
-                      <div style={{ marginLeft: "175%" }}>
-                        <SpinnerLoader />
+                      <div class="container">
+                        <div style={{ marginLeft: "175%" }}>
+                          <SpinnerLoader />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
               <div class="modal fade" id="myModal">
                 <div class="modal-dialog">
                   <div class="modal-content">

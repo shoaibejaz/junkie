@@ -12,13 +12,16 @@ export const uploadDeliveryAction = (Data, File, crtl) => dispatch => {
   axios
     .post(BaseURL + "/adminCompletesOrder", formdata)
     .then(res => {
-      if (res.data) {
-        crtl.setState({ loading: false });
-      }
       dispatch({
         type: UploadDelivery,
         payload: res.data
       });
+      if (res.data) {
+        crtl.setState({ loading: false });
+        if (res.data === "Order is delivered") {
+          window.location.reload();
+        }
+      }
       console.log(res.data);
     })
     .catch(error => {

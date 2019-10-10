@@ -240,213 +240,215 @@ class AddRequirements extends Component {
           </label>
         </div>
         {/* Table */}
-        <table class="table table-bordered table-sm">
-          <thead class="thead-dark">
+        <div style={{ overflowX: "auto" }}>
+          <table class="table table-bordered table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th>File Name</th>
+                <th>File Size</th>
+                <th>File Length</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
             <tr>
-              <th>File Name</th>
-              <th>File Size</th>
-              <th>File Length</th>
-              <th>Cost</th>
+              <td>
+                {Order._fileName ? (
+                  <img
+                    width="20px"
+                    onClick={() => {
+                      deleteOrder("OrderData");
+                      window.location.reload();
+                    }}
+                    style={{ cursor: "pointer" }}
+                    src={require("../../../../image/cancelWarning.png")}
+                  />
+                ) : (
+                  ""
+                )}
+                {Order._fileName
+                  ? Order._fileName
+                  : this.props.fileList._response === "got"
+                  ? this.props.fileList._fileName
+                  : "example.mp4"}
+              </td>
+              <td>
+                {Order._fileSize
+                  ? Order._fileSize
+                  : this.props.fileList._response === "got"
+                  ? this.props.fileList._fileSize
+                  : "0 B"}
+              </td>
+              <td>
+                {Order._fileDuration
+                  ? Order._fileDuration
+                  : this.props.fileList._response === "got"
+                  ? this.props.fileList._duration
+                  : "00:00:00"}
+              </td>
+              <td>
+                $
+                {Order._totalCost
+                  ? Order._totalCost
+                  : this.props.fileList._response === "got"
+                  ? this.props.fileList._totalCost
+                  : "0"}
+              </td>
             </tr>
-          </thead>
-          <tr>
-            <td>
-              {Order._fileName ? (
-                <img
-                  width="20px"
-                  onClick={() => {
-                    deleteOrder("OrderData");
-                    window.location.reload();
-                  }}
-                  style={{ cursor: "pointer" }}
-                  src={require("../../../../image/cancelWarning.png")}
-                />
-              ) : (
-                ""
-              )}
-              {Order._fileName
-                ? Order._fileName
-                : this.props.fileList._response === "got"
-                ? this.props.fileList._fileName
-                : "example.mp4"}
-            </td>
-            <td>
-              {Order._fileSize
-                ? Order._fileSize
-                : this.props.fileList._response === "got"
-                ? this.props.fileList._fileSize
-                : "0 B"}
-            </td>
-            <td>
-              {Order._fileDuration
-                ? Order._fileDuration
-                : this.props.fileList._response === "got"
-                ? this.props.fileList._duration
-                : "00:00:00"}
-            </td>
-            <td>
-              $
-              {Order._totalCost
-                ? Order._totalCost
-                : this.props.fileList._response === "got"
-                ? this.props.fileList._totalCost
-                : "0"}
-            </td>
-          </tr>
-          {Order._filePath ? (
-            <React.Fragment>
-              <tr>
-                <td>Turn Around Time</td>
-                <td colspan="3">
-                  <div class="form-group" style={{ width: "130px" }}>
-                    <select
-                      class="form-control"
-                      onChange={e =>
-                        this.setState({ TurnAroundTime: e.target.value })
-                      }
-                      id="sel1"
-                      value={this.state.TurnAroundTime}
-                      style={{ width: "30" }}
-                    >
-                      <option value={24}>24 hour</option>
-                      <option value={2}>2 days</option>
-                      <option value={3}>3 days</option>
-                      <option value={1}>1 week</option>
-                    </select>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Number of Speaker</td>
-                <td class="qty mt-5" colSpan="3">
-                  <span class="minus bg-dark" onClick={this.decrement}>
-                    -
-                  </span>
-                  <input
-                    style={{ height: "30px" }}
-                    type="number"
-                    class="count input"
-                    name="qty"
-                    value="1"
-                    value={this.state._NumberOFPersons}
-                    onChange={e => {
-                      this.setState({ _NumberOFPersons: e.target.value });
-                    }}
-                  />
-                  <span class="plus bg-dark" onClick={this.increment}>
-                    +
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>Time Stamp</td>
-                <td colSpan="3">
-                  <input
-                    id="checkbox_id_T"
-                    type="checkbox"
-                    checked={this.state.checked_TStatus}
-                    onChange={this.handleCheckTimeStamping}
-                  />
-                  <label htmlFor="checkbox_id_T">$0.15/mint</label>
-                </td>
-              </tr>
-              <tr>
-                <td>Verbitam</td>
-                <td colSpan="3">
-                  <input
-                    id="checkbox_id_V"
-                    type="checkbox"
-                    checked={this.state.checked_VStatus}
-                    onChange={this.handleCheckVerbatim}
-                  />
-                  <label htmlFor="checkbox_id_V">$0.15/mint</label>
-                </td>
-              </tr>
-              {/* <tr>
+            {Order._filePath ? (
+              <React.Fragment>
+                <tr>
+                  <td>Turn Around Time</td>
+                  <td colspan="3">
+                    <div class="form-group" style={{ width: "130px" }}>
+                      <select
+                        class="form-control"
+                        onChange={e =>
+                          this.setState({ TurnAroundTime: e.target.value })
+                        }
+                        id="sel1"
+                        value={this.state.TurnAroundTime}
+                        style={{ width: "30" }}
+                      >
+                        <option value={24}>24 hour</option>
+                        <option value={2}>2 days</option>
+                        <option value={3}>3 days</option>
+                        <option value={1}>1 week</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Number of Speaker</td>
+                  <td class="qty mt-5" colSpan="3">
+                    <span class="minus bg-dark" onClick={this.decrement}>
+                      -
+                    </span>
+                    <input
+                      style={{ height: "30px" }}
+                      type="number"
+                      class="count input"
+                      name="qty"
+                      value="1"
+                      value={this.state._NumberOFPersons}
+                      onChange={e => {
+                        this.setState({ _NumberOFPersons: e.target.value });
+                      }}
+                    />
+                    <span class="plus bg-dark" onClick={this.increment}>
+                      +
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Time Stamp</td>
+                  <td colSpan="3">
+                    <input
+                      id="checkbox_id_T"
+                      type="checkbox"
+                      checked={this.state.checked_TStatus}
+                      onChange={this.handleCheckTimeStamping}
+                    />
+                    <label htmlFor="checkbox_id_T">$0.15/mint</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Verbitam</td>
+                  <td colSpan="3">
+                    <input
+                      id="checkbox_id_V"
+                      type="checkbox"
+                      checked={this.state.checked_VStatus}
+                      onChange={this.handleCheckVerbatim}
+                    />
+                    <label htmlFor="checkbox_id_V">$0.15/mint</label>
+                  </td>
+                </tr>
+                {/* <tr>
                 <td class="table-secondary " colspan="4">
                   <b>Sub Total</b>
                 </td>
               </tr> */}
-            </React.Fragment>
-          ) : this.props.fileList._response === "got" ? (
-            <React.Fragment>
-              <tr>
-                <td>Turn Around Time</td>
-                <td colspan="3">
-                  <div class="form-group" style={{ width: "130px" }}>
-                    <select
-                      class="form-control"
-                      onChange={e =>
-                        this.setState({ TurnAroundTime: e.target.value })
-                      }
-                      id="sel1"
-                      value={this.state.TurnAroundTime}
-                      style={{ width: "30" }}
-                    >
-                      <option value={24}>24 hour</option>
-                      <option value={2}>2 days</option>
-                      <option value={3}>3 days</option>
-                      <option value={1}>1 week</option>
-                    </select>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Number of Speaker</td>
-                <td class="qty mt-5" colSpan="3">
-                  <span class="minus bg-dark" onClick={this.decrement}>
-                    -
-                  </span>
-                  <input
-                    style={{ height: "30px" }}
-                    type="number"
-                    class="count input"
-                    name="qty"
-                    value="1"
-                    value={this.state._NumberOFPersons}
-                    onChange={e => {
-                      this.setState({ _NumberOFPersons: e.target.value });
-                    }}
-                  />
-                  <span class="plus bg-dark" onClick={this.increment}>
-                    +
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>Time Stamp</td>
-                <td colSpan="3">
-                  <input
-                    id="checkbox_id_T"
-                    type="checkbox"
-                    checked={this.state.checked_TStatus}
-                    onChange={this.handleCheckTimeStamping}
-                  />
-                  <label htmlFor="checkbox_id_T">$0.15/mint</label>
-                </td>
-              </tr>
-              <tr>
-                <td>Verbitam</td>
-                <td colSpan="3">
-                  <input
-                    id="checkbox_id_V"
-                    type="checkbox"
-                    checked={this.state.checked_VStatus}
-                    onChange={this.handleCheckVerbatim}
-                  />
-                  <label htmlFor="checkbox_id_V">$0.15/mint</label>
-                </td>
-              </tr>
-              {/* <tr>
+              </React.Fragment>
+            ) : this.props.fileList._response === "got" ? (
+              <React.Fragment>
+                <tr>
+                  <td>Turn Around Time</td>
+                  <td colspan="3">
+                    <div class="form-group" style={{ width: "130px" }}>
+                      <select
+                        class="form-control"
+                        onChange={e =>
+                          this.setState({ TurnAroundTime: e.target.value })
+                        }
+                        id="sel1"
+                        value={this.state.TurnAroundTime}
+                        style={{ width: "30" }}
+                      >
+                        <option value={24}>24 hour</option>
+                        <option value={2}>2 days</option>
+                        <option value={3}>3 days</option>
+                        <option value={1}>1 week</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Number of Speaker</td>
+                  <td class="qty mt-5" colSpan="3">
+                    <span class="minus bg-dark" onClick={this.decrement}>
+                      -
+                    </span>
+                    <input
+                      style={{ height: "30px" }}
+                      type="number"
+                      class="count input"
+                      name="qty"
+                      value="1"
+                      value={this.state._NumberOFPersons}
+                      onChange={e => {
+                        this.setState({ _NumberOFPersons: e.target.value });
+                      }}
+                    />
+                    <span class="plus bg-dark" onClick={this.increment}>
+                      +
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Time Stamp</td>
+                  <td colSpan="3">
+                    <input
+                      id="checkbox_id_T"
+                      type="checkbox"
+                      checked={this.state.checked_TStatus}
+                      onChange={this.handleCheckTimeStamping}
+                    />
+                    <label htmlFor="checkbox_id_T">$0.15/mint</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Verbitam</td>
+                  <td colSpan="3">
+                    <input
+                      id="checkbox_id_V"
+                      type="checkbox"
+                      checked={this.state.checked_VStatus}
+                      onChange={this.handleCheckVerbatim}
+                    />
+                    <label htmlFor="checkbox_id_V">$0.15/mint</label>
+                  </td>
+                </tr>
+                {/* <tr>
                 <td class="table-secondary " colspan="4">
                   <b>Sub Total</b>
                 </td>
               </tr> */}
-            </React.Fragment>
-          ) : (
-            ""
-          )}
-        </table>
+              </React.Fragment>
+            ) : (
+              ""
+            )}
+          </table>
+        </div>
         {Order._filePath ? (
           html ? (
             ReactHtmlParser(html)

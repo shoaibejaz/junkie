@@ -36,42 +36,44 @@ class CompletedWork extends Component {
           <div class="row">
             <div class="col-lg-12">
               <div class="card-content">
-                <table class="table">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">Order ID</th>
-                      <th scope="col">Start Date</th>
-                      <th scope="col">End Date</th>
-                      <th scope="col">Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.loading === false ? (
-                      this.props.completedOrdersListlenght > 0 ? (
-                        this.props.completedOrdersList.map(ls => (
+                <div style={{ overflowX: "auto" }}>
+                  <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.loading === false ? (
+                        this.props.completedOrdersListlenght > 0 ? (
+                          this.props.completedOrdersList.map(ls => (
+                            <tr>
+                              <th scope="row">{ls._orderId}</th>
+                              <td>{ls._orederStartDate}</td>
+                              <td>{ls._orderEndDate}</td>
+                              <td>${ls._totlCost}</td>
+                            </tr>
+                          ))
+                        ) : (
                           <tr>
-                            <th scope="row">{ls._orderId}</th>
-                            <td>{ls._orederStartDate}</td>
-                            <td>{ls._orderEndDate}</td>
-                            <td>${ls._totlCost}</td>
+                            <td colSpan="4">
+                              <h2>No order is completed yet</h2>
+                            </td>
                           </tr>
-                        ))
+                        )
                       ) : (
-                        <tr>
-                          <td colSpan="4">
-                            <h2>No order is completed yet</h2>
-                          </td>
-                        </tr>
-                      )
-                    ) : (
-                      <div class="container">
-                        <div style={{ marginLeft: "200%" }}>
-                          <SpinnerLoader />
+                        <div class="container">
+                          <div style={{ marginLeft: "200%" }}>
+                            <SpinnerLoader />
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </tbody>
-                </table>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

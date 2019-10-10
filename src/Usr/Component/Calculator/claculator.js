@@ -176,79 +176,81 @@ class Calculator extends Component {
                   </label>
                 </div>
                 <br />
-                <table class="table table-bordered table-sm">
-                  <thead class="thead-dark">
+                <div style={{ overflowX: "auto" }}>
+                  <table class="table table-sm table-bordered">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>File Name</th>
+                        <th>File Size</th>
+                        <th>File Length</th>
+                        <th>Cost</th>
+                      </tr>
+                    </thead>
                     <tr>
-                      <th>File Name</th>
-                      <th>File Size</th>
-                      <th>File Length</th>
-                      <th>Cost</th>
+                      <td>
+                        {this.state.fileName
+                          ? this.state.fileName
+                          : "example.mp4"}
+                      </td>
+                      <td>{filesize(this.state.fileSize)}</td>
+                      <td>
+                        {this.state.fileDuration
+                          ? this.state.fileDuration
+                          : "00:00:00"}
+                      </td>
+                      <td>${this.state.initialCost}</td>
                     </tr>
-                  </thead>
-                  <tr>
-                    <td>
-                      {this.state.fileName
-                        ? this.state.fileName
-                        : "example.mp4"}
-                    </td>
-                    <td>{filesize(this.state.fileSize)}</td>
-                    <td>
-                      {this.state.fileDuration
-                        ? this.state.fileDuration
-                        : "00:00:00"}
-                    </td>
-                    <td>${this.state.initialCost}</td>
-                  </tr>
-                  <tr>
-                    <th class="thead-dark">Time stamping</th>
-                    <td colSpan="2">
-                      <input
-                        id="checkbox_id_T"
-                        type="checkbox"
-                        checked={this.state.checked_T}
-                        onChange={this.handleCheckTimeStamping}
-                      />
-                      <label style={{ zIndex: 1 }} htmlFor="checkbox_id_T">
-                        $0.15/mint
-                      </label>
-                    </td>
-                    <td>
-                      $
-                      {this.state.checked_T === false
-                        ? "0"
-                        : this.state.timeStampingCost}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="thead-dark">Verbatim</th>
+                    <tr>
+                      <th class="thead-dark">Time stamping</th>
+                      <td colSpan="2">
+                        <input
+                          id="checkbox_id_T"
+                          type="checkbox"
+                          checked={this.state.checked_T}
+                          onChange={this.handleCheckTimeStamping}
+                        />
+                        <label style={{ zIndex: 1 }} htmlFor="checkbox_id_T">
+                          $0.15/mint
+                        </label>
+                      </td>
+                      <td>
+                        $
+                        {this.state.checked_T === false
+                          ? "0"
+                          : this.state.timeStampingCost}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="thead-dark">Verbatim</th>
 
-                    <td colSpan="2">
-                      <input
-                        id="checkbox_id_V"
-                        type="checkbox"
-                        checked={this.state.checked_V}
-                        onChange={this.handleCheckVerbatim}
-                      />
-                      <label htmlFor="checkbox_id_V">$0.15/mint</label>
-                    </td>
-                    <td>
-                      $
-                      {this.state.checked_V === false
-                        ? "0"
-                        : this.state.verbitamCost}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-secondary" colSpan="3">
-                      <b>Sub Total</b>
-                    </td>
-                    <td class="table-secondary">
-                      <b>
-                        ${this.state.totalCost ? this.state.totalCost : "0"}
-                      </b>
-                    </td>
-                  </tr>
-                </table>
+                      <td colSpan="2">
+                        <input
+                          id="checkbox_id_V"
+                          type="checkbox"
+                          checked={this.state.checked_V}
+                          onChange={this.handleCheckVerbatim}
+                        />
+                        <label htmlFor="checkbox_id_V">$0.15/mint</label>
+                      </td>
+                      <td>
+                        $
+                        {this.state.checked_V === false
+                          ? "0"
+                          : this.state.verbitamCost}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="table-secondary" colSpan="3">
+                        <b>Sub Total</b>
+                      </td>
+                      <td class="table-secondary">
+                        <b>
+                          ${this.state.totalCost ? this.state.totalCost : "0"}
+                        </b>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </fieldset>
             </form>
           </div>

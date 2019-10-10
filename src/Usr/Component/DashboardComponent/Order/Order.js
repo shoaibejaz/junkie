@@ -136,67 +136,69 @@ class Services extends Component {
               role="tabpanel"
               aria-labelledby="home-tab"
             >
-              <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">File Name</th>
-                    <th scope="col">Turnaround Time</th>
-                    <th scope="col">Total Cost</th>
-                    <th scope="col">Payment Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.rLoading === false ? (
-                    this.props.rLength > 0 ? (
-                      this.props.requestedOrders.map(ls => (
+              <div style={{ overflowX: "auto" }}>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Order ID</th>
+                      <th scope="col">File Name</th>
+                      <th scope="col">Turnaround Time</th>
+                      <th scope="col">Total Cost</th>
+                      <th scope="col">Payment Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.rLoading === false ? (
+                      this.props.rLength > 0 ? (
+                        this.props.requestedOrders.map(ls => (
+                          <tr>
+                            <th scope="row">{ls.orderid}</th>
+                            <td>
+                              <a
+                                style={{ textDecoration: "none" }}
+                                href={ls.filepath}
+                                target={ls.filepath}
+                              >
+                                {ls.filename}
+                              </a>
+                            </td>
+                            <td>
+                              {ls.taroundtime === "24"
+                                ? ls.taroundtime + " hours"
+                                : ""}
+                              {ls.taroundtime === "2"
+                                ? ls.taroundtime + " days"
+                                : ""}
+                              {ls.taroundtime === "3"
+                                ? ls.taroundtime + " days"
+                                : ""}
+                              {ls.taroundtime === "1"
+                                ? ls.taroundtime + " week"
+                                : ""}
+                            </td>
+                            <td>${ls.totlcost}</td>
+                            <td>
+                              {ls.paypalstatus == "1" ? "Payed" : "Unpayed"}
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
                         <tr>
-                          <th scope="row">{ls.orderid}</th>
-                          <td>
-                            <a
-                              style={{ textDecoration: "none" }}
-                              href={ls.filepath}
-                              target={ls.filepath}
-                            >
-                              {ls.filename}
-                            </a>
-                          </td>
-                          <td>
-                            {ls.taroundtime === "24"
-                              ? ls.taroundtime + " hours"
-                              : ""}
-                            {ls.taroundtime === "2"
-                              ? ls.taroundtime + " days"
-                              : ""}
-                            {ls.taroundtime === "3"
-                              ? ls.taroundtime + " days"
-                              : ""}
-                            {ls.taroundtime === "1"
-                              ? ls.taroundtime + " week"
-                              : ""}
-                          </td>
-                          <td>${ls.totlcost}</td>
-                          <td>
-                            {ls.paypalstatus == "1" ? "Payed" : "Unpayed"}
+                          <td colSpan="5">
+                            <h2>No new order is requested yet</h2>
                           </td>
                         </tr>
-                      ))
+                      )
                     ) : (
-                      <tr>
-                        <td colSpan="5">
-                          <h2>No new order is requested yet</h2>
-                        </td>
-                      </tr>
-                    )
-                  ) : (
-                    <div class="container">
-                      <div style={{ marginLeft: "350%" }}>
-                        <SpinnerLoader />
+                      <div class="container">
+                        <div style={{ marginLeft: "350%" }}>
+                          <SpinnerLoader />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div
               class="tab-pane fade"
@@ -204,67 +206,69 @@ class Services extends Component {
               role="tabpanel"
               aria-labelledby="profile-tab"
             >
-              <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">File Name</th>
-                    <th scope="col">Turnaround Time</th>
-                    <th scope="col">Total Cost</th>
-                    <th scope="col">Payment Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.cLoading === false ? (
-                    this.props.cLength > 0 ? (
-                      this.props.confirmedOrders.map(ls => (
+              <div style={{ overflowX: "auto" }}>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Order ID</th>
+                      <th scope="col">File Name</th>
+                      <th scope="col">Turnaround Time</th>
+                      <th scope="col">Total Cost</th>
+                      <th scope="col">Payment Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.cLoading === false ? (
+                      this.props.cLength > 0 ? (
+                        this.props.confirmedOrders.map(ls => (
+                          <tr>
+                            <th scope="row">{ls.orderid}</th>
+                            <td>
+                              <a
+                                style={{ textDecoration: "none" }}
+                                href={ls.filepath}
+                                target={ls.filepath}
+                              >
+                                {ls.filename}
+                              </a>
+                            </td>
+                            <td>
+                              {ls.taroundtime === "24"
+                                ? ls.taroundtime + " hours"
+                                : ""}
+                              {ls.taroundtime === "2"
+                                ? ls.taroundtime + " days"
+                                : ""}
+                              {ls.taroundtime === "3"
+                                ? ls.taroundtime + " days"
+                                : ""}
+                              {ls.taroundtime === "1"
+                                ? ls.taroundtime + " week"
+                                : ""}
+                            </td>
+                            <td>${ls.totlcost}</td>
+                            <td>
+                              {ls.paypalstatus == "1" ? "Payed" : "Unpayed"}
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
                         <tr>
-                          <th scope="row">{ls.orderid}</th>
-                          <td>
-                            <a
-                              style={{ textDecoration: "none" }}
-                              href={ls.filepath}
-                              target={ls.filepath}
-                            >
-                              {ls.filename}
-                            </a>
-                          </td>
-                          <td>
-                            {ls.taroundtime === "24"
-                              ? ls.taroundtime + " hours"
-                              : ""}
-                            {ls.taroundtime === "2"
-                              ? ls.taroundtime + " days"
-                              : ""}
-                            {ls.taroundtime === "3"
-                              ? ls.taroundtime + " days"
-                              : ""}
-                            {ls.taroundtime === "1"
-                              ? ls.taroundtime + " week"
-                              : ""}
-                          </td>
-                          <td>${ls.totlcost}</td>
-                          <td>
-                            {ls.paypalstatus == "1" ? "Payed" : "Unpayed"}
+                          <td colSpan="5">
+                            <h2>No order is confirmed yet</h2>
                           </td>
                         </tr>
-                      ))
+                      )
                     ) : (
-                      <tr>
-                        <td colSpan="5">
-                          <h2>No order is confirmed yet</h2>
-                        </td>
-                      </tr>
-                    )
-                  ) : (
-                    <div class="container">
-                      <div style={{ marginLeft: "350%" }}>
-                        <SpinnerLoader />
+                      <div class="container">
+                        <div style={{ marginLeft: "350%" }}>
+                          <SpinnerLoader />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div
               class="tab-pane fade"
@@ -272,72 +276,74 @@ class Services extends Component {
               role="tabpanel"
               aria-labelledby="contact-tab"
             >
-              <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">File Name</th>
-                    <th scope="col">Turnaround Time</th>
-                    <th scope="col">Total Cost</th>
-                    <th scope="col">Delivery File</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.dLoading === false ? (
-                    this.props.dLength > 0 ? (
-                      this.props.deliveredOrders.map(ls => (
-                        <tr>
-                          <th scope="row">{ls.orderid}</th>
-                          <td>
+              <div style={{ overflowX: "auto" }}>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Order ID</th>
+                      <th scope="col">File Name</th>
+                      <th scope="col">Turnaround Time</th>
+                      <th scope="col">Total Cost</th>
+                      <th scope="col">Delivery File</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.dLoading === false ? (
+                      this.props.dLength > 0 ? (
+                        this.props.deliveredOrders.map(ls => (
+                          <tr>
+                            <th scope="row">{ls.orderid}</th>
+                            <td>
+                              <a
+                                style={{ textDecoration: "none" }}
+                                href={ls.filepath}
+                                target={ls.filepath}
+                              >
+                                {ls.filename}
+                              </a>
+                            </td>
+                            <td>
+                              {ls.taroundtime === "24"
+                                ? ls.taroundtime + " hours"
+                                : ""}
+                              {ls.taroundtime === "2"
+                                ? ls.taroundtime + " days"
+                                : ""}
+                              {ls.taroundtime === "3"
+                                ? ls.taroundtime + " days"
+                                : ""}
+                              {ls.taroundtime === "1"
+                                ? ls.taroundtime + " week"
+                                : ""}
+                            </td>
+                            <td>${ls.totlcost}</td>
                             <a
                               style={{ textDecoration: "none" }}
-                              href={ls.filepath}
-                              target={ls.filepath}
+                              href={ls.workedfilepath}
+                              target={ls.workedfilepath}
                             >
-                              {ls.filename}
+                              {" "}
+                              <td>{ls.workedfilename}</td>
                             </a>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="5">
+                            <h2>No order is delivered yet</h2>
                           </td>
-                          <td>
-                            {ls.taroundtime === "24"
-                              ? ls.taroundtime + " hours"
-                              : ""}
-                            {ls.taroundtime === "2"
-                              ? ls.taroundtime + " days"
-                              : ""}
-                            {ls.taroundtime === "3"
-                              ? ls.taroundtime + " days"
-                              : ""}
-                            {ls.taroundtime === "1"
-                              ? ls.taroundtime + " week"
-                              : ""}
-                          </td>
-                          <td>${ls.totlcost}</td>
-                          <a
-                            style={{ textDecoration: "none" }}
-                            href={ls.workedfilepath}
-                            target={ls.workedfilepath}
-                          >
-                            {" "}
-                            <td>{ls.workedfilename}</td>
-                          </a>
                         </tr>
-                      ))
+                      )
                     ) : (
-                      <tr>
-                        <td colSpan="5">
-                          <h2>No order is delivered yet</h2>
-                        </td>
-                      </tr>
-                    )
-                  ) : (
-                    <div class="container">
-                      <div style={{ marginLeft: "350%" }}>
-                        <SpinnerLoader />
+                      <div class="container">
+                        <div style={{ marginLeft: "350%" }}>
+                          <SpinnerLoader />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

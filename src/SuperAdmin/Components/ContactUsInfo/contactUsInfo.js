@@ -29,42 +29,46 @@ class ContactUsInfo extends Component {
           <div class="row">
             <div class="col-lg-12">
               <div class="card-content">
-                <table class="table">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Message</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.loading === false ? (
-                      this.props.contactListLength > 0 ? (
-                        this.props.ContactInfoList.map(ls => (
+                <div style={{ overflowX: "auto" }}>
+                  <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Message</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.loading === false ? (
+                        this.props.contactListLength > 0 ? (
+                          this.props.ContactInfoList.map(ls => (
+                            <tr>
+                              <td scope="row">{ls.fname}</td>
+                              <td>{ls.lname}</td>
+                              <td>{ls.email}</td>
+                              <td>{ls.description}</td>
+                            </tr>
+                          ))
+                        ) : (
                           <tr>
-                            <td scope="row">{ls.fname}</td>
-                            <td>{ls.lname}</td>
-                            <td>{ls.email}</td>
-                            <td>{ls.description}</td>
+                            <td colSpan="4">
+                              <h2>
+                                No contact us information is available now
+                              </h2>
+                            </td>
                           </tr>
-                        ))
+                        )
                       ) : (
-                        <tr>
-                          <td colSpan="4">
-                            <h2>No contact us information is available now</h2>
-                          </td>
-                        </tr>
-                      )
-                    ) : (
-                      <div class="container">
-                        <div style={{ marginLeft: "175%" }}>
-                          <SpinnerLoader />
+                        <div class="container">
+                          <div style={{ marginLeft: "175%" }}>
+                            <SpinnerLoader />
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </tbody>
-                </table>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

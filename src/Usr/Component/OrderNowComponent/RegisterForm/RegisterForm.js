@@ -310,6 +310,7 @@ class OrderNow extends Component {
 							</strong>
 						</label>
 					</div>
+					<div style={{overflowX:"auto"}}>
 					<table class="table table-bordered table-sm">
 						<thead class="thead-dark">
 							<tr>
@@ -482,6 +483,7 @@ class OrderNow extends Component {
 						</tr>
 						</React.Fragment>:"")}
 					</table>
+					</div>
 							  <input
 							  type="button"
 							

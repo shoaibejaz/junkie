@@ -10,6 +10,7 @@ export const displayAllOrdersAction = () => dispatch => {
         type: DisplayAllOrdersPool,
         payload: res.data
       });
+      console.log(res.data);
     })
     .catch(error => {
       console.log(error.response);

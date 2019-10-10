@@ -90,11 +90,11 @@ h2.active {
   /* -webkit-border-radius: 5px 5px 5px 5px;  */
   /* border-radius: 5px 5px 5px 5px; */
   margin: 5px 20px 40px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
+  /* -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; */
 }
 
 /* input[type="button"]:hover, */
@@ -107,11 +107,11 @@ h2.active {
 .SubmitSA:active
 /* input[type="reset"]:active { */
  {
-  -moz-transform: scale(0.95);
+  /* -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
   -ms-transform: scale(0.95);
-  transform: scale(0.95);
+  transform: scale(0.95); */
 }
 
 .textSA {
@@ -147,7 +147,7 @@ input[type="text"]:placeholder {
 /* ANIMATIONS */
 
 /* Simple CSS3 Fade-in-down Animation */
-.fadeInDown {
+/* .fadeInDown {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
   -webkit-animation-duration: 1s;
@@ -180,10 +180,10 @@ input[type="text"]:placeholder {
     -webkit-transform: none;
     transform: none;
   }
-}
+} */
 
 /* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn {
+/* @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
   }
@@ -206,9 +206,9 @@ input[type="text"]:placeholder {
   to {
     opacity: 1;
   }
-}
+} */
 
-.fadeInSA {
+/* .fadeInSA {
   opacity: 0;
   -webkit-animation: fadeIn ease-in 1;
   -moz-animation: fadeIn ease-in 1;
@@ -221,9 +221,9 @@ input[type="text"]:placeholder {
   -webkit-animation-duration: 1s;
   -moz-animation-duration: 1s;
   animation-duration: 1s;
-}
+} */
 
-.fadeIn.first {
+/* .fadeIn.first {
   -webkit-animation-delay: 0.4s;
   -moz-animation-delay: 0.4s;
   animation-delay: 0.4s;
@@ -245,7 +245,7 @@ input[type="text"]:placeholder {
   -webkit-animation-delay: 1s;
   -moz-animation-delay: 1s;
   animation-delay: 1s;
-}
+} */
 
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {

@@ -19,7 +19,7 @@ class Editor extends Component {
   //   }
   // }
   render() {
-    console.log(this.props.downloadDocumentList);
+    // console.log(this.props.downloadDocumentList);
     const htmlFile = this.props.DocumentData.text;
     // const ParsedFile = ReactHtmlParser(this.props.document.text);
     const htmlFileWithStartingTags =

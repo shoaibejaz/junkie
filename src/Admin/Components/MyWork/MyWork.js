@@ -8,56 +8,33 @@ class CompletedWork extends Component {
     url: "http",
     flag: true
   };
-
-  // componentWillMount() {
-  //   console.log("componentWillMount");
-  //   console.log(this.props.AOrder);
-  // }
-  componentDidMount() {
-    console.log("componentDidMount");
-    console.log(this.state.url);
-  }
-  // componentWillMount() {
-  //   console.log(this.props.AOrder._filePath);
-  // }
   render() {
-    console.log(this.props.AOrder._filePath);
-    // if (this.props.AOrder._filePath) {
-    //   if (this.state.flag === true) {
-    //     this.setState({ url: this.props.AOrder._filePath });
-    //   }
-    // }
-    // const filePath = JSON.stringify(this.props.AOrder._filePath);
-    // if (
-    //   this.props.AOrder._filePath === undefined ||
-    //   this.props.AOrder._filePath === null
-    // ) {
-    //   console.log("UNDEFINED");
-    // } else {
-    //   if (this.state.flag) {
-    //     console.log("ASSIGNING");
-    //     console.log(this.props.AOrder._filePath);
-    //     this.setState({ flag: false }, () => {
-    //       console.log(this.props.AOrder);
-    //       this.setState({ url: this.props.AOrder._filePath }, () => {
-    //         console.log("URL");
-    //         console.log(this.props.AOrder._filePath);
-    //         console.log(this.state.url);
-    //         console.log("URL1");
-    //       });
-    //     });
-    //   }
-    // }
+    if (
+      this.props.AOrder._filePath === undefined ||
+      this.props.AOrder._filePath === null
+    ) {
+      // console.log("File Path is not defined");
+    } else {
+      if (this.state.flag) {
+        // console.log("We have a file path");
+        if (this.props.AOrder._filePath) {
+          this.setState({ url: this.props.AOrder._filePath }, () => {
+            this.setState({ flag: false });
+            // console.log("URL");
+            // console.log(this.props.AOrder._filePath);
+            // console.log(this.state.url);
+            // console.log("URL1");
+          });
+        }
+      }
+    }
     return (
       <React.Fragment>
-        {/* <SideNav /> */}
         <div>
-          {/* <h1>My Work</h1> */}
-          {/* <div class="row"> */}
           <div class="card-content">
             <div class="card-img">
               <video autoplay loop controls style={{ height: "300px" }}>
-                {this.state.url ? (
+                {this.state.url === "http" ? (
                   false
                 ) : (
                   <source src={this.state.url} type="video/mp4" />
@@ -97,15 +74,8 @@ class CompletedWork extends Component {
                     <span>{this.props.AOrder._noOfSpeaker}</span>
                   </h6>
                 </div>
-                {/* <div class="col-lg-12">
-                  <h6>
-                    Time Stamp:&nbsp;&nbsp;
-                    <span>{this.props.AOrder._timeStamp}</span>
-                  </h6>
-                </div> */}
               </div>
             </div>
-            {/* </div> */}
           </div>
         </div>
       </React.Fragment>
