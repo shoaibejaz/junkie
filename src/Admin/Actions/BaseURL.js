@@ -1,1 +1,1 @@
-export const BaseURL = "http://transcriptionjunkie.com";
+export const BaseURL = "https://transcriptionjunkie.com";
